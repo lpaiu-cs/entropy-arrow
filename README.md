@@ -48,6 +48,7 @@ experiments/
   t7_universal_check.py    U2: non-Clifford (Haar) control — the horizon law is no stabilizer artifact
   t7_clifford_darwinism.py U3: Quantum Darwinism — record redundant under decoherence, encoded under scrambling
   t7_clifford_falsification.py  U4: falsification — a conserved record outlives thermalization (t*≫t_S)
+  t8_expanding_universe.py T8: (exploratory) low-entropy past as small volume + expansion (Carroll–Chen toy)
   make_movie.py            renders the CA thermalize-then-exactly-un-thermalize movie
 figures/                   generated PNGs (+ the movie)
 ```
@@ -61,7 +62,7 @@ for e in selftest t1_boundary t2_loschmidt t3_records t3_hard_readout \
          t6c_corroboration t7_ledger t7_redundancy t7_horizon t7_horizon_L \
          t7_redundancy_scaling t7_redundancy_scaling_hires t7_redundancy_extrapolate \
          md_companion t7_md_horizon t7_clifford_horizon t7_universal_check \
-         t7_clifford_darwinism t7_clifford_falsification; do
+         t7_clifford_darwinism t7_clifford_falsification t8_expanding_universe; do
     ./.venv/bin/python experiments/$e.py
 done
 ```
@@ -85,5 +86,9 @@ record dies exactly when entropy saturates, t\* ≈ t_S**. That centerpiece is *
 artifact**: it reproduces, with an order-one κ, in a continuous hard-disk gas and in an exactly
 reversible quantum (Clifford) circuit — and survives a non-Clifford control (U1, U2). The felt
 "flow" need not be added to physics: a boundary condition plus reversible dynamics is enough to
-make memory, and therefore the experienced past, point down the entropy gradient. What remains
-unexplained is *why the boundary was low-entropy* — the mystery is relocated, not removed.
+make memory, and therefore the experienced past, point down the entropy gradient. Records are
+also **redundant under decoherence but encoded under scrambling** (U3, quantum Darwinism), and
+the horizon law is **falsifiable** — a conserved quantity lets a record outlive thermalization
+(U4). What remains unexplained is *why the boundary was low-entropy*; T8 explores a Carroll–Chen
+relocation (small early volume + expansion, not a fine-tuned microstate) but the mystery is
+**relocated, not removed** — the honest edge of the whole programme.

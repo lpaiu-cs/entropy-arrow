@@ -39,6 +39,7 @@ Substrates: an **exactly bit-reversible Margolus lattice gas** (rigorous core) a
 | **U2** | *Universality (quantum)* — **t\*≈t_S** in an exactly reversible **Clifford** circuit, and no stabilizer artifact | κ = **0.79** over a **6.9×** range (t_S 33→229), flat; the record MI I(R:window) and half-chain entanglement **collapse** under t/t_S; a **non-Clifford (Haar) statevector** control tracks it (κ: Clifford **0.89**, Haar **0.60** — both O(1)) | ✅ PASS |
 | **U3** | *Quantum Darwinism* — the record is redundant under decoherence, encoded under scrambling | broadcast → flat **redundancy plateau** (any fragment carries the pointer); scrambling → step (needs ~½, non-redundant); perfect broadcast reaches **α = 1.00 exactly** (R_δ = N_E, ideal) vs the classical lattice's finite-size 0.92 | ✅ PASS |
 | **U4** | *Falsification* — the horizon law is contingent on ergodicity, not a tautology | a **conserved** record (Z₀) survives thermalization: t_S finite but t\* **censored** (record never lost); κ=t\*/t_S **diverges** as ergodicity p→0 (2.90→censored) while it holds (κ≈0.8) when ergodic — boundary mapped | ✅ PASS |
+| **T8** | *Exploratory* — the low-entropy past as small volume + expansion, not a fine-tuned microstate (Carroll–Chen toy) | expanding box: S rises **403→761** unbounded (no heat death) vs static **saturates**; a symmetric bounce gives a **two-headed entropy valley** from a *typical* small-volume middle — **relocates, does not dissolve**, the Past Hypothesis | ✅ demo |
 
 **Bottom line: H survives every test we could throw at it in this model** — and the
 centerpiece **t\*≈t_S** now holds in **three independent substrates** (reversible CA, continuous
@@ -394,6 +395,37 @@ dynamics, not artifacts of any one model — while U4 keeps us honest about wher
 
 ---
 
+## Toward an endogenous boundary — the low-entropy past as small volume, not fine-tuning (T8, exploratory)
+`experiments/t8_expanding_universe.py` → `figures/T8_expanding_universe.png`
+
+Every result so far (T1–U4) takes the low-entropy boundary as an **input**. T8 is an exploratory
+attempt to *soften* that input in the spirit of Carroll–Chen: instead of positing a fine-tuned
+low-entropy **microstate**, posit only that the universe was **small** early on, and let a
+time-symmetric **expansion** generate the arrow. The gas expands by periodic isotropic dilation
+(comoving / Hubble flow) between reversible dynamics epochs; the volume-dependent coarse entropy
+is S = N ln M − Σ ln n_i! with M the (growing) number of fixed-size cells.
+
+- **No heat death.** A static box thermalizes to a fixed ceiling and the arrow dies (S flat at
+  ≈ 400). An expanding box has a ceiling S_max ~ N ln M that keeps **receding**, so S rises
+  without bound (**403 → 761** as the box grows 20 → 139) — the arrow persists purely because the
+  volume grows. The needed input is not a special state but a growing volume.
+- **Two-headed arrow from a symmetric bounce.** With a scale factor symmetric about a minimum at
+  t = 0, entropy forms a **valley**, rising in *both* directions from the small middle — T1's
+  valley, but now the low-entropy middle is a **typical (equilibrium) state of a small box, not a
+  fine-tuned microstate**. The two epochs have antiparallel arrows, each pointing away from the
+  bounce (the T4 two-observer picture, now with the low-S end *explained* rather than posited).
+
+**What it buys, and the honest limits.** This **relocates** the Past Hypothesis — from "a
+fine-tuned low-entropy microstate" to "a small early universe + expansion," arguably a more
+natural posit (a typical state in a small box automatically has low *absolute* entropy because M
+is small). It does **not dissolve** it: it does not explain *why* the volume was small, nor supply
+a measure on which such histories are typical — exactly the hard part Carroll–Chen themselves hand
+to cosmology. The unanswered question is merely restated in volume terms instead of microstate
+terms. **A demonstration, not a proof** — the honest edge of what a boundary-condition account can
+reach.
+
+---
+
 ## What this does NOT prove (the bill, carried over from the discussion)
 
 The model relocates the mystery; it does not dissolve it.
@@ -405,6 +437,11 @@ The model relocates the mystery; it does not dissolve it.
    actual universe's boundary was low-entropy (Penrose's ~1-in-10^(10^123) fine-tuning)
    is still not addressed and cannot be, by a time-symmetric dynamics — it is handed to
    cosmology (Carroll–Chen dynamical generation, Penrose's Weyl curvature hypothesis).
+   **T8 explores exactly this Carroll–Chen relocation** — the low-entropy past reframed as a
+   *small early volume + expansion* rather than a fine-tuned microstate — but it **relocates the
+   posit, it does not remove it**: *why* the volume was small (and on what measure that is
+   typical) is still unaddressed. The mystery moves from microstate-space to volume-space; it
+   does not go away.
 2. **The quenched scatterers are a modelling choice.** They are static and
    time-symmetric (they add no arrow — verified: reversal stays bit-exact), but they
    are how we buy clean thermalization on a square lattice. Pure HPP recurs. *Mitigated
@@ -464,6 +501,7 @@ python3 -m venv .venv && ./.venv/bin/pip install numpy matplotlib
 ./.venv/bin/python experiments/t7_universal_check.py   # U2: non-Clifford (Haar) control — not a stabilizer artifact
 ./.venv/bin/python experiments/t7_clifford_darwinism.py     # U3: Quantum Darwinism — redundant vs encoded, ideal α=1
 ./.venv/bin/python experiments/t7_clifford_falsification.py # U4: falsification — t*≫t_S when a conservation law protects the record
+./.venv/bin/python experiments/t8_expanding_universe.py     # T8: (exploratory) low-entropy past as small volume + expansion
 ```
 
 Every script prints its own numeric PASS/CHECK verdict and writes its figure into
