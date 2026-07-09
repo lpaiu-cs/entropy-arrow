@@ -21,6 +21,8 @@ arrow/
   entropy.py     coarse-grained Boltzmann entropy  S = Σ ln C(b², nᵢ)
   states.py      initial conditions (low-entropy blobs, microcanonical ensembles)
   harddisk.py    event-driven hard-disk gas (the intuitive companion)
+  stabilizer.py  exactly-reversible Clifford circuit (the quantum substrate; entanglement
+                 entropy + mutual information from the stabilizer check matrix)
 experiments/
   selftest.py              reversibility (bit-exact) + mixing checks
   t1_boundary.py           T1: the arrow lives in the boundary condition, not the dynamics
@@ -40,6 +42,9 @@ experiments/
   t7_redundancy_scaling.py T7: how redundancy scales with environment size (original L≤128)
   t7_redundancy_scaling_hires.py  T7: …high-resolution retry (L→512, N=16384) → α≈1 (ideal Darwinism)
   md_companion.py          hard-disk free expansion + velocity echo
+  t7_md_horizon.py         U1: t* ≈ t_S in a continuous hard-disk gas (universality)
+  t7_clifford_horizon.py   U2: t* ≈ t_S in a reversible Clifford circuit (quantum universality)
+  t7_universal_check.py    U2: non-Clifford (Haar) control — the horizon law is no stabilizer artifact
   make_movie.py            renders the CA thermalize-then-exactly-un-thermalize movie
 figures/                   generated PNGs (+ the movie)
 ```
@@ -51,7 +56,8 @@ python3 -m venv .venv && ./.venv/bin/pip install numpy matplotlib
 for e in selftest t1_boundary t2_loschmidt t3_records t3_hard_readout \
          t4_two_observers t5_fork t6a_fluctuations t6b_boltzmann_brain \
          t6c_corroboration t7_ledger t7_redundancy t7_horizon t7_horizon_L \
-         t7_redundancy_scaling t7_redundancy_scaling_hires md_companion; do
+         t7_redundancy_scaling t7_redundancy_scaling_hires md_companion \
+         t7_md_horizon t7_clifford_horizon t7_universal_check; do
     ./.venv/bin/python experiments/$e.py
 done
 ```
@@ -71,7 +77,9 @@ Boltzmann-brain catastrophe (T6). The **T7** layer turns the story quantitative:
 coarse-entropy rise is *exactly* the growth of hidden information while the microscopic
 (Gibbs) entropy is conserved to machine precision (ledger); records are stored
 **redundantly** (classical Darwinism); and — the firm, size-robust result — **the readable
-record dies exactly when entropy saturates, t\* ≈ t_S**. The felt "flow" need not be added to
-physics: a boundary condition plus reversible dynamics is enough to make memory, and
-therefore the experienced past, point down the entropy gradient. What remains unexplained is
-*why the boundary was low-entropy* — the mystery is relocated, not removed.
+record dies exactly when entropy saturates, t\* ≈ t_S**. That centerpiece is **not a lattice
+artifact**: it reproduces, with an order-one κ, in a continuous hard-disk gas and in an exactly
+reversible quantum (Clifford) circuit — and survives a non-Clifford control (U1, U2). The felt
+"flow" need not be added to physics: a boundary condition plus reversible dynamics is enough to
+make memory, and therefore the experienced past, point down the entropy gradient. What remains
+unexplained is *why the boundary was low-entropy* — the mystery is relocated, not removed.

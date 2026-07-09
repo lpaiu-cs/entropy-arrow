@@ -35,8 +35,13 @@ Substrates: an **exactly bit-reversible Margolus lattice gas** (rigorous core) a
 | **T7b** | Records are stored redundantly (classical Darwinism) | near boundary a random **10% of cells → 89%** of the record; **R≈8–10** independent copies, collapsing to 1 at the horizon | ✅ PASS |
 | **T7c** | The record's lifetime IS the thermalization time (**T7 centerpiece**) | **t\*=1.08·t_S**, ratio flat across scrambling rates; **size-robust**: κ mean **0.99** over L=48→128 (t_S spanning 6×) | ✅ PASS |
 | **T7d** | Redundancy scales with environment size → **ideal Darwinism** | at the old ceiling (L≤128) α=**0.81**; pushing to **L=512 (N=16384)** the equivalent-fragment exponent climbs to α=**0.91±0.05** (asymptotic tail, L≥128) — **consistent with ideal α=1**; the running slope reaches **≈1** at large N; SNR-confounded refinement stays at α=**0.71** | ✅ PASS |
+| **U1** | *Universality (classical continuum)* — the horizon law **t\*≈t_S** is not a lattice artifact | in an event-driven **hard-disk gas**, a self-similar size sweep gives **t\* = 1.00·t_S** over a **5.1×** range (t_S 14→73); per-size κ flat (1.19,1.03,0.94,0.97,1.03); record MI and entropy relaxation **collapse** under t/t_S rescaling | ✅ PASS |
+| **U2** | *Universality (quantum)* — **t\*≈t_S** in an exactly reversible **Clifford** circuit, and no stabilizer artifact | κ = **0.79** over a **6.9×** range (t_S 33→229), flat; the record MI I(R:window) and half-chain entanglement **collapse** under t/t_S; a **non-Clifford (Haar) statevector** control tracks it (κ: Clifford **0.89**, Haar **0.60** — both O(1)) | ✅ PASS |
 
-**Bottom line: H survives every test we could throw at it in this model.** The record
+**Bottom line: H survives every test we could throw at it in this model** — and the
+centerpiece **t\*≈t_S** now holds in **three independent substrates** (reversible CA, continuous
+hard-disk gas, reversible quantum circuit), so it is a fact about reversible information
+dynamics, not a lattice artifact. The record
 (proto-"psychological") arrow is not merely *correlated* with the thermodynamic
 arrow — in this system it is the *same gradient measured another way*, and it flips
 when the gradient flips. Even the *causal* arrow (T5) — which way an event's records
@@ -288,6 +293,59 @@ is grown to L = 512 (N = 16 384): all four T7 results now firm up.
 
 ---
 
+## Universality — the record horizon is substrate-independent (not a lattice artifact)
+
+The most load-bearing T7 result is the horizon law **t\* ≈ t_S** (T7c): the readable record
+dies exactly when entropy saturates. A fair objection is that it might be an artifact of the
+one substrate it was measured in — a square reversible lattice gas with quenched scatterers. So
+we re-ran the *same two clocks* in two deliberately different substrates. The target was **not**
+to reproduce the CA's numerical κ = 1.08 (κ is threshold-conventional — it depends on the
+0.9·S_max and ½-bit choices) but to show the invariant: **t\* ∝ t_S with κ = O(1), and the
+record decay and the entropy relaxation collapse onto one clock.**
+
+### U1 — a continuous hard-disk gas (classical continuum)
+`experiments/t7_md_horizon.py` → `figures/T7_md_horizon.png`
+
+An event-driven hard-disk gas (`arrow/harddisk.py`) thermalizes by *ballistic crossing*, not
+lattice scattering, so the clean knob is a **self-similar size sweep**: scale the low-entropy
+blob with the box so the record and the entropy live on the same spatial scale, and grow the
+size to stretch the one thermalization time. (Growing the box with the blob held *fixed*
+decouples two scales — global filling vs. erasing a local asymmetry — and κ then drifts; the
+self-similar sweep is the physically correct knob.) Result: **t\* = 1.00·t_S over a 5.1× range**
+(t_S 14→73), per-size κ flat (1.19, 1.03, 0.94, 0.97, 1.03). Rescaling time by t_S folds both
+the record MI and the coarse-entropy relaxation of every size onto single master curves — so
+t\* and t_S are one clock, κ merely the (conventional) point at which each crosses its threshold.
+
+### U2 — an exactly reversible quantum (Clifford) circuit
+`experiments/t7_clifford_horizon.py`, `t7_universal_check.py`
+→ `figures/T7_clifford_horizon.png`, `T7_universal_check.png`
+
+The theory (observational entropy, Zurek redundancy) is natively quantum, but T1–T7 only
+exercised its classical shadow. A Clifford brickwork (`arrow/stabilizer.py`) is unitary — hence
+exactly reversible — yet Gottesman–Knill-simulable, so we reach **N = 128 qubits**. Two clocks
+on the *same* random circuit: t_S = half-chain **entanglement**-saturation; t\* = when a
+reference qubit's recoverable record **I(R : local window)** drops below 1 bit. Sweeping N
+stretches the (ballistic) scrambling time. Result: **t\* = 0.79·t_S over a 6.9× range**
+(t_S 33→229), per-size κ flat (→ 0.77–0.79 at large N), with the same t/t_S collapse of
+entanglement growth and record decay.
+
+*Not a stabilizer artifact.* Clifford circuits are efficiently simulable precisely because they
+are non-generic, so we add a non-Clifford control (`t7_universal_check.py`): a small full
+**statevector** simulation with true von Neumann entropy, run under both random Clifford gates
+(κ = **0.89 ± 0.32**) and genuinely universal **Haar-random** gates (κ = **0.60 ± 0.10**). Both
+obey the proportional horizon law with κ = O(1), and the Haar value tracks the Clifford one —
+had the law been a stabilizer artifact, the universal gate set would have broken it.
+
+### What universality buys
+κ takes a *different* order-one value in each substrate — CA **1.08**, hard-disk gas **1.00**,
+Clifford **0.79**, Haar **~0.6** — which is exactly the point: the number is convention- and
+substrate-dependent, but the **law** t\* ∝ t_S is not. The record's lifetime being the
+thermalization time is now demonstrated across a reversible lattice gas, a continuous
+Hamiltonian gas, and a reversible quantum circuit — strong evidence it is a general fact about
+reversible information dynamics, not an artifact of any one model.
+
+---
+
 ## What this does NOT prove (the bill, carried over from the discussion)
 
 The model relocates the mystery; it does not dissolve it.
@@ -301,7 +359,11 @@ The model relocates the mystery; it does not dissolve it.
    cosmology (Carroll–Chen dynamical generation, Penrose's Weyl curvature hypothesis).
 2. **The quenched scatterers are a modelling choice.** They are static and
    time-symmetric (they add no arrow — verified: reversal stays bit-exact), but they
-   are how we buy clean thermalization on a square lattice. Pure HPP recurs.
+   are how we buy clean thermalization on a square lattice. Pure HPP recurs. *Mitigated
+   for the centerpiece:* the horizon law t\* ≈ t_S no longer rests on this one substrate —
+   the **Universality** section reproduces it in a continuous hard-disk gas and a reversible
+   quantum (Clifford) circuit, so at least that result is not an artifact of the scatterers
+   or the lattice.
 3. **Region B had to be *constructed*, not found.** T4's anti-thermalizing branch is
    measure-zero; we built it by time-reversal. That we cannot stumble on one is
    *why* a generic universe shows a single arrow — which just restarts point 1.
@@ -347,6 +409,9 @@ python3 -m venv .venv && ./.venv/bin/pip install numpy matplotlib
 ./.venv/bin/python experiments/t7_redundancy_scaling.py # T7: redundancy vs environment size (original L≤128)
 ./.venv/bin/python experiments/t7_redundancy_scaling_hires.py # T7: …high-resolution retry (L→512) → α≈1
 ./.venv/bin/python experiments/md_companion.py
+./.venv/bin/python experiments/t7_md_horizon.py        # U1: t* ≈ t_S in a continuous hard-disk gas
+./.venv/bin/python experiments/t7_clifford_horizon.py  # U2: t* ≈ t_S in a reversible Clifford circuit
+./.venv/bin/python experiments/t7_universal_check.py   # U2: non-Clifford (Haar) control — not a stabilizer artifact
 ```
 
 Every script prints its own numeric PASS/CHECK verdict and writes its figure into
