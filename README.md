@@ -42,9 +42,12 @@ experiments/
   t7_redundancy_scaling.py T7: how redundancy scales with environment size (original L≤128)
   t7_redundancy_scaling_hires.py  T7: …high-resolution retry (L→512, N=16384) → α≈1 (ideal Darwinism)
   md_companion.py          hard-disk free expansion + velocity echo
+  t7_redundancy_extrapolate.py  T7d: finite-size extrapolation of the redundancy exponent → α∞≈0.92
   t7_md_horizon.py         U1: t* ≈ t_S in a continuous hard-disk gas (universality)
   t7_clifford_horizon.py   U2: t* ≈ t_S in a reversible Clifford circuit (quantum universality)
   t7_universal_check.py    U2: non-Clifford (Haar) control — the horizon law is no stabilizer artifact
+  t7_clifford_darwinism.py U3: Quantum Darwinism — record redundant under decoherence, encoded under scrambling
+  t7_clifford_falsification.py  U4: falsification — a conserved record outlives thermalization (t*≫t_S)
   make_movie.py            renders the CA thermalize-then-exactly-un-thermalize movie
 figures/                   generated PNGs (+ the movie)
 ```
@@ -56,8 +59,9 @@ python3 -m venv .venv && ./.venv/bin/pip install numpy matplotlib
 for e in selftest t1_boundary t2_loschmidt t3_records t3_hard_readout \
          t4_two_observers t5_fork t6a_fluctuations t6b_boltzmann_brain \
          t6c_corroboration t7_ledger t7_redundancy t7_horizon t7_horizon_L \
-         t7_redundancy_scaling t7_redundancy_scaling_hires md_companion \
-         t7_md_horizon t7_clifford_horizon t7_universal_check; do
+         t7_redundancy_scaling t7_redundancy_scaling_hires t7_redundancy_extrapolate \
+         md_companion t7_md_horizon t7_clifford_horizon t7_universal_check \
+         t7_clifford_darwinism t7_clifford_falsification; do
     ./.venv/bin/python experiments/$e.py
 done
 ```
