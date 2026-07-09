@@ -37,7 +37,8 @@ experiments/
   t7_scaling.py            T7: first scaling cut + shared helpers (superseded by the two below)
   t7_horizon.py            T7: the record horizon t* ≈ t_S (its lifetime IS t_thermalization)
   t7_horizon_L.py          T7: …and it is robust to system size
-  t7_redundancy_scaling.py T7: how redundancy scales with environment size (finite-size)
+  t7_redundancy_scaling.py T7: how redundancy scales with environment size (original L≤128)
+  t7_redundancy_scaling_hires.py  T7: …high-resolution retry (L→512, N=16384) → α≈1 (ideal Darwinism)
   md_companion.py          hard-disk free expansion + velocity echo
   make_movie.py            renders the CA thermalize-then-exactly-un-thermalize movie
 figures/                   generated PNGs (+ the movie)
@@ -50,7 +51,7 @@ python3 -m venv .venv && ./.venv/bin/pip install numpy matplotlib
 for e in selftest t1_boundary t2_loschmidt t3_records t3_hard_readout \
          t4_two_observers t5_fork t6a_fluctuations t6b_boltzmann_brain \
          t6c_corroboration t7_ledger t7_redundancy t7_horizon t7_horizon_L \
-         t7_redundancy_scaling md_companion; do
+         t7_redundancy_scaling t7_redundancy_scaling_hires md_companion; do
     ./.venv/bin/python experiments/$e.py
 done
 ```
