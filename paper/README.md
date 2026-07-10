@@ -1,8 +1,9 @@
 # Paper draft
 
-**Target: Phys. Rev. E** (alternates: *Entropy*, *Foundations of Physics*). REVTeX 4.2,
+**Target: SciPost Physics** (fallbacks: SciPost Physics Core, then PRE). REVTeX 4.2,
 two-column. Figures are pulled directly from `../figures/` (the PNGs the experiments
-generate); for submission they should be regenerated as vector PDFs.
+generate; runner supertitles cropped for submission); vector-PDF regeneration remains a
+production-stage item.
 
 ## Build
 

@@ -1,4 +1,4 @@
-% Mode-matched record horizons in reversible dynamics — PRE-target draft v0.2
+% Mode-matched record horizons in reversible dynamics — SciPost Physics submission draft
 % Compile: latexmk -pdf main   (REVTeX 4.2; figures pulled from ../figures/)
 \documentclass[aps,pre,twocolumn,superscriptaddress,nofootinbib,longbibliography]{revtex4-2}
 
@@ -52,7 +52,7 @@ $\tstar$ from $\tS$, and one of $25$ lattice realizations does the same
 for $48\,\tS$---and records are stored redundantly,
 with effective redundancy growing as $N^{\alpha}$, $\alpha_\infty=0.92\pm0.04$
 (conservative) classically and $\alpha=1$ for quantum broadcast states. These results
-quantify the sense in which the experienced past is the direction of the entropy
+quantify the sense in which the recorded past is the direction of the entropy
 gradient---while leaving the low-entropy boundary itself unexplained.
 \end{abstract}
 
@@ -115,9 +115,9 @@ does not care which record was planted ($\tS$ flat to $2\%$) while the horizon s
 $9\times$, each mode's lifetime reproduced by its own $\tau_M\ln(A_M/\theta)$ to
 $1$--$5\%$. ``Record lifetime $=$ thermalization time'' is the \emph{supremum} of this
 law over relaxing records, attained by those written in the slowest mode.
-\item \textbf{Universality} (Sec.~\ref{sec:universality}): the boundary-scale
-proportionality reproduces in a continuous hard-disk gas and in reversible Clifford
-circuits (up to $N=128$ qubits), and survives a Haar-random statevector control.
+\item \textbf{Cross-substrate corroboration} (Sec.~\ref{sec:universality}): the
+boundary-scale proportionality reproduces in a continuous hard-disk gas and in reversible
+Clifford circuits (up to $N=128$ qubits), and survives a Haar-random statevector control.
 \item \textbf{A falsification boundary} (Sec.~\ref{sec:falsification}): the law is
 contingent on ergodicity. A conservation law protecting the record makes $\tstar$ diverge
 while $\tS$ stays finite---the extreme case of a non-relaxing mode.
@@ -254,19 +254,25 @@ vs $156.3$). The one censored run is qualitatively different, and we diagnose ra
 merely disclose it: its record never degrades at all---$I(F;\hat F)$ dips to $0.855$ bit
 and returns to $1.0$, remaining perfectly readable when the run is extended to
 $t=12\,000\approx48\,\tS$, while its four sibling seeds cross at $\tstar\approx192$
-(Fig.~\ref{fig:anomaly}). The diagnosis: the planted marker is a solid patch, a fully
-occupied (or fully empty) $2\times2$ block is a \emph{fixed point of every block rule} of
-this automaton, and in this one quenched world the marker's erosion stalls. At $t=2400$,
+(Fig.~\ref{fig:anomaly}). The diagnosis: the planted marker is a solid patch, and a fully
+occupied (or fully empty) $2\times2$ block is a fixed point of every block rule
+\emph{within a single partition}---under the alternating partitions this makes the
+\emph{interiors} of solid and void clusters inert while their boundaries can still erode,
+and in this one quenched world the erosion stalls. At $t=2400$,
 $87\%$ of the class-discriminating signal sits inside the marker boxes and $81\%$ of it on
 sites that never move over the measurement window; those frozen sites have occupancy
 $0.93$ in each class's own marker box (a solid remnant) and $0.07$--$0.15$ in the opposite
-box (a void remnant). The realization is non-ergodic exactly where the record lives: its
-mode does not relax ($\tau_{\mathrm{mode}}=\infty$), the protected limit of
-Eq.~\eqref{eq:modelaw} and of Sec.~\ref{sec:falsification}, arising here spontaneously
-from quenched disorder rather than by engineering. We therefore state the horizon law as
-holding in $24/25$ realizations, with the exception classified as a frozen-record sector
-rather than folded into the fit (as a point value at its lower bound $\tstar\ge T$ it
-would shift the through-origin fit to $3.0$ through a single high-leverage point). Re-deriving both crossings from the stored curves over a grid of gate
+box (a void remnant). The realization is non-ergodic where the record lives \emph{on
+every timescale we can observe}: the record's mode shows no relaxation out to
+$\tstar\ge12\,000\approx48\,\tS$---a kinetically frozen record, consistent with (though,
+absent an invariance proof, not established to be) the protected
+$\tau_{\mathrm{mode}}\to\infty$ limit of Eq.~\eqref{eq:modelaw} and of
+Sec.~\ref{sec:falsification}, arising here spontaneously from quenched disorder rather
+than by engineering. We therefore state the horizon law as holding in $24/25$
+realizations, with the exception classified as a frozen-record sector rather than folded
+into the fit (as a point value at its lower bound $\tstar\ge T$ it would shift the
+through-origin fit to $3.0$ through a single high-leverage point); all its lifetime
+statements are lower bounds. Re-deriving both crossings from the stored curves over a grid of gate
 conventions quantifies how convention-bound the \emph{number} $\kap$ is:
 $\kap=0.87$--$2.83$ for $\theta_S\in\{0.85,0.9\}$, $\theta_M\in\{0.25,0.5,0.75\}$ bit
 (a $\theta_S=0.95$ gate lies above the finite-size equilibrium entropy and never resolves).
@@ -296,15 +302,18 @@ ratio $\tstar/\tS$ is flat across scrambling rates---the law holds run by run.}
 \begin{figure*}
 \includegraphics[width=\textwidth]{T7_anomaly.png}
 \caption{\textbf{The censored run, diagnosed: a spontaneously frozen record} (scatter
-$0.42$, one of five quenched worlds). Left: the anomalous world's record never dies---it
-remains perfectly readable when the run is extended to $5\times$ the original window
-($\approx48\,\tS$)---while a resolved sibling world's record dies on schedule.
+$0.42$, one of five quenched worlds). Left: the anomalous world's record outlives every
+window we simulate---still perfectly readable when the run is extended to $5\times$ the
+original window ($\approx48\,\tS$)---while a resolved sibling world's record dies on
+schedule.
 Middle-left: the class-mean coarse difference at $t=2400$ localizes at the two marker
 boxes ($87\%$ of $|\Delta|^2$; $81\%$ on never-moving sites). Right two panels: per-site
 activity maps; the anomalous world holds a frozen solid remnant of the marker (never-move
 sites with occupancy $0.93$ in the own box, $0.07$--$0.15$ in the opposite, initially
 empty box), absent in the sibling. A fully occupied or empty $2\times2$ block is a fixed
-point of every rule, so a stalled erosion stores the record indefinitely: the
+point of every rule within a single partition, so cluster interiors are inert and a
+stalled erosion stores the record for as long as we can measure ($\tstar\ge48\,\tS$;
+all lifetime statements are lower bounds)---behaviour consistent with the
 $\tau_{\mathrm{mode}}\to\infty$ limit of Eq.~\eqref{eq:modelaw}, realized by quenched
 disorder.}
 \label{fig:anomaly}
@@ -440,10 +449,10 @@ The general law supported by these measurements is
 where the supremum ranges over \emph{relaxing} records in the ergodic sector and is
 attained by those written in the slowest thermalizing mode---which is what
 boundary-condition facts (``the gas started on the left'') naturally are. The scope
-restriction is not pedantry: a non-relaxing mode escapes the bound entirely, whether
-engineered (the conservation law of Sec.~\ref{sec:falsification}) or spontaneous (the
-frozen realization of Sec.~\ref{sec:horizon})---both are the
-$\tau_{\mathrm{mode}}=\infty$ limit of Eq.~\eqref{eq:modelaw}.
+restriction is not pedantry: a non-relaxing mode escapes the bound entirely. The
+engineered conservation law of Sec.~\ref{sec:falsification} realizes the
+$\tau_{\mathrm{mode}}=\infty$ limit of Eq.~\eqref{eq:modelaw} exactly; the frozen
+realization of Sec.~\ref{sec:horizon} is consistent with it on all observed timescales.
 
 \begin{figure*}
 \includegraphics[width=\textwidth]{T7_mode_resolved.png}
@@ -458,7 +467,7 @@ $1$--$5\%$ (see text).}
 \label{fig:modes}
 \end{figure*}
 
-\section{Universality}
+\section{Cross-substrate corroboration}
 \label{sec:universality}
 
 A fair objection to Secs.~\ref{sec:horizon}--\ref{sec:mechanism} is that they might
@@ -492,7 +501,7 @@ hardware gives $\kap=1.04$ with the same flatness \cite{repo}.)
 
 \begin{figure*}
 \includegraphics[width=\textwidth]{T7_md_horizon.png}
-\caption{\textbf{Universality I: continuous hard-disk gas} (self-similar size sweep,
+\caption{\textbf{Cross-substrate corroboration I: continuous hard-disk gas} (self-similar size sweep,
 $D=40$--$130$, three seed-ensembles per size). Left: $\tstar$ vs.\ $\tS$;
 $\tstar=1.00\,\tS$ over a $5.1\times$ range with flat per-size ratios. Right: rescaling time
 by $\tS$ collapses the record MI (solid) and the entropy relaxation (dashed) of every size
@@ -542,7 +551,7 @@ point is that a universal gate set does not break the law.
 
 \begin{figure*}
 \includegraphics[width=\textwidth]{T7_clifford_horizon.png}
-\caption{\textbf{Universality II: exactly reversible quantum (Clifford) circuits}
+\caption{\textbf{Cross-substrate corroboration II: exactly reversible quantum (Clifford) circuits}
 ($N=24$--$128$ qubits, five circuit seeds per size). Left: record horizon vs.\
 entanglement-saturation time; $\tstar=0.79\,\tS$ ($R^2=0.95$) over a $6.9\times$ range,
 per-size ratios flat. Right: $t/\tS$ collapse of entanglement growth (dashed) and record
@@ -598,7 +607,8 @@ is, in this language, the deliberate construction of horizon-law violations. Map
 boundary is what makes the mode-matched law a falsifiable claim about generic dynamics
 rather than a tautology of our definitions. And the boundary is crossed spontaneously in
 our own data: the diagnosed censored run of Sec.~\ref{sec:horizon} is a quenched world in
-which a frozen structure---no engineered gate---stores the record indefinitely.
+which a frozen structure---no engineered gate---stores the record beyond every window we
+simulated ($\ge48\,\tS$).
 
 \begin{figure*}
 \includegraphics[width=\textwidth]{T7_clifford_falsification.png}
@@ -727,8 +737,8 @@ thermalization time itself; objectivity while alive is redundancy; and outliving
 gradient requires a non-relaxing structure. In our data that happened two ways: by
 engineered protection (Sec.~\ref{sec:falsification}), and unbidden, in one of $25$
 disordered realizations, by spontaneous freezing (Sec.~\ref{sec:horizon})---nature does
-occasionally build its own memory protection, and when it does, the record steps outside
-the thermodynamic clock. In companion experiments in the same testbed \cite{repo}, the
+occasionally build its own memory protection, and when it does, the record decouples from
+the thermodynamic clock for as long as we can follow it. In companion experiments in the same testbed \cite{repo}, the
 \emph{direction} of record accumulation flips with the sign of the entropy gradient
 (including for facts injected mid-run, realizing Reichenbach's fork asymmetry), completing
 the picture: direction, lifetime, and storage of memory are all read off the gradient.

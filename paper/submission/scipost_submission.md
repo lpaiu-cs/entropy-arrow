@@ -12,8 +12,10 @@ redundancy, and protected exceptions" — 14 pp, 11 figures.
 
 1. **arXiv first.** SciPost reviews the arXiv preprint. Upload
    `paper/arxiv/arxiv_submission.tar.gz` (regenerate with `paper/build_arxiv.sh`) to
-   arXiv, primary category **cond-mat.stat-mech**, cross-list **quant-ph**.
-   A first-time submitter may need an arXiv endorsement for cond-mat.stat-mech.
+   arXiv, primary category **cond-mat.stat-mech**, cross-list **quant-ph**; set the arXiv
+   "Comments" field to **"Submission to SciPost Physics"** (SciPost's official
+   recommendation). A first-time submitter may need an arXiv endorsement for
+   cond-mat.stat-mech.
 2. Create a SciPost account (ORCID recommended), then *Submit a manuscript* →
    provide the arXiv identifier once the preprint is announced.
 3. In the form: select SciPost Physics, field: Statistical and Soft Matter Physics
@@ -37,7 +39,8 @@ record-independent while horizons span an order of magnitude, each record dying 
 mode's tau*ln(A/theta), making "lifetime = thermalization time" the supremum over relaxing
 records; and (iv) a mapped failure boundary — engineered conservation laws and, in one of
 25 disordered realizations, a *spontaneously frozen* record that stores a bit at full
-fidelity for 48 thermalization times. Concrete follow-up paths are opened and stated:
+fidelity for at least 48 thermalization times (a lower bound). Concrete follow-up paths
+are opened and stated:
 the frozen-record phase diagram (classical analogue of ergodicity breaking /
 fragmentation-protected memory), the transport crossover tau(lambda) vs lambda^2/D,
 decoder hierarchies toward the information-theoretic horizon, and the corroboration
@@ -53,14 +56,14 @@ circuit entanglement dynamics (Page plateau, ballistic growth), and ergodicity b
 
 ## General acceptance criteria (checklist)
 
-- **Clarity and detail:** every claim is tied to a numbered experiment with printed
-  PASS/CHECK gates; two adversarial review rounds are already incorporated (scope
-  restrictions, statistics, renamings documented in the repository history).
+- **Clarity and detail:** every quantitative claim is tied to a numbered experiment with
+  committed outputs; scope restrictions (operational horizon, relaxing-record supremum,
+  convention-bound kappa) and the statistics behind each fit are stated in the text.
 - **Citation of relevant literature:** 30-entry bibliography, every journal entry
   verified against Crossref (DOIs included); closest prior work (Mlodinow–Brun 2014,
   Rovelli 2022, Riedel–Zurek–Zwolak 2012) explicitly credited and positioned against.
-- **Reproducibility:** complete code, per-run data (`data/*.npz`), figure-generating
-  scripts, and per-experiment numerical verdicts are public; the CA/stabilizer substrates
+- **Reproducibility:** complete code, the scripts generating every figure, and per-run
+  data for the core experiments (`data/*.npz`) are public; the CA/stabilizer substrates
   are bit-exactly reproducible, and the float-chaotic gas is flagged as
   statistically-only reproducible in the text.
 - **Summary + outlook:** Sec. VIII discusses what is and is NOT shown (the low-entropy
@@ -81,4 +84,4 @@ should confirm no conflicts and check current affiliations:
 ## Post-acceptance TODO (production stage)
 
 - Convert to the SciPost LaTeX template (submission itself is reviewed from arXiv).
-- Regenerate figures as vector PDFs without the experiment-runner supertitles.
+- Regenerate figures as vector PDFs (runner supertitles already removed from the PNGs).

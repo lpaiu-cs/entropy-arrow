@@ -4,13 +4,15 @@ it is a qualitatively different realization. Which is it: a decoder artifact, a 
 conserved quantity, or a spontaneously frozen (non-ergodic) structure?
 
 The construction suggests the answer. fact_base's marker is a SOLID all-on patch
-(w/4 x w/4 = 10 x 10 sites), and in this Margolus gas a fully occupied 2x2 block is a
-fixed point of ALL three block rules (stream and both rotations map a full block to
-itself). A solid cluster's interior is therefore exactly invariant; only its boundary
-erodes, at a rate set by the surrounding microstate and the quenched rotator layout. If
-for one quenched world the erosion stalls, the marker survives as a frozen solid cluster
--- a PROTECTED record arising spontaneously, the tau -> infinity limit of the
-mode-matched law (the same physics t7_clifford_falsification engineers by hand).
+(w/4 x w/4 = 10 x 10 sites), and in this Margolus gas a fully occupied (or empty) 2x2
+block is a fixed point of every block rule WITHIN A SINGLE PARTITION. Under the
+alternating partitions this makes solid/void cluster INTERIORS inert while boundaries
+can still erode, at a rate set by the surrounding microstate and the quenched rotator
+layout -- so permanence is NOT a theorem; what can be established empirically is that
+for one quenched world the erosion stalls on every timescale we can observe. That is a
+KINETICALLY FROZEN record, consistent with (but not proven to be) the tau -> infinity
+protected limit that t7_clifford_falsification engineers by hand (where Z_0 conservation
+IS analytic).
 
 Diagnostics, comparing the anomalous world (seed 101) with a resolved sibling (seed 7),
 same condition (scatter=0.42):
@@ -18,13 +20,14 @@ same condition (scatter=0.42):
       (class-mean coarse difference field; fraction of |Delta|^2 inside the marker boxes)
   (2) frozenness  -- per-site activity over a late window (fraction of steps the site
       changes); solid-cluster site count inside the marker boxes;
-  (3) persistence -- extend the run 5x (T=12000): does the record ever die?
+  (3) persistence -- extend the run 5x (T=12000 ~ 48 t_S): does the record die within
+      any window we can afford?
 
-Verdict PASS = the anomaly is a frozen-cluster protected record (activity ~ 0 solid
-cluster at the marker, carrying ~all of the discriminating signal, persisting at 5x),
-absent in the sibling. That reclassifies the censored run as a spontaneously realized
-U4-type exception -- a non-ergodic realization -- rather than a failure of the law's
-statistics, and it must be reported as such.
+Verdict PASS = the anomaly is a kinetically frozen record (activity ~ 0 solid remnant at
+the marker, carrying ~all of the discriminating signal, still perfect at 48 t_S), absent
+in the sibling. That reclassifies the censored run as a spontaneously realized U4-type
+exception -- a non-ergodic-on-observed-timescales realization -- rather than a failure of
+the law's statistics. All lifetime statements are LOWER BOUNDS (t* >= 12,000).
 """
 
 import sys, pathlib
@@ -157,7 +160,7 @@ def main(smoke=False):
     ax1.axhline(0.5, ls=":", color="0.5", lw=1)
     ax1.set_xlabel("time [steps]"); ax1.set_ylabel("record MI [bits]")
     ax1.set_xlim(0, Text); ax1.set_ylim(0, 1.05)
-    ax1.set_title("The anomalous record never dies\n(perfectly readable at 5× the original window)")
+    ax1.set_title("The anomalous record outlives every window we simulate\n(still perfectly readable at 5× the original run, ≈48·$t_S$)")
     ax1.legend(fontsize=8, loc="center right")
 
     vmax = max(np.abs(dma).max(), 1e-9)
@@ -188,10 +191,7 @@ def main(smoke=False):
     ax4.set_xlabel("x"); ax4.set_ylabel("y")
     fig.colorbar(im4, ax=ax4, shrink=0.8)
 
-    fig.suptitle("T7-anomaly: the one censored horizon run is a spontaneously FROZEN record — "
-                 "a solid cluster (a fixed point of every block rule) stores the fact; "
-                 "the tau→∞ limit of the mode-matched law, arising without engineering", fontsize=11)
-    fig.tight_layout(rect=[0, 0, 1, 0.92])
+    fig.tight_layout()
     out = FIG / "T7_anomaly.png"
     fig.savefig(out, dpi=112)
 
@@ -207,7 +207,7 @@ def main(smoke=False):
     allok = persists and localized and on_frozen and remnant and sibling_dead
     print(f"\nT7-anomaly verdict: record_persists_5x={persists}  signal_in_marker_boxes={localized}  "
           f"signal_on_frozen_cells={on_frozen}  frozen_marker_remnant={remnant}  sibling_record_dead={sibling_dead}")
-    print(f"  => {'PASS (spontaneously frozen protected record — a U4-type non-ergodic realization)' if allok else 'CHECK'}")
+    print(f"  => {'PASS (kinetically frozen record, t* >= 48 t_S — a spontaneously realized U4-type exception)' if allok else 'CHECK'}")
     print(f"saved {out}")
 
 
