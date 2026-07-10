@@ -199,13 +199,13 @@ def main(smoke=False):
     ax3.set_xlim(0, hi3); ax3.set_ylim(0, hi3)
     ax3.set_xlabel("measured crossing time")
     ax3.set_ylabel(r"predicted  $\tau\,\ln(A/\theta)$")
-    ax3.set_title(f"Parameter-free postdiction from (τ, A, thresholds):\n"
+    ax3.set_title(f"Reconstruction from (τ, A, thresholds) — no extra free parameters:\n"
                   fr"median errors  $t^*$: {100*err_t:.0f}%,  $t_S$: {100*err_S:.0f}%;  "
                   fr"κ pred {kap_pred:.2f} vs meas {kap_meas:.2f}")
     ax3.legend(fontsize=8.5, loc="upper left")
 
-    fig.suptitle("T7-mechanism: t* ≈ t_S because record and entropy relax through the SAME slowest "
-                 "mode — κ is a computable ratio of logs, not a fitted number", fontsize=11.5)
+    fig.suptitle("T7-mechanism: record and entropy relax through the same slowest mode — "
+                 "κ as a ratio of logs (in-sample reconstruction + out-of-sample prediction)", fontsize=11.5)
     fig.tight_layout(rect=[0, 0, 1, 0.94])
     out = FIG / "T7_mechanism.png"
     fig.savefig(out, dpi=112)
@@ -228,7 +228,7 @@ def main(smoke=False):
     allok = shared_clock and postdiction and loo_ok and kappa_ok
     print(f"\nT7-mechanism verdict: shared_clock(tau_M~tau_S)={shared_clock}  "
           f"postdiction_ok={postdiction}  out_of_sample_ok={loo_ok}  kappa_pred~meas={kappa_ok}")
-    print(f"  => {'PASS (the horizon law is a one-mode theorem, not a coincidence)' if allok else 'CHECK'}")
+    print(f"  => {'PASS (a one-slow-mode account: reconstructs in-sample, predicts out-of-sample)' if allok else 'CHECK'}")
     print(f"saved {out}")
 
 

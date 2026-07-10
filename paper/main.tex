@@ -45,9 +45,12 @@ comparable accuracy. The analysis' sharper consequence is confirmed by making th
 wavelength an independent knob: the entropy clock is unchanged ($\tS$ varies by $2\%$)
 while the horizon spans $9\times$, each mode's lifetime given by its own
 $\tau_M\ln(A_M/\theta)$ to $1$--$5\%$. \emph{A record lives as long as the mode that
-carries it}; the thermalization time bounds that lifetime and is attained by
-boundary-scale records. The law fails exactly where it must---a conservation law
-protecting the record decouples $\tstar$ from $\tS$---and records are stored redundantly,
+carries it}; among relaxing records the longest horizons are of order the thermalization
+time, attained at the boundary scale, while a non-relaxing mode escapes the clock
+entirely. The law fails exactly where it must---an engineered conservation law decouples
+$\tstar$ from $\tS$, and one of $25$ lattice realizations does the same
+\emph{spontaneously}, storing its record in a diagnosed frozen cluster at full fidelity
+for $48\,\tS$---and records are stored redundantly,
 with effective redundancy growing as $N^{\alpha}$, $\alpha_\infty=0.92\pm0.04$
 (conservative) classically and $\alpha=1$ for quantum broadcast states. These results
 quantify the sense in which the experienced past is the direction of the entropy
@@ -111,8 +114,8 @@ held-out runs out-of-sample at comparable accuracy.
 an independent knob shows the general statement is \emph{mode-matched}: the entropy clock
 does not care which record was planted ($\tS$ flat to $2\%$) while the horizon spans
 $9\times$, each mode's lifetime reproduced by its own $\tau_M\ln(A_M/\theta)$ to
-$1$--$5\%$. ``Record lifetime $=$ thermalization time'' is the \emph{supremum} of this law,
-attained by records written in the slowest mode.
+$1$--$5\%$. ``Record lifetime $=$ thermalization time'' is the \emph{supremum} of this
+law over relaxing records, attained by those written in the slowest mode.
 \item \textbf{Universality} (Sec.~\ref{sec:universality}): the boundary-scale
 proportionality reproduces in a continuous hard-disk gas and in reversible Clifford
 circuits (up to $N=128$ qubits), and survives a Haar-random statevector control.
@@ -248,12 +251,23 @@ and the discrete sampling is coarsest relative to them.) A condition-stratified 
 gives a $95\%$ confidence interval $\kap\in[0.91,\,1.24]$; an unconstrained affine fit
 $\tstar=a+b\,\tS$ yields an intercept consistent with zero ($a=2.5$, $95\%$ CI
 $[-16.2,\,20.4]$) and is not preferred over the one-parameter proportionality (AIC $154.4$
-vs $156.3$). The one censored run can only \emph{lengthen} a horizon: its record never
-crosses the $\tfrac12$-bit gate within $T=2400$ while its four sibling seeds cross at
-$\tstar\approx192$, so it cannot weaken the law's direction; folding it in as the point
-value $\tstar=T$ would move the through-origin fit to $3.0$ purely through that single
-high-leverage point, which is why we quote the resolved-run fit and disclose the censored
-run instead. Re-deriving both crossings from the stored curves over a grid of gate
+vs $156.3$). The one censored run is qualitatively different, and we diagnose rather than
+merely disclose it: its record never degrades at all---$I(F;\hat F)$ dips to $0.855$ bit
+and returns to $1.0$, remaining perfectly readable when the run is extended to
+$t=12\,000\approx48\,\tS$, while its four sibling seeds cross at $\tstar\approx192$
+(Fig.~\ref{fig:anomaly}). The diagnosis: the planted marker is a solid patch, a fully
+occupied (or fully empty) $2\times2$ block is a \emph{fixed point of every block rule} of
+this automaton, and in this one quenched world the marker's erosion stalls. At $t=2400$,
+$87\%$ of the class-discriminating signal sits inside the marker boxes and $81\%$ of it on
+sites that never move over the measurement window; those frozen sites have occupancy
+$0.93$ in each class's own marker box (a solid remnant) and $0.07$--$0.15$ in the opposite
+box (a void remnant). The realization is non-ergodic exactly where the record lives: its
+mode does not relax ($\tau_{\mathrm{mode}}=\infty$), the protected limit of
+Eq.~\eqref{eq:modelaw} and of Sec.~\ref{sec:falsification}, arising here spontaneously
+from quenched disorder rather than by engineering. We therefore state the horizon law as
+holding in $24/25$ realizations, with the exception classified as a frozen-record sector
+rather than folded into the fit (as a point value at its lower bound $\tstar\ge T$ it
+would shift the through-origin fit to $3.0$ through a single high-leverage point). Re-deriving both crossings from the stored curves over a grid of gate
 conventions quantifies how convention-bound the \emph{number} $\kap$ is:
 $\kap=0.87$--$2.83$ for $\theta_S\in\{0.85,0.9\}$, $\theta_M\in\{0.25,0.5,0.75\}$ bit
 (a $\theta_S=0.95$ gate lies above the finite-size equilibrium entropy and never resolves).
@@ -278,6 +292,23 @@ nothing clamped). Left: $\tstar$ against $\tS$ for all resolved runs; the throug
 fit gives $\tstar=1.08\,\tS$ ($R^2=0.82$) over a $7\times$ range. Right: the per-condition
 ratio $\tstar/\tS$ is flat across scrambling rates---the law holds run by run.}
 \label{fig:horizon}
+\end{figure*}
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{T7_anomaly.png}
+\caption{\textbf{The censored run, diagnosed: a spontaneously frozen record} (scatter
+$0.42$, one of five quenched worlds). Left: the anomalous world's record never dies---it
+remains perfectly readable when the run is extended to $5\times$ the original window
+($\approx48\,\tS$)---while a resolved sibling world's record dies on schedule.
+Middle-left: the class-mean coarse difference at $t=2400$ localizes at the two marker
+boxes ($87\%$ of $|\Delta|^2$; $81\%$ on never-moving sites). Right two panels: per-site
+activity maps; the anomalous world holds a frozen solid remnant of the marker (never-move
+sites with occupancy $0.93$ in the own box, $0.07$--$0.15$ in the opposite, initially
+empty box), absent in the sibling. A fully occupied or empty $2\times2$ block is a fixed
+point of every rule, so a stalled erosion stores the record indefinitely: the
+$\tau_{\mathrm{mode}}\to\infty$ limit of Eq.~\eqref{eq:modelaw}, realized by quenched
+disorder.}
+\label{fig:anomaly}
 \end{figure*}
 
 \section{A one-slow-mode account}
@@ -364,10 +395,12 @@ The blob is prepared with an internal stripe modulation: $2m$ vertical bands, al
 at densities $0.55$ and $0.35$ (mean $0.45$ as in all other runs), with the one-bit fact
 $F$ the stripe \emph{phase} (which band set is dense). The two classes have identical
 particle number by construction, and $m=1,2,4,5$ sets the record's wavelength
-$\lambda=w/m$. As a decoder-free reference for each mode's lifetime we use the
-noise-corrected class-mean separation power $\|\Delta(t)\|^2$ (the squared distance between
-the two classes' mean coarse states, with the $K$-world sampling floor subtracted), whose
-decay time $\tau_{\Delta^2}$ tracks the discriminating signal wherever it drifts; because
+$\lambda=w/m$. As a reference for each mode's lifetime that involves no \emph{trained}
+readout we use the noise-corrected, \emph{label-conditioned} separation power
+$\|\Delta(t)\|^2$ (the squared distance between the two classes' mean coarse states, with
+the $K$-world sampling floor subtracted---class labels are used, but nothing is fitted),
+whose decay time $\tau_{\Delta^2}$ tracks the discriminating signal wherever it drifts;
+because
 the small-signal mutual information is quadratic in the mode amplitude, the MI tail time
 $\tau_M$ should equal $\tau_{\Delta^2}$.
 
@@ -383,7 +416,7 @@ live until thermalization'' is therefore \emph{false in general}: a fine-scale r
 long dead while the gas is still far from saturated.
 \item \emph{Each lifetime is its own mode's crossing.} Per mode, the fitted
 $(\tau_M,A_M)$ reconstruct $\tstar(m)$ as $\tau_M\ln(A_M/\theta_M) = 154,\,60,\,21,\,17$
----errors of $0.5\%,\,4.7\%,\,1.9\%,\,4.0\%$. The decoder-free mode times agree,
+---errors of $0.5\%,\,4.7\%,\,1.9\%,\,4.0\%$. The label-conditioned separation-power times agree,
 $\tau_M/\tau_{\Delta^2}=0.94,\,0.58,\,0.74,\,1.00$. (The raw $\tstar$-vs-$\tau$ log-log
 slope is $1.75$ rather than $1$ precisely because the amplitude logarithm $\ln A_M(m)$
 also varies across modes---the lifetime law has both factors.)
@@ -402,13 +435,16 @@ The general law supported by these measurements is
 \begin{equation}
 \boxed{\;\tstar = \tau_{\mathrm{mode}}
 \ln\!\frac{A_{\mathrm{mode}}}{\theta_M}\,,\quad
-\max_{\mathrm{records}}\tstar \simeq \mathcal{O}(1)\,\tS\;}
+\max_{\mathrm{relaxing}}\tstar \simeq \mathcal{O}(1)\,\tS\;}
 \label{eq:modelaw}
 \end{equation}
-with the maximum attained by records written in the slowest thermalizing mode---which is
-what boundary-condition facts (``the gas started on the left'') naturally are. The
-falsification experiment of Sec.~\ref{sec:falsification} is the limiting case of
-Eq.~\eqref{eq:modelaw}: a protected mode has $\tau_{\mathrm{mode}}=\infty$.
+where the supremum ranges over \emph{relaxing} records in the ergodic sector and is
+attained by those written in the slowest thermalizing mode---which is what
+boundary-condition facts (``the gas started on the left'') naturally are. The scope
+restriction is not pedantry: a non-relaxing mode escapes the bound entirely, whether
+engineered (the conservation law of Sec.~\ref{sec:falsification}) or spontaneous (the
+frozen realization of Sec.~\ref{sec:horizon})---both are the
+$\tau_{\mathrm{mode}}=\infty$ limit of Eq.~\eqref{eq:modelaw}.
 
 \begin{figure*}
 \includegraphics[width=\textwidth]{T7_mode_resolved.png}
@@ -416,8 +452,8 @@ Eq.~\eqref{eq:modelaw}: a protected mode has $\tau_{\mathrm{mode}}=\infty$.
 wavelengths $\lambda=w/m$, $m=1,2,4,5$; $K=40$, three seeds). Left: record MI for each
 wavelength, with $S/\Smax$ (dashed) and $\tS$ marked: shorter-wavelength records die
 earlier at fixed entropy clock ($\tS$ flat to $2.3\%$, $\tstar$ spanning $9\times$).
-Middle: decoder-free mode power $\|\Delta(t)\|^2$ on a log scale---each wavelength has its
-own relaxation time. Right: $\tstar(m)$ against $\tau_{\Delta^2}(m)$ with the three
+Middle: label-conditioned separation power $\|\Delta(t)\|^2$ on a log scale---each
+wavelength has its own relaxation time. Right: $\tstar(m)$ against $\tau_{\Delta^2}(m)$ with the three
 readouts; each mode's lifetime is reconstructed by its own $\tau_M\ln(A_M/\theta_M)$ to
 $1$--$5\%$ (see text).}
 \label{fig:modes}
@@ -442,13 +478,18 @@ scattering. The mode-matched knob is a \emph{self-similar} size sweep: the low-e
 scale while the one thermalization time stretches with size. Result (Fig.~\ref{fig:md}):
 $\tstar=1.00\,\tS$ over a $5.1\times$ range ($\tS=14$--$73$), per-size
 $\kap=1.19,\,1.03,\,0.94,\,0.97,\,1.03$, and both observables collapse onto master curves
-under $t/\tS$. The complementary \emph{mode-mismatch control} behaves as
-Sec.~\ref{sec:modes} requires: growing the box while holding the blob fixed decouples the
-two spatial scales (filling the box versus erasing a local asymmetry) and the ratio then
-drifts---which is the mode-resolved law reasserting itself, not a failure of the
-proportionality. (This substrate is float-chaotic, so exact values vary at the percent
-level with the floating-point environment; an independent re-run on different hardware
-gives $\kap=1.04$ with the same flatness \cite{repo}.)
+under $t/\tS$. The complementary \emph{mode-mismatch control} (Fig.~\ref{fig:mdmismatch})
+measures what happens when the scales are deliberately decoupled: the blob (and the fact)
+held at fixed absolute size while the box grows leaves the record on a fixed spatial scale
+while the entropy clock fills an ever larger volume. Measured: $\tS$ grows $5.1\times$
+across the sweep while $\tstar$ varies by only $1.4\times$, so $\kap$ drifts
+monotonically from $1.15$ to $0.31$ ($3.7\times$)---and at the smallest box, where the
+fixed blob coincides with the self-similar one, $\kap$ agrees with the self-similar
+value. The flat law is destroyed exactly when, and only when, the mode matching is
+broken: the mode-resolved law of Sec.~\ref{sec:modes}, reasserting itself in a continuous
+gas. (This substrate is float-chaotic, so exact values vary at the percent level with the
+floating-point environment; an independent re-run of the self-similar sweep on different
+hardware gives $\kap=1.04$ with the same flatness \cite{repo}.)
 
 \begin{figure*}
 \includegraphics[width=\textwidth]{T7_md_horizon.png}
@@ -456,9 +497,21 @@ gives $\kap=1.04$ with the same flatness \cite{repo}.)
 $D=40$--$130$, three seed-ensembles per size). Left: $\tstar$ vs.\ $\tS$;
 $\tstar=1.00\,\tS$ over a $5.1\times$ range with flat per-size ratios. Right: rescaling time
 by $\tS$ collapses the record MI (solid) and the entropy relaxation (dashed) of every size
-onto single master curves. Holding the blob fixed while growing the box (a deliberate
-mode mismatch) makes the ratio drift, as the mode-resolved law requires.}
+onto single master curves. The complementary mode-mismatch control is measured in
+Fig.~\ref{fig:mdmismatch}.}
 \label{fig:md}
+\end{figure*}
+
+\begin{figure*}
+\includegraphics[width=0.86\textwidth]{T7_md_mismatch.png}
+\caption{\textbf{The mode-mismatch control} (hard-disk gas; blob and planted fact held at
+fixed absolute size while the box grows $D=40$--$130$; three seed-ensembles per size).
+Left: the record horizon stays on the fixed blob scale ($\tstar=16.5\to22.5$) while the
+entropy clock fills the growing box ($\tS=14\to73$). Right: $\kap=\tstar/\tS$ drifts
+monotonically $1.15\to0.31$ instead of staying flat; at $D=40$ the fixed blob coincides
+with the self-similar one and $\kap$ matches Fig.~\ref{fig:md}. Decoupling the scales
+destroys the flat proportionality exactly as Eq.~\eqref{eq:modelaw} requires.}
+\label{fig:mdmismatch}
 \end{figure*}
 
 \subsection{Reversible quantum circuits}
@@ -544,7 +597,9 @@ what lets a record outlast---or point against---the entropy gradient. This is th
 limit of a protected (pointer/code) subspace \cite{zurek2003rmp}; engineered quantum memory
 is, in this language, the deliberate construction of horizon-law violations. Mapping this
 boundary is what makes the mode-matched law a falsifiable claim about generic dynamics
-rather than a tautology of our definitions.
+rather than a tautology of our definitions. And the boundary is crossed spontaneously in
+our own data: the diagnosed censored run of Sec.~\ref{sec:horizon} is a quenched world in
+which a frozen structure---no engineered gate---stores the record indefinitely.
 
 \begin{figure*}
 \includegraphics[width=\textwidth]{T7_clifford_falsification.png}
@@ -656,8 +711,10 @@ records by wavelength shows the general law is \emph{mode-matched},
 Eq.~\eqref{eq:modelaw}: the entropy clock is record-independent while lifetimes span an
 order of magnitude, each set by its own mode's relaxation and amplitude, with
 ``lifetime $=$ thermalization time'' as the supremum attained by slowest-mode records;
-(v) the law fails precisely when a conservation law protects the record---the
-$\tau\to\infty$ limit of the same statement; (vi) records are stored redundantly, with an
+(v) the law fails precisely when the record is stored in a non-relaxing structure---the
+$\tau\to\infty$ limit of the same statement---whether engineered (a conservation law,
+Sec.~\ref{sec:falsification}) or spontaneous (the diagnosed frozen realization,
+Sec.~\ref{sec:horizon}); (vi) records are stored redundantly, with an
 effective-redundancy scaling that approaches ideal classical Darwinism and attains it in
 the noiseless quantum broadcast.
 
@@ -667,9 +724,12 @@ argued that a robust record-forming system must sit on the entropy-increasing si
 gradient \cite{mlodinowbrun2014}; Rovelli, that memories degrade as the system thermalizes
 \cite{rovelli2020memory}. Our measurements supply the quantitative structure: \emph{which}
 records last is set by mode matching; the most durable record's lifetime is the
-thermalization time itself; objectivity while alive is redundancy; and the only way to
-outlive the gradient is a conservation law---which is engineering (memory protection), not
-generic dynamics. In companion experiments in the same testbed \cite{repo}, the
+thermalization time itself; objectivity while alive is redundancy; and outliving the
+gradient requires a non-relaxing structure. In our data that happened two ways: by
+engineered protection (Sec.~\ref{sec:falsification}), and unbidden, in one of $25$
+disordered realizations, by spontaneous freezing (Sec.~\ref{sec:horizon})---nature does
+occasionally build its own memory protection, and when it does, the record steps outside
+the thermodynamic clock. In companion experiments in the same testbed \cite{repo}, the
 \emph{direction} of record accumulation flips with the sign of the entropy gradient
 (including for facts injected mid-run, realizing Reichenbach's fork asymmetry), completing
 the picture: direction, lifetime, and storage of memory are all read off the gradient.
@@ -751,8 +811,10 @@ Sec.~\ref{sec:modes} are (a) an untrained fixed-template decoder (the sign of th
 projection onto the $t=0$ stripe pattern) and (b) a Gaussian plug-in mutual information on
 the held-out one-dimensional stripe projection, with the finite-sample separation bias
 $\sigma^2(2/n)$ subtracted so the estimate decays to zero rather than to a sampling floor.
-The decoder-free mode power is $\|\Delta(t)\|^2=\|\bar V_0(t)-\bar V_1(t)\|^2$ minus its
-$K$-world sampling floor, where $\bar V_c$ is the class-mean coarse state.
+The label-conditioned separation power is
+$\|\Delta(t)\|^2=\|\bar V_0(t)-\bar V_1(t)\|^2$ minus its $K$-world sampling floor,
+where $\bar V_c$ is the class-mean coarse state (class labels enter; no decoder is
+trained).
 
 For the ledger, an ensemble of $K$ equiprobable microstates gives $H=\ln K$ exactly under
 bijective evolution, while the coarse observer assigns the observational entropy

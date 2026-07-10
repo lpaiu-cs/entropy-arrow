@@ -40,12 +40,19 @@ experiments/
   t7_horizon.py            T7: the record horizon t* ≈ t_S (its lifetime IS t_thermalization)
   t7_horizon_L.py          T7: …and it is robust to system size
   t7_mechanism.py          T7: WHY t* ≈ t_S — both clocks read ONE slowest relaxation mode;
-                           κ = a ratio of logs, postdicted parameter-free to ~5%
+                           κ = a ratio of logs; out-of-sample (LOO) prediction to ~19%/12%
+  t7_mode_resolved.py      T7: the honest general law is MODE-MATCHED — records at wavelength
+                           w/m die at their own τ_M·ln(A_M/θ) (t* spans 9× at fixed t_S);
+                           t*≈t_S is the sup over relaxing records
+  t7_anomaly.py            T7: the 1/25 censored horizon run diagnosed — a spontaneously
+                           FROZEN record (solid marker remnant; MI=1.0 at 48·t_S; U4 in the wild)
   t7_redundancy_scaling.py T7: how redundancy scales with environment size (original L≤128)
   t7_redundancy_scaling_hires.py  T7: …high-resolution retry (L→512, N=16384) → α≈1 (ideal Darwinism)
   md_companion.py          hard-disk free expansion + velocity echo
   t7_redundancy_extrapolate.py  T7d: finite-size extrapolation of the redundancy exponent → α∞≈0.92
   t7_md_horizon.py         U1: t* ≈ t_S in a continuous hard-disk gas (universality)
+  t7_md_mismatch.py        U1b: the mode-mismatch control — fixed blob in a growing box
+                           destroys the flat law (κ drifts 1.15→0.31), as mode-matching requires
   t7_clifford_horizon.py   U2: t* ≈ t_S in a reversible Clifford circuit (quantum universality)
   t7_universal_check.py    U2: non-Clifford (Haar) control — the horizon law is no stabilizer artifact
   t7_clifford_darwinism.py U3: Quantum Darwinism — record redundant under decoherence, encoded under scrambling
@@ -62,8 +69,9 @@ python3 -m venv .venv && ./.venv/bin/pip install numpy matplotlib
 for e in selftest t1_boundary t2_loschmidt t3_records t3_hard_readout \
          t4_two_observers t5_fork t6a_fluctuations t6b_boltzmann_brain \
          t6c_corroboration t7_ledger t7_redundancy t7_horizon t7_horizon_L \
-         t7_mechanism t7_redundancy_scaling t7_redundancy_scaling_hires t7_redundancy_extrapolate \
-         md_companion t7_md_horizon t7_clifford_horizon t7_universal_check \
+         t7_mechanism t7_mode_resolved t7_anomaly t7_redundancy_scaling \
+         t7_redundancy_scaling_hires t7_redundancy_extrapolate \
+         md_companion t7_md_horizon t7_md_mismatch t7_clifford_horizon t7_universal_check \
          t7_clifford_darwinism t7_clifford_falsification t8_expanding_universe; do
     ./.venv/bin/python experiments/$e.py
 done
@@ -88,8 +96,12 @@ record dies exactly when entropy saturates, t\* ≈ t_S**. That centerpiece is *
 artifact**: it reproduces, with an order-one κ, in a continuous hard-disk gas and in an exactly
 reversible quantum (Clifford) circuit — and survives a non-Clifford control (U1, U2). It is
 also **understood, not just measured**: entropy deficit and record signal decay through the
-*same* slowest relaxation mode, so κ is a computable ratio of logarithms — postdicted
-parameter-free to ~5% (T7-mechanism). The felt
+*same* slowest relaxation mode, so κ is a computable ratio of logarithms — reconstructed to
+~5% in-sample and predicted out-of-sample (T7-mechanism). Resolving records by wavelength
+shows the honest general law is **mode-matched**: each record dies at its own mode's
+τ·ln(A/θ) (t\* spans 9× at fixed t_S), with **t\* ≈ t_S the sup over relaxing records**
+(T7-mode-resolved) — and the single 1/25 exception is a **diagnosed spontaneously frozen
+record** (T7-anomaly), the τ→∞ limit arising from quenched disorder. The felt
 "flow" need not be added to physics: a boundary condition plus reversible dynamics is enough to
 make memory, and therefore the experienced past, point down the entropy gradient. Records are
 also **redundant under decoherence but encoded under scrambling** (U3, quantum Darwinism), and

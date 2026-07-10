@@ -33,10 +33,13 @@ Substrates: an **exactly bit-reversible Margolus lattice gas** (rigorous core) a
 | **T6c** | Corroboration distinguishes a real past from a fluctuation | genuine past: two independent halves agree **1.00** (MI **0.99** bit); equilibrium: **0.43 / 0.00** | ✅ PASS |
 | **T7a** | Record arrow = an exact information ledger | Gibbs entropy conserved to **machine precision** (max\|H−lnK\|=**0**); **100%** of ΔS_obs is the hidden-info term I; a planted record decays 1.00→0.006 bit | ✅ PASS |
 | **T7b** | Records are stored redundantly (classical Darwinism) | near boundary a random **10% of cells → 89%** of the record; **R≈8–10** independent copies, collapsing to 1 at the horizon | ✅ PASS |
-| **T7c** | The record's lifetime IS the thermalization time (**T7 centerpiece**) | **t\*=1.08·t_S**, ratio flat across scrambling rates; **size-robust**: κ mean **0.99** over L=48→128 (t_S spanning 6×) | ✅ PASS |
+| **T7c** | The record's lifetime IS the thermalization time (**T7 centerpiece**, for slowest-mode records) | **t\*=1.08·t_S** (95% CI **[0.91, 1.24]**), ratio flat across scrambling rates; intercept≈0 (AIC prefers origin); **size-robust**: κ mean **0.99** over L=48→128; the 1/25 censored run **diagnosed** as a spontaneously frozen record (T7g) | ✅ PASS |
 | **T7d** | Redundancy scales with environment size → **near-ideal Darwinism** | at the old ceiling (L≤128) α=**0.81**; pushing to **L=512 (N=16384)** and finite-size-extrapolating gives α∞=**0.92±0.04** — ideal α=1 **supported but not certified** (~2σ), a clear climb from 0.81; SNR-confounded refinement stays at α=**0.71**; the extrapolation is **conservative** — softer (equally-well-fitting) correction forms give α∞ up to 0.95–1.00 | ✅ PASS |
-| **T7e** | *Mechanism* — **why** t\*≈t_S: both clocks read **one slowest relaxation mode** | entropy deficit and record MI decay exponentially with a **shared τ** (τ_M/τ_S = **0.92±0.30**, flat while absolute τ varies **7.6×**); **parameter-free postdiction** of both crossings from (τ, A, thresholds): median err t\* **5%**, t_S **1%**; κ predicted **0.98** vs measured **1.02** — κ is a computable **ratio of logs** | ✅ PASS |
+| **T7e** | *Mechanism* — **why** t\*≈t_S: both clocks read **one slowest relaxation mode** | shared τ (τ_M/τ_S = **0.92±0.30**, flat over **7.6×**); reconstruction from (τ, A, thresholds): median err t\* **5%**, t_S **1%**; **out-of-sample (LOO seeds): t\* 19%, t_S 12%**; κ 0.98 vs 1.02 — a computable **ratio of logs** | ✅ PASS |
+| **T7f** | *Mode-resolved* — the horizon law is **mode-matched**; t\*≈t_S is its **sup over relaxing records** | stripe-phase records at λ=w/m (m=1,2,4,5): **t_S flat to 2.3%** while **t\* spans 9×** (153→17); each mode's lifetime = **τ_M·ln(A_M/θ)** to **1–5%**; three readouts agree at the slowest mode (log-offsets as predicted) | ✅ PASS |
+| **T7g** | *Anomaly diagnosed* — the 1/25 censored run is a **spontaneously frozen record** (U4's τ=∞ limit in the wild) | 87% of the signal in the marker boxes, **81% on never-move sites** (occupancy 0.93 solid / 0.07–0.15 void remnants); record still **MI=1.000 at t=12,000 ≈ 48·t_S**; a full/empty 2×2 block is a fixed point of every rule — quenched disorder stalls the marker's erosion | ✅ PASS |
 | **U1** | *Universality (classical continuum)* — the horizon law **t\*≈t_S** is not a lattice artifact | in an event-driven **hard-disk gas**, a self-similar size sweep gives **t\* = 1.00·t_S** over a **5.1×** range (t_S 14→73); per-size κ flat (1.19,1.03,0.94,0.97,1.03); record MI and entropy relaxation **collapse** under t/t_S rescaling | ✅ PASS |
+| **U1b** | *Mode-mismatch control* — decoupling the scales **destroys** the flat law, as mode-matching requires | blob+fact held at fixed absolute size while the box grows: t_S grows **5.1×** but t\* only **1.4×**; **κ drifts monotonically 1.15→0.31 (3.7×)**; at D=40 (scales coincide) κ matches the self-similar value | ✅ PASS |
 | **U2** | *Universality (quantum)* — **t\*≈t_S** in an exactly reversible **Clifford** circuit, and no stabilizer artifact | κ = **0.79** over a **6.9×** range (t_S 33→229), flat; the record MI I(R:window) and half-chain entanglement **collapse** under t/t_S; a **non-Clifford (Haar) statevector** control tracks it (κ: Clifford **0.89**, Haar **0.60** — both O(1)) | ✅ PASS |
 | **U3** | *Quantum Darwinism* — the record is redundant under decoherence, encoded under scrambling | broadcast → flat **redundancy plateau** (any fragment carries the pointer); scrambling → step (needs ~½, non-redundant); perfect broadcast reaches **α = 1.00 exactly** (R_δ = N_E, ideal) vs the classical lattice's finite-size 0.92 | ✅ PASS |
 | **U4** | *Falsification* — the horizon law is contingent on ergodicity, not a tautology | a **conserved** record (Z₀) survives thermalization: t_S finite but t\* **censored** (record never lost); κ=t\*/t_S **diverges** as ergodicity p→0 (2.90→censored) while it holds (κ≈0.8) when ergodic — boundary mapped | ✅ PASS |
@@ -321,6 +324,29 @@ with S_max, so the log-ratio is size-free); (3) why κ is **substrate-dependent 
 (amplitudes and threshold conventions enter only through slowly-varying logs — CA 1.08, gas
 1.00, Clifford 0.79); (4) why threshold choices matter only **logarithmically**. The horizon
 law is a one-slow-mode theorem, not a numerical coincidence.
+
+### T7-mode-resolved, T7-anomaly, U1b — the law, made honest (the mode-matched layer)
+`experiments/t7_mode_resolved.py`, `t7_anomaly.py`, `t7_md_mismatch.py`
+→ `figures/T7_mode_resolved.png`, `T7_anomaly.png`, `T7_md_mismatch.png`; per-run data in `data/`
+
+Three follow-ups sharpen the horizon law into its defensible general form:
+
+- **Mode-resolved (T7f).** Making the record's wavelength an independent knob (stripe-phase
+  facts at λ=w/m) shows the entropy clock ignores the record (**t_S flat to 2.3%**) while the
+  horizon spans **9×**; each mode's lifetime is its own crossing **t\*(m)=τ_M·ln(A_M/θ)** to
+  **1–5%**. So "record lifetime = thermalization time" is *false in general* and survives as
+  the **sup over relaxing records**, attained at the slowest (boundary) scale — which is what
+  boundary-condition facts naturally are. Readout dependence quantified on the same runs.
+- **Anomaly diagnosed (T7g).** The single censored horizon run is a **spontaneously frozen
+  record**: a full/empty 2×2 block is a fixed point of every rule, this quenched world stalls
+  the solid marker's erosion, and 81% of the discriminating signal sits on never-moving sites
+  (occupancy 0.93 solid / ~0.1 void remnants); the record is still perfect (MI=1.000) at
+  **t=12,000 ≈ 48·t_S**. U4's τ=∞ protected limit, arising in the wild — reported as a
+  classified exception (law holds in 24/25 realizations), not folded into the fit.
+- **Mode-mismatch control (U1b).** In the hard-disk gas, holding the blob fixed while the box
+  grows decouples the scales: t_S grows 5.1× while t\* changes 1.4×, so **κ drifts 1.15→0.31**
+  instead of staying flat — the flat law is destroyed exactly when mode matching is broken,
+  as the mode-resolved law requires.
 
 **T7 bottom line.** The record arrow is not merely *illustrated* but *measured — and now
 understood*: an exact entropy/information ledger; a size-robust law **t\* ≈ t_S** — the

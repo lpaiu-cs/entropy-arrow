@@ -156,7 +156,8 @@ def contrast(V, u):
 
 
 def diff_norm2(V):
-    """Decoder-free, template-free mode power: ||mean(V|ph0)-mean(V|ph1)||^2 per time,
+    """LABEL-CONDITIONED separation power (no decoder is trained, but class labels are
+    used): ||mean(V|ph0)-mean(V|ph1)||^2 per time,
     with the K-world sampling floor subtracted (unbiased for zero true separation).
     Small-signal MI is proportional to this quantity, so tau_M ~ tau_{Delta^2}."""
     _, K, nt, nc = V.shape
@@ -285,7 +286,7 @@ def main(smoke=False):
     ax2.set_xlim(0, 2.2 * tS_mean); ax2.set_ylim(1e-4, 1.4)
     ax2.set_xlabel("time [steps]")
     ax2.set_ylabel(r"mode power  $||\Delta(t)||^2 / ||\Delta(0)||^2$  (log)")
-    ax2.set_title("Decoder-free mode power (noise-floor corrected):\neach wavelength has its own relaxation time")
+    ax2.set_title("Label-conditioned separation power (noise-floor corrected):\neach wavelength has its own relaxation time")
 
     ax3.errorbar(tau, tst, xerr=tau_e, yerr=tst_e, fmt="o", ms=9, color="#2b6cb0",
                  capsize=4, label="trained linear decoder")
@@ -297,7 +298,7 @@ def main(smoke=False):
              label=fr"$t^* = {k_fit:.1f}\,\tau$  (log-log slope {slope:.2f})")
     ax3.axhline(tS_mean, ls=":", color="0.5", lw=1.2)
     ax3.text(tau.max() * 0.02, tS_mean * 1.03, r"$t_S$", color="0.4")
-    ax3.set_xlabel(r"mode-power relaxation time  $\tau_{\Delta^2}(m)$  [decoder-free]")
+    ax3.set_xlabel(r"separation-power relaxation time  $\tau_{\Delta^2}(m)$  [no trained decoder]")
     ax3.set_ylabel(r"record horizon  $t^*(m)$")
     ax3.set_title("Mode matching: the horizon is the relaxation time\nof the mode that carries the record")
     ax3.legend(fontsize=8.5, loc="lower right")
@@ -336,7 +337,7 @@ def main(smoke=False):
     print(f"\nT7-mode-resolved verdict: monotone={monotone}  tS_indep_of_record={tS_flat}  "
           f"tauM~tauD2={taus_agree}  amp_postdiction(<15%)={pred_ok}  "
           f"sup_form(m=1~t_S; fastest<<slowest)={sup_form}  decoders_agree_at_slowest={dec_agree}")
-    print(f"  => {'PASS (the horizon is mode-matched; t*~t_S is its sup over records)' if allok else 'CHECK'}")
+    print(f"  => {'PASS (the horizon is mode-matched; t*~t_S is its sup over RELAXING records)' if allok else 'CHECK'}")
     print(f"saved {out}")
 
 
