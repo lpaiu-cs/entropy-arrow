@@ -53,8 +53,14 @@ for $48\,\tS$; the incidence of this frozen sector is itself measured, closed at
 disorder ($0/448$ worlds) and opening sharply ($5.5\%$, then $43\%$) at the strongest
 scrambling rates---and records are stored redundantly,
 with effective redundancy growing as $N^{\alpha}$, $\alpha_\infty=0.92\pm0.04$
-(conservative) classically and $\alpha=1$ for quantum broadcast states. These results
-quantify the sense in which the recorded past is the direction of the entropy
+(conservative) classically and $\alpha=1$ for quantum broadcast states. Finally, the
+horizon needs no external analyst: an \emph{endogenous} one-bit observer---a reversible
+Maxwell demon whose sensor is fixed at the boundary and never retrained, writing to blank
+tape by reversible \textsc{cnot}, erasures counted at the Landauer bound---sees the same
+horizon ($\tstar_{\mathrm{demon}}=0.95\,\tS$ on the lattice, $0.54\,\tS$ in the gas),
+cannot learn in equilibrium ($0.02$ bit), and its best recall decays with the record's own
+mode: durable memory is bought only with blank tape spent before the record has relaxed.
+These results quantify the sense in which the recorded past is the direction of the entropy
 gradient---while leaving the low-entropy boundary itself unexplained.
 \end{abstract}
 
@@ -132,6 +138,15 @@ $R_\delta\approx8$--$10$); $R_\delta$ grows with the number of environment fragm
 $N^{\alpha}$ with a conservative $\alpha_\infty=0.92\pm0.04$, while a quantum broadcast
 realizes ideal Darwinism, $\alpha=1$ exactly---consistent with the classical shortfall
 being a signal-to-noise and finite-size effect rather than a limit of the principle.
+\item \textbf{An endogenous observer} (Sec.~\ref{sec:demon}): replacing the retrained
+decoder by a physical one-bit demon---sensor calibrated once at the boundary and never
+retrained, records written to blank tape by reversible \textsc{cnot}, erasures counted at
+the Landauer bound \cite{szilard1929,landauer1961,bennett1982,parrondo2015}---reproduces
+the horizon law on the lattice ($\kap=0.95$) and in the gas ($\kap=0.54$), flips with the
+boundary, and cannot learn in equilibrium. Its thermodynamic ledger makes the cost of
+memory explicit: keeping the fact \emph{currently} known until $\tstar$ costs $\sim9$
+erased bits per bit of content, and recall from a tape started at $t_{\mathrm{start}}$
+decays with the record's own mode---the low-entropy boundary is a non-renewable resource.
 \end{enumerate}
 
 Throughout we are explicit about scope and about what is \emph{not} shown
@@ -599,7 +614,9 @@ confirms the behaviour is not a stabilizer artifact.}
 
 \begin{table}
 \caption{The horizon law across substrates (boundary-scale records). $\kap$ is convention-
-and substrate-dependent, Eq.~\eqref{eq:kappa}; the law is the flat proportionality.}
+and substrate-dependent, Eq.~\eqref{eq:kappa}; the law is the flat proportionality. The
+last two rows replace the retrained decoder by the fixed endogenous one-bit demon of
+Sec.~\ref{sec:demon}---a weaker reader (lower $\kap$), reading the same clock.}
 \label{tab:kappa}
 \begin{ruledtabular}
 \begin{tabular}{llll}
@@ -610,6 +627,9 @@ Margolus CA        & bit-reversible          & $7\times$   & $1.08$ \\
 Hard-disk gas      & Hamiltonian             & $5.1\times$ & $1.00$ \\
 Clifford circuit   & unitary, $N\le128$      & $6.9\times$ & $0.79$ \\
 Haar statevector   & unitary, $N\le16$       & spot        & $0.60(10)$ \\
+\hline
+CA, demon readout  & bit-reversible          & $3.5\times$ & $0.95$ \\
+Gas, demon readout & Hamiltonian             & $5.1\times$ & $0.54$ \\
 \end{tabular}
 \end{ruledtabular}
 \end{table}
@@ -740,6 +760,87 @@ limit the classical lattice approaches from below.}
 \label{fig:qdarwin}
 \end{figure*}
 
+\section{An endogenous observer: the horizon without an external analyst}
+\label{sec:demon}
+
+Every readout so far---including the fixed-template control of Sec.~\ref{sec:modes}---is
+applied by an external analyst with fresh access to the whole coarse state at every sample
+time. A physical observer is a subsystem of the same reversible dynamics: its detector is
+fixed when the event happens (one cannot re-fit a memory to a fact already forgotten), and
+writing a record has a thermodynamic price
+\cite{szilard1929,landauer1961,bennett1982,parrondo2015}. We therefore build a reversible
+Maxwell demon inside the lattice gas and ask whether the horizon law survives when the
+observer is endogenous and its bookkeeping is honest. The demon has a \emph{fixed one-bit
+sensor}, calibrated once at the boundary as the class contrast
+$w=\bar V_0(0)-\bar V_1(0)$ over the training worlds and never retrained; its reading is
+$o(t)=\mathbf{1}[\,w\cdot V(t)>\theta\,]$, and its knowledge of the fact is the held-out
+mutual information $I\bigl(o(t);F\bigr)\le1$ bit. Recording is the reversible \textsc{cnot}
+$\text{tape}\oplus\!=o(t)$ onto a blank cell---von Neumann premeasurement---so a blank cell
+is \emph{required} to record, and resetting a used cell is an erasure, which we count in
+units of the Landauer bound (the athermal substrate has no temperature; the ledger counts
+erased bits, each costing $k_BT\ln2$ in any isothermal implementation). Note the demon does
+not threaten the second law---Szilard, Landauer and Bennett settled that
+\cite{szilard1929,landauer1961,bennett1982}; we run the argument in the opposite direction
+and ask what the exorcised demon's \emph{knowledge} is slaved to.
+
+Three results (Fig.~\ref{fig:demon}). First, the dumb one-bit physical detector sees the
+\emph{same horizon} as the trained multi-cell decoder: across four scrambling rates
+($\tS=26$--$90$, $3.5\times$), $\tstar_{\mathrm{demon}}=0.95\,\tS$ with per-rate ratios
+$0.68$--$1.05$ (through-origin $R^2=0.73$, resolution-limited by the one-bit reading at the
+sample stride)---compare the decoder's $\kap=1.08$ (Table~\ref{tab:kappa}). The horizon is
+in the state, not in the sophistication of the readout. Relocating the low-entropy boundary
+to the opposite time end flips the demon's faithful readings with it
+($I(o;F)$: $0.01$ at $t=0$, $1.00$ at $t=T$). Second, the \emph{equilibrium control}: the
+same fact presented to a pre-thermalized gas (the fact survives only in the microstate, not
+the macrostate) yields a coin-flip reading---mean $I(o;F)=0.02$ bit, never crossing the
+$\tfrac12$-bit threshold over the whole run, against a forward peak of $1.00$. Without a
+low-entropy boundary there is nothing for a physical memory to record.
+
+Third, the thermodynamic ledger. A \emph{cyclic} demon (one tape cell, erased and rewritten
+each epoch) holds at most one bit forever, yet its erasure bill grows linearly: keeping the
+fact \emph{currently} known until $\tstar_{\mathrm{demon}}$ costs $\sim9$ erased bits per
+bit of content at the representative rate---the running price of a live memory of a
+decaying record. An \emph{accumulate} demon (a fresh blank cell each epoch, old cells
+frozen) escapes the recurring bill, but only cells written early carry the fact: the best
+recall available from a tape \emph{started} at $t_{\mathrm{start}}$ is $1.00$ bit at
+$t_{\mathrm{start}}=0$ for every rate, decays along the record's own mode---the curves of
+all four rates collapse on $t_{\mathrm{start}}/\tS$ with the knee at ${\approx}\,\kap$---and
+reaches the estimator noise floor ($0.08$--$0.18$ bit) past ${\sim}3\,\tS$. No amount of
+blank tape spent after the record has relaxed buys the fact back: durable memory is
+purchased with low-entropy resource spent \emph{while the gradient is alive}, the same
+resource the boundary condition supplies.
+
+Why does a \emph{fixed} sensor work at all? By the mechanism of
+Secs.~\ref{sec:mechanism}--\ref{sec:modes}: in a diffusive substrate the boundary-scale
+record rides the slowest relaxation mode, which decays in place (amplitude shrinks, spatial
+shape preserved), so a sensor matched to it at the boundary stays matched. This predicts
+the construction generalizes exactly as far as mode matching does, and it does: in the
+hard-disk gas the identical fixed-contrast sensor inherits the law,
+$\tstar_{\mathrm{demon}}=0.54\,\tS$ ($R^2=0.92$) over the full $5.1\times$ self-similar
+sweep of Sec.~\ref{sec:universality} (per-size ratios $0.67$--$0.52$: a weaker reader than
+the retrained decoder's $\kap=1.00$, reading the same clock). In the ballistically
+scrambling Clifford brickwork, by contrast, a fixed local sensor (a \textsc{cnot} copy of a
+sensor qubit onto a blank ancilla) loses the record at an $N$-independent $O(1)$ butterfly
+time even though the actively decoded window information survives to ${\approx}0.8\,\tS$
+(Fig.~\ref{fig:clifford})---the mode-mismatch expectation, since a ballistic scrambler has
+no slowly relaxing local mode to ride; a systematic study of that crossover is deferred to
+companion work.
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{T9_maxwell_demon.png}
+\caption{\textbf{The endogenous demon} (lattice gas, $K=40$ worlds per class, three
+disorder seeds). Left (representative rate): the fixed one-bit sensor's held-out
+$I(o;F)$ falls below $\tfrac12$ bit at the entropy-saturation time (blue); relocating the
+low-entropy boundary to the future end flips the readings (orange, dashed); a demon in a
+pre-thermalized gas never learns the fact (grey); the cyclic demon's erasure bill grows
+linearly throughout (red, right axis). Middle: $\tstar_{\mathrm{demon}}$ vs.\ $\tS$ across
+four scrambling rates; the fixed sensor reproduces the horizon law with $\kap=0.95$.
+Right: the accumulate demon's best recall from a tape started at $t_{\mathrm{start}}$,
+for all four rates, collapsing on $t_{\mathrm{start}}/\tS$: recall decays with the
+record's own mode and blank tape spent past ${\sim}3\,\tS$ buys only the noise floor.}
+\label{fig:demon}
+\end{figure*}
+
 \section{Discussion}
 \label{sec:discussion}
 
@@ -763,7 +864,11 @@ Sec.~\ref{sec:falsification}) or spontaneous, and the spontaneous sector has a m
 sharply-onsetting incidence in disorder strength ($0/448\to5.5\%\to43\%$,
 Sec.~\ref{sec:horizon}); (vi) records are stored redundantly, with an
 effective-redundancy scaling that approaches ideal classical Darwinism and attains it in
-the noiseless quantum broadcast.
+the noiseless quantum broadcast; (vii) none of this requires an external analyst: an
+endogenous, thermodynamically-billed one-bit demon---sensor fixed at the boundary,
+reversible tape---sees the same horizon on the lattice and in the gas, flips with the
+boundary, cannot learn in equilibrium, and its recall decays with the record's own mode,
+so durable memory is purchased with blank tape spent while the gradient is alive.
 
 Taken together, these results sharpen the qualitative account of the memory arrow
 \cite{reichenbach1956,wolpert1992,mlodinowbrun2014,rovelli2020memory}. Mlodinow and Brun
@@ -808,7 +913,7 @@ information dynamics rather than an artifact of any one model.
 
 \subsection{Outlook}
 
-Three extensions seem most valuable. (i) A quantitative tie of the mode times to
+Several extensions seem most valuable. (i) A quantitative tie of the mode times to
 transport: the account predicts $\tau(\lambda)\propto\lambda^2/D$ in the hydrodynamic
 regime, with $D$ set by the scatterer density; our measured $\tau_{\Delta^2}(m)$ decays
 more slowly with $m$ than $\lambda^2$ at these sizes, and mapping that crossover would
@@ -821,7 +926,12 @@ low-entropy past---Reichenbach's common cause as a measurable statement. (iv) Th
 onset of the frozen sector invites a mechanism study: what structural change controls it,
 how the onset scales with marker geometry and system size, and how this classical sector
 relates to the broader physics of weak ergodicity breaking and fragmentation-protected
-memory.
+memory. (v) The endogenous observer (Sec.~\ref{sec:demon}) opens its own program: mapping
+the crossover between mode-matched readout, where a fixed sensor reaches $\tS$, and
+butterfly-limited readout, where in a ballistic scrambler a fixed sensor dies in $O(1)$
+time while only active decoding reaches $\tS$---together with its Landauer budget. That
+crossover asks, quantitatively, which dynamics permit memory that simply \emph{sits there}
+and stays readable; it is the subject of companion work.
 
 \begin{acknowledgments}
 All simulations, per-experiment numerical verdicts, the scripts generating every figure,
@@ -866,6 +976,19 @@ The label-conditioned separation power is
 $\|\Delta(t)\|^2=\|\bar V_0(t)-\bar V_1(t)\|^2$ minus its $K$-world sampling floor,
 where $\bar V_c$ is the class-mean coarse state (class labels enter; no decoder is
 trained).
+
+The demon sensor of Sec.~\ref{sec:demon} is the boundary contrast
+$w=\bar V_0(0)-\bar V_1(0)$ with threshold
+$\theta=\tfrac12\bigl(\bar V_0(0)+\bar V_1(0)\bigr)\cdot w$, both computed on the training
+half at $t=0$ only; $I\bigl(o(t);F\bigr)$ is the mutual information of the held-out
+$2\times2$ confusion of the binary reading $o(t)$. The equilibrium control pre-thermalizes
+each world for $10^3$ steps before the demon begins reading, and its verdict statistic is
+the run-mean $I(o;F)$ together with the fraction of samples crossing $\tfrac12$ bit (a
+run-maximum is positively biased for a noisy plug-in estimator and is not used). The
+accumulate-demon recall curve is
+$\max_{t_j\ge t_{\mathrm{start}}} I\bigl(o(t_j);F\bigr)$ on the seed-averaged reading
+series; ``noise floor'' is its late-time plateau, $0.08$--$0.18$ bit at held-out sample
+size $K=40$.
 
 For the ledger, an ensemble of $K$ equiprobable microstates gives $H=\ln K$ exactly under
 bijective evolution, while the coarse observer assigns the observational entropy
