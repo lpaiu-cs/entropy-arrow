@@ -26,16 +26,27 @@ redundancy wording corrected to *effective* redundancy and "consistent with" SNR
 explanation; hard-disk fixed-blob drift promoted to a mode-mismatch control; Clifford
 ballistic-geometry caveat added; per-run data now committed under `data/`.
 
-## TODO before submission
+## Submission (SciPost Physics — see `submission/`)
 
-- [ ] Affiliation placeholder in `main.tex`
-- [ ] Verify every bibliography entry against the published record (entries written
-      from memory; volume/page numbers need checking — `rovelli2020memory` updated to
-      Entropy 24(8) 1022 (2022) from the MDPI page, `nagasawa2024` verified via
-      Semantic Scholar; others still unchecked: `wolpert1992`, `halliwell1999`,
-      `blumekohout2006`, `ollivier2004`)
-- [ ] Regenerate figures as vector PDFs sized for two-column layout, without the
-      experiment-runner supertitles (fonts get small at `\textwidth` from the 13×5 in PNGs)
-- [ ] τ(λ) vs λ²/D transport crossover (outlook item (i)) would strengthen Secs. IV–V
-- [ ] Consider a decoder-hierarchy bound on the information-theoretic horizon (outlook (ii))
-- [ ] Decide whether the T8 remark stays in Discussion or is cut entirely
+- **Bibliography: VERIFIED 23/23** (all journal entries checked against Crossref, DOIs
+  injected; arXiv entries checked against the arXiv API; books/classics standard).
+- **arXiv bundle:** `./build_arxiv.sh` → `arxiv/arxiv_submission.tar.gz` (self-contained,
+  standalone-compile-verified, 14 pp). Primary cond-mat.stat-mech, cross-list quant-ph.
+- **SciPost materials:** `submission/scipost_submission.md` (expectations justification,
+  criteria checklist, procedure, suggested referees) and `submission/cover_letter.md`.
+- Acknowledgments include an AI-assistance disclosure — author's call to keep/edit.
+
+## TODO before submitting
+
+- [ ] Affiliation placeholder in `main.tex` (arXiv requires something — "Independent
+      researcher, Seoul, Korea" works if unaffiliated)
+- [ ] arXiv endorsement for cond-mat.stat-mech if first submission
+- [ ] Double-check current SciPost criteria wording at scipost.org before pasting
+- [ ] Vet suggested referees for conflicts
+
+## Post-acceptance (production stage)
+
+- [ ] Convert to the SciPost LaTeX template
+- [ ] Regenerate figures as vector PDFs without the experiment-runner supertitles
+- [ ] τ(λ) vs λ²/D transport crossover and decoder-hierarchy bound remain outlook items
+      (possible referee requests); T8 remark keep-or-cut decision on referee feedback

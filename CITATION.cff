@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite the repository (and the paper once published)."
+title: "entropy-arrow: mode-matched record horizons in reversible dynamics (arrow-of-time simulation testbed)"
+authors:
+  - family-names: Kim
+    given-names: Juneyoung
+    email: lpaiu.cs@gmail.com
+repository-code: "https://github.com/lpaiu-cs/entropy-arrow"
+license: MIT
+date-released: "2026-07-10"
+keywords:
+  - arrow of time
+  - entropy
+  - records
+  - quantum Darwinism
+  - observational entropy
+  - reversible cellular automata
+preferred-citation:
+  type: article
+  title: "Mode-matched record horizons in reversible dynamics: relaxation, redundancy, and protected exceptions"
+  authors:
+    - family-names: Kim
+      given-names: Juneyoung
+  year: 2026
+  notes: "Preprint in paper/ of this repository; journal reference to be added."

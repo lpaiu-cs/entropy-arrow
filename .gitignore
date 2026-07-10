@@ -27,3 +27,6 @@ paper/main.fdl
 paper/main.fdb_latexmk
 paper/main.synctex.gz
 paper/mainNotes.bib
+
+# arXiv build artifacts
+paper/arxiv/
