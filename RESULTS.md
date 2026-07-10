@@ -34,7 +34,8 @@ Substrates: an **exactly bit-reversible Margolus lattice gas** (rigorous core) a
 | **T7a** | Record arrow = an exact information ledger | Gibbs entropy conserved to **machine precision** (max\|H−lnK\|=**0**); **100%** of ΔS_obs is the hidden-info term I; a planted record decays 1.00→0.006 bit | ✅ PASS |
 | **T7b** | Records are stored redundantly (classical Darwinism) | near boundary a random **10% of cells → 89%** of the record; **R≈8–10** independent copies, collapsing to 1 at the horizon | ✅ PASS |
 | **T7c** | The record's lifetime IS the thermalization time (**T7 centerpiece**) | **t\*=1.08·t_S**, ratio flat across scrambling rates; **size-robust**: κ mean **0.99** over L=48→128 (t_S spanning 6×) | ✅ PASS |
-| **T7d** | Redundancy scales with environment size → **near-ideal Darwinism** | at the old ceiling (L≤128) α=**0.81**; pushing to **L=512 (N=16384)** and finite-size-extrapolating gives α∞=**0.92±0.04** — ideal α=1 **supported but not certified** (~2σ), a clear climb from 0.81; SNR-confounded refinement stays at α=**0.71** | ✅ PASS |
+| **T7d** | Redundancy scales with environment size → **near-ideal Darwinism** | at the old ceiling (L≤128) α=**0.81**; pushing to **L=512 (N=16384)** and finite-size-extrapolating gives α∞=**0.92±0.04** — ideal α=1 **supported but not certified** (~2σ), a clear climb from 0.81; SNR-confounded refinement stays at α=**0.71**; the extrapolation is **conservative** — softer (equally-well-fitting) correction forms give α∞ up to 0.95–1.00 | ✅ PASS |
+| **T7e** | *Mechanism* — **why** t\*≈t_S: both clocks read **one slowest relaxation mode** | entropy deficit and record MI decay exponentially with a **shared τ** (τ_M/τ_S = **0.92±0.30**, flat while absolute τ varies **7.6×**); **parameter-free postdiction** of both crossings from (τ, A, thresholds): median err t\* **5%**, t_S **1%**; κ predicted **0.98** vs measured **1.02** — κ is a computable **ratio of logs** | ✅ PASS |
 | **U1** | *Universality (classical continuum)* — the horizon law **t\*≈t_S** is not a lattice artifact | in an event-driven **hard-disk gas**, a self-similar size sweep gives **t\* = 1.00·t_S** over a **5.1×** range (t_S 14→73); per-size κ flat (1.19,1.03,0.94,0.97,1.03); record MI and entropy relaxation **collapse** under t/t_S rescaling | ✅ PASS |
 | **U2** | *Universality (quantum)* — **t\*≈t_S** in an exactly reversible **Clifford** circuit, and no stabilizer artifact | κ = **0.79** over a **6.9×** range (t_S 33→229), flat; the record MI I(R:window) and half-chain entanglement **collapse** under t/t_S; a **non-Clifford (Haar) statevector** control tracks it (κ: Clifford **0.89**, Haar **0.60** — both O(1)) | ✅ PASS |
 | **U3** | *Quantum Darwinism* — the record is redundant under decoherence, encoded under scrambling | broadcast → flat **redundancy plateau** (any fragment carries the pointer); scrambling → step (needs ~½, non-redundant); perfect broadcast reaches **α = 1.00 exactly** (R_δ = N_E, ideal) vs the classical lattice's finite-size 0.92 | ✅ PASS |
@@ -280,7 +281,11 @@ ceiling — R = 34 → 73 → 118 → 239 → **438** at L = 128 → 192 → 256
   finite-size-limited 0.81. A proper **finite-size extrapolation** (`t7_redundancy_extrapolate.py`;
   a cutoff sweep and an R = A·Nᵅ(1+c/N) correction fit, both agreeing) firms this to
   **α∞ = 0.92 ± 0.04** — ideal Darwinism (α = 1) **supported but not certified** (~2σ), a clear
-  climb from 0.81 but honestly *not* a clean 1.00 at L ≤ 512;
+  climb from 0.81 but honestly *not* a clean 1.00 at L ≤ 512. **Sensitivity to the assumed
+  correction form** (the data cannot distinguish the forms — near-identical residuals): the
+  quoted c/N value is the **most conservative** — the physically-motivated c/√N (the marker
+  width scales as L = b√N) gives **α∞ = 0.95 ± 0.07** (within 1σ of ideal), and c/N^0.25
+  gives 1.00 ± 0.12;
 - the **local running slope** d ln R / d ln N reaches **≈ 1** at the largest sizes
   (0.96, 0.83, 0.87, 1.05 across the top four size steps) — the small-L downward curvature that
   dragged the fit below 1 fades once the marker spreads over many cells;
@@ -293,12 +298,38 @@ the exponent climbs strongly toward the ideal (0.81 → α∞ ≈ 0.92) as resol
 certified R ∝ N; the *quantum* Darwinism experiment (U3) is what actually reaches α = 1 exactly,
 with perfect copying and no SNR loss.
 
-**T7 bottom line.** The record arrow is not merely *illustrated* but *measured*: an exact
-entropy/information ledger, and a size-robust law **t\* ≈ t_S** — the record's lifetime is
-the thermalization time. The redundancy exponent, finite-size-limited at L ≤ 128 (α = 0.81),
-firms to **α∞ = 0.92 ± 0.04** (supported-but-not-certified ideal Darwinism) at L = 512 and
-reaches **α = 1 exactly** in the quantum broadcast (U3): the four T7 results now firm up, and
-the horizon law is shown substrate-independent (U1, U2) with a mapped falsification boundary (U4).
+### T7-mechanism — *why* t\* ≈ t_S: both clocks read one slowest mode  ⭐ (the law, understood)
+`experiments/t7_mechanism.py` → `figures/T7_mechanism.png`
+
+The horizon law was, so far, a measured proportionality. This experiment tests the mechanism
+that would explain its entire phenomenology at once. In a finite ergodic system the late-time
+approach to equilibrium is dominated by the **slowest relaxation mode** (here the
+largest-wavelength density mode, τ ~ L²/D) — and *both clocks read that same mode*: the
+entropy deficit S_eq − S(t) ~ A_S·e^(−t/τ) is the large-scale inhomogeneity left to erase,
+and the record signal MI(t) ~ A_M·e^(−t/τ′) *is* the odd large-wavelength component. If
+τ′ ≈ τ, threshold crossings give t_S = τ·ln(A_S/θ_S) and t\* = τ′·ln(A_M/θ_M), hence
+
+> **t\* = κ·t_S with κ = ln(A_M/θ_M) / ln(A_S/θ_S)** — a computable ratio of logarithms.
+
+Measured (5 scrambling rates × 3 seeds, fitting both exponential tails per run):
+**τ_M/τ_S = 0.92 ± 0.30, flat while the absolute τ varies 7.6×** (condition means 0.76–1.16,
+no trend) — one clock underlies both observables. The **parameter-free postdiction** of the
+crossings from each run's fitted (τ, A) and the thresholds lands at **median error 5% for t\***
+**and 1% for t_S**; κ predicted **0.98** vs measured **1.02**. This explains, with no free
+parameter: (1) the proportionality itself; (2) why κ is **flat in system size** (A_S scales
+with S_max, so the log-ratio is size-free); (3) why κ is **substrate-dependent but O(1)**
+(amplitudes and threshold conventions enter only through slowly-varying logs — CA 1.08, gas
+1.00, Clifford 0.79); (4) why threshold choices matter only **logarithmically**. The horizon
+law is a one-slow-mode theorem, not a numerical coincidence.
+
+**T7 bottom line.** The record arrow is not merely *illustrated* but *measured — and now
+understood*: an exact entropy/information ledger; a size-robust law **t\* ≈ t_S** — the
+record's lifetime is the thermalization time — with a **mechanism** (both clocks slaved to the
+one slowest relaxation mode, κ a computable ratio of logs, postdicted to ~5%). The redundancy
+exponent, finite-size-limited at L ≤ 128 (α = 0.81), firms to **α∞ = 0.92 ± 0.04**
+(supported-but-not-certified ideal Darwinism) at L = 512 and reaches **α = 1 exactly** in the
+quantum broadcast (U3): the T7 results now firm up, and the horizon law is shown
+substrate-independent (U1, U2) with a mapped falsification boundary (U4).
 
 ---
 
@@ -324,6 +355,9 @@ self-similar sweep is the physically correct knob.) Result: **t\* = 1.00·t_S ov
 (t_S 14→73), per-size κ flat (1.19, 1.03, 0.94, 0.97, 1.03). Rescaling time by t_S folds both
 the record MI and the coarse-entropy relaxation of every size onto single master curves — so
 t\* and t_S are one clock, κ merely the (conventional) point at which each crosses its threshold.
+(Reproducibility note: unlike the bit-exact CA and stabilizer results, this substrate is
+float-chaotic, so exact per-size values vary with the floating-point environment; an
+independent re-run on different hardware gives κ = 1.04, R² = 0.84 — same law, same flatness.)
 
 ### U2 — an exactly reversible quantum (Clifford) circuit
 `experiments/t7_clifford_horizon.py`, `t7_universal_check.py`
@@ -385,7 +419,9 @@ makes t\* ≈ t_S a falsifiable claim rather than a definition.
 ### What universality buys
 κ takes a *different* order-one value in each substrate — CA **1.08**, hard-disk gas **1.00**,
 Clifford **0.79**, Haar **~0.6** — which is exactly the point: the number is convention- and
-substrate-dependent, but the **law** t\* ∝ t_S is not. The record's lifetime being the
+substrate-dependent, but the **law** t\* ∝ t_S is not. **T7-mechanism explains why**: κ is a
+ratio of logarithms of amplitudes and thresholds — different in every substrate/convention,
+but always slowly-varying, hence always O(1). The record's lifetime being the
 thermalization time is now demonstrated across a reversible lattice gas, a continuous
 Hamiltonian gas, and a reversible quantum circuit (U1, U2); the *redundancy* of records lifts to
 the quantum setting too, reaching ideal Darwinism (U3); and the law has a **mapped boundary** —
@@ -414,6 +450,10 @@ is S = N ln M − Σ ln n_i! with M the (growing) number of fixed-size cells.
   valley, but now the low-entropy middle is a **typical (equilibrium) state of a small box, not a
   fine-tuned microstate**. The two epochs have antiparallel arrows, each pointing away from the
   bounce (the T4 two-observer picture, now with the low-S end *explained* rather than posited).
+  Held to T1's evidential standard, the valley is **one history, not a collage**: a single bounce
+  microstate is evolved forward for t > 0 and — via exact velocity reversal, the hard-disk
+  dynamics being time-reversible — backward for t < 0 under the same symmetric a(|t|)
+  (middle S ≈ 401, both edges → 762).
 
 **What it buys, and the honest limits.** This **relocates** the Past Hypothesis — from "a
 fine-tuned low-entropy microstate" to "a small early universe + expansion," arguably a more

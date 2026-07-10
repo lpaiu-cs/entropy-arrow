@@ -19,7 +19,10 @@ S = N ln M - sum ln(n_i!), M = number of fixed-size cells (M grows with the box)
       small 'bounce'. The low-entropy middle is a TYPICAL (equilibrium) state of a small box --
       not fine-tuned -- and the two epochs have antiparallel arrows, each pointing away from the
       minimum. This is T1's valley with the low-entropy end EXPLAINED (small volume) rather than
-      posited (special microstate).
+      posited (special microstate). Held to T1's standard, the valley is ONE history: a single
+      bounce microstate evolved forward for t>0 and -- via exact velocity reversal, since the
+      hard-disk dynamics is time-reversible -- backward for t<0 under the same symmetric a(|t|),
+      NOT two independent runs glued at t=0.
 
 HONEST LIMITS (this does NOT dissolve the mystery). It relocates the Past Hypothesis from 'a
 fine-tuned low-entropy microstate' to 'a small early universe + expansion'. It does not explain
@@ -69,9 +72,8 @@ def coarse_S(g, b):
     return len(P) * math.log(M) - float(np.sum([math.lgamma(c + 1) for c in counts if c > 1]))
 
 
-def evolve(L0, N, R, b, eps, dt, nepoch, seed):
-    """Run dynamics+expansion; return per-epoch (scale L, entropy S)."""
-    g = typical_gas(L0, N, R, seed)
+def evolve_from(g, b, eps, dt, nepoch):
+    """Run dynamics+expansion from an existing gas state; return per-epoch (L, S)."""
     Ls, Ss = [], []
     for _ in range(nepoch):
         g.sample(dt, 2)
@@ -79,6 +81,11 @@ def evolve(L0, N, R, b, eps, dt, nepoch, seed):
             g.pos *= (1 + eps); g.Lx *= (1 + eps); g.Ly *= (1 + eps)
         Ls.append(g.Lx); Ss.append(coarse_S(g, b))
     return np.array(Ls), np.array(Ss)
+
+
+def evolve(L0, N, R, b, eps, dt, nepoch, seed):
+    """Run dynamics+expansion from a fresh typical state; per-epoch (scale L, entropy S)."""
+    return evolve_from(typical_gas(L0, N, R, seed), b, eps, dt, nepoch)
 
 
 def main(smoke=False):
@@ -93,11 +100,18 @@ def main(smoke=False):
     ep = np.arange(nepoch)
 
     # --- claim 2: the symmetric bounce -> a two-headed entropy valley ---
-    # two independent typical 'middle' states expand away from t=0 in opposite time senses
-    _, Sp = evolve(L0, N, R, b, eps, dt, nepoch, seed=2)   # future branch (t>0)
-    _, Sm = evolve(L0, N, R, b, eps, dt, nepoch, seed=3)   # past branch (mirror to t<0)
+    # ONE typical bounce microstate, ONE history (T1's standard): evolve the same state
+    # forward for t>0, and for t<0 evolve its exact velocity reversal forward under the
+    # same symmetric a(|t|) -- by time-reversal invariance of the hard-disk dynamics this
+    # IS the state's past. The middle point is the actual entropy of the actual state.
+    g0 = typical_gas(L0, N, R, seed=2)
+    S0 = coarse_S(g0, b)
+    gF = HardDisks(g0.pos.copy(), g0.vel.copy(), R, g0.Lx, g0.Ly)
+    gB = HardDisks(g0.pos.copy(), -g0.vel.copy(), R, g0.Lx, g0.Ly)
+    _, Sp = evolve_from(gF, b, eps, dt, nepoch)            # future branch (t>0)
+    _, Sm = evolve_from(gB, b, eps, dt, nepoch)            # past branch (t<0, reversed)
     tb = np.concatenate([-ep[::-1] - 1, [0], ep + 1])
-    Sb = np.concatenate([Sm[::-1], [0.5 * (Sp[0] + Sm[0])], Sp])
+    Sb = np.concatenate([Sm[::-1], [S0], Sp])
 
     # ---------------------------------------------------------------- figure
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13.4, 5.3))
@@ -124,8 +138,8 @@ def main(smoke=False):
     ax2.text(tb.max() * 0.55, Sb.max() * 0.86, "arrow →", color="#2b6cb0", fontsize=9)
     ax2.text(tb.min() * 0.9, Sb.max() * 0.86, "← arrow", color="#2b6cb0", fontsize=9)
     ax2.set_xlabel("time  (symmetric about the bounce)"); ax2.set_ylabel("coarse Boltzmann entropy")
-    ax2.set_title("Two-headed arrow from a symmetric bounce:\n"
-                  "entropy rises both ways from a small, TYPICAL middle")
+    ax2.set_title("Two-headed arrow from a symmetric bounce — ONE microstate,\n"
+                  "one history: forward for t>0, exact velocity reversal for t<0")
     fig.suptitle("T8-expanding-universe (exploratory): the low-entropy 'past' as small volume + "
                  "expansion, not a fine-tuned microstate — relocating the Past Hypothesis", fontsize=11)
     fig.tight_layout(rect=[0, 0, 1, 0.95])

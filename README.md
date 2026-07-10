@@ -39,6 +39,8 @@ experiments/
   t7_scaling.py            T7: first scaling cut + shared helpers (superseded by the two below)
   t7_horizon.py            T7: the record horizon t* ≈ t_S (its lifetime IS t_thermalization)
   t7_horizon_L.py          T7: …and it is robust to system size
+  t7_mechanism.py          T7: WHY t* ≈ t_S — both clocks read ONE slowest relaxation mode;
+                           κ = a ratio of logs, postdicted parameter-free to ~5%
   t7_redundancy_scaling.py T7: how redundancy scales with environment size (original L≤128)
   t7_redundancy_scaling_hires.py  T7: …high-resolution retry (L→512, N=16384) → α≈1 (ideal Darwinism)
   md_companion.py          hard-disk free expansion + velocity echo
@@ -60,7 +62,7 @@ python3 -m venv .venv && ./.venv/bin/pip install numpy matplotlib
 for e in selftest t1_boundary t2_loschmidt t3_records t3_hard_readout \
          t4_two_observers t5_fork t6a_fluctuations t6b_boltzmann_brain \
          t6c_corroboration t7_ledger t7_redundancy t7_horizon t7_horizon_L \
-         t7_redundancy_scaling t7_redundancy_scaling_hires t7_redundancy_extrapolate \
+         t7_mechanism t7_redundancy_scaling t7_redundancy_scaling_hires t7_redundancy_extrapolate \
          md_companion t7_md_horizon t7_clifford_horizon t7_universal_check \
          t7_clifford_darwinism t7_clifford_falsification t8_expanding_universe; do
     ./.venv/bin/python experiments/$e.py
@@ -84,7 +86,10 @@ coarse-entropy rise is *exactly* the growth of hidden information while the micr
 **redundantly** (classical Darwinism); and — the firm, size-robust result — **the readable
 record dies exactly when entropy saturates, t\* ≈ t_S**. That centerpiece is **not a lattice
 artifact**: it reproduces, with an order-one κ, in a continuous hard-disk gas and in an exactly
-reversible quantum (Clifford) circuit — and survives a non-Clifford control (U1, U2). The felt
+reversible quantum (Clifford) circuit — and survives a non-Clifford control (U1, U2). It is
+also **understood, not just measured**: entropy deficit and record signal decay through the
+*same* slowest relaxation mode, so κ is a computable ratio of logarithms — postdicted
+parameter-free to ~5% (T7-mechanism). The felt
 "flow" need not be added to physics: a boundary condition plus reversible dynamics is enough to
 make memory, and therefore the experienced past, point down the entropy gradient. Records are
 also **redundant under decoherence but encoded under scrambling** (U3, quantum Darwinism), and

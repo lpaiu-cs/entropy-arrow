@@ -28,9 +28,9 @@ FIG = pathlib.Path(__file__).resolve().parents[1] / "figures"
 CACHE = pathlib.Path(__file__).resolve().parent / "_t7_hires_cache.npz"
 
 
-def correction_fit(N, R):
-    """Fit ln R = c0 + alpha*ln N + c1/N by linear least squares; return alpha."""
-    A = np.column_stack([np.ones_like(N), np.log(N), 1.0 / N])
+def correction_fit(N, R, p=1.0):
+    """Fit ln R = c0 + alpha*ln N + c1*N**(-p) by linear least squares; return alpha."""
+    A = np.column_stack([np.ones_like(N), np.log(N), N ** (-p)])
     coef, *_ = np.linalg.lstsq(A, np.log(R), rcond=None)
     return coef[1]
 
@@ -103,6 +103,21 @@ def main():
     fig.tight_layout(rect=[0, 0, 1, 0.95])
     out = FIG / "T7_redundancy_extrapolate.png"
     fig.savefig(out, dpi=115)
+
+    # Robustness of the extrapolation to the ASSUMED correction form: the physical
+    # finite-size scale is the number of cells across the marker (prop. to L = b*sqrt(N)),
+    # so c/sqrt(N) is at least as natural as c/N. The data cannot distinguish the forms
+    # (near-identical residuals), so we report the spread: softer corrections give HIGHER
+    # alpha_inf -- the quoted c/N value is the most conservative of the family.
+    print("correction-form sensitivity (alpha_inf +/- seed-bootstrap err):")
+    for p, name in [(1.0, "c/N"), (0.5, "c/sqrt(N)"), (0.25, "c/N^0.25")]:
+        a_p = correction_fit(NL, RLm, p)
+        boot_p = np.array([correction_fit(NL, RLmat[:, rng.integers(0, nseed, nseed)].mean(1), p)
+                           for _ in range(2000)])
+        Ap = np.column_stack([np.ones_like(NL), np.log(NL), NL ** (-p)])
+        res = np.linalg.lstsq(Ap, np.log(RLm), rcond=None)[1]
+        rss = float(res[0]) if len(res) else float("nan")
+        print(f"    {name:>10}: alpha_inf = {a_p:.3f} +/- {boot_p.std():.3f}   (RSS {rss:.3f})")
 
     nsig = abs(alpha_corr - 1.0) / corr_err
     print(f"plain power-law exponent (all points)   alpha      = {full_alpha:.3f}")
