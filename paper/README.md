@@ -34,12 +34,11 @@ ballistic-geometry caveat added; per-run data now committed under `data/`.
   standalone-compile-verified, 14 pp). Primary cond-mat.stat-mech, cross-list quant-ph.
 - **SciPost materials:** `submission/scipost_submission.md` (expectations justification,
   criteria checklist, procedure, suggested referees) and `submission/cover_letter.md`.
-- Acknowledgments include an AI-assistance disclosure — author's call to keep/edit.
+- AI-assistance disclosure removed per author decision (author reviews/edits directly).
 
 ## TODO before submitting
 
-- [ ] Affiliation placeholder in `main.tex` (arXiv requires something — "Independent
-      researcher, Seoul, Korea" works if unaffiliated)
+- [x] Affiliation: "Independent Researcher" 
 - [ ] arXiv endorsement for cond-mat.stat-mech if first submission
 - [ ] Double-check current SciPost criteria wording at scipost.org before pasting
 - [ ] Vet suggested referees for conflicts
