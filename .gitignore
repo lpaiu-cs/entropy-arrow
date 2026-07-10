@@ -17,3 +17,13 @@ experiments/_*_cache.npz
 *.swp
 .idea/
 .vscode/
+paper/main.aux
+paper/main.bbl
+paper/main.blg
+paper/main.log
+paper/main.out
+paper/main.fls
+paper/main.fdl
+paper/main.fdb_latexmk
+paper/main.synctex.gz
+paper/mainNotes.bib

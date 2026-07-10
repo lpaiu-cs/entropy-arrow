@@ -1,0 +1,653 @@
+% Record horizons in reversible dynamics — PRE-target draft v0.1
+% Compile: latexmk -pdf main   (REVTeX 4.2; figures pulled from ../figures/)
+\documentclass[aps,pre,twocolumn,superscriptaddress,nofootinbib,longbibliography]{revtex4-2}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{bm}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\graphicspath{{../figures/}}
+
+\newcommand{\tS}{t_{\mathrm{S}}}
+\newcommand{\tstar}{t^{*}}
+\newcommand{\Smax}{S_{\max}}
+\newcommand{\kap}{\kappa}
+
+\begin{document}
+
+\title{The lifetime of a record is the thermalization time:\\
+a measured, derived, and falsifiable horizon law for the memory arrow of time}
+
+% TODO: real author name and affiliation before submission
+\author{[Author]}
+\affiliation{[Affiliation]}
+
+\date{\today}
+
+\begin{abstract}
+In the standard account of the arrow of time, the direction in which memories accumulate is
+slaved to the thermodynamic gradient: records form on the entropy-increasing side of a
+low-entropy boundary condition. That statement is usually qualitative. Here we make it
+quantitative. In an exactly bit-reversible lattice gas we place two clocks on the same
+dynamics: the entropy-saturation time $\tS$ (coarse-grained entropy reaches $0.9\,\Smax$)
+and the \emph{record horizon} $\tstar$, the time at which the mutual information between a
+planted macroscopic fact and an optimal readout of the present coarse state falls below half
+a bit. Across scrambling rates and system sizes we find $\tstar=\kap\,\tS$ with $\kap$ of
+order one and flat ($\kap=1.08$, $R^2=0.82$ over a $7\times$ range; size-robust,
+$\bar\kap=0.99$ for $L=48\ldots128$): \emph{the readable record dies exactly when entropy
+saturates}. The same law, with substrate-dependent order-one $\kap$, holds in a continuous
+hard-disk gas ($\kap=1.00$) and in exactly reversible Clifford circuits of up to $128$
+qubits ($\kap=0.79$), and survives a Haar-random (non-Clifford) control. The law is derived,
+not merely fitted: entropy deficit and record signal relax through the same slowest mode,
+making $\kap$ a ratio of logarithms of amplitudes and thresholds; the resulting
+parameter-free postdiction reproduces the two crossing times to $5\%$ and $1\%$ median
+error. The law is falsifiable, and fails exactly where it must: a conservation law
+protecting the record decouples $\tstar$ from $\tS$. Finally, records are stored redundantly
+(classical Darwinism): redundancy grows as $N^{\alpha}$ with a conservative
+$\alpha_\infty=0.92\pm0.04$ classically and $\alpha=1$ exactly for quantum broadcast states.
+These results quantify the sense in which the experienced past is the direction of the
+entropy gradient---while leaving the low-entropy boundary itself unexplained.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+\label{sec:intro}
+
+Microscopic dynamics---classical Hamiltonian flow, unitary quantum evolution, or the exactly
+bit-reversible cellular automata used below---has no arrow of time. The observed asymmetry is
+standardly traced to a low-entropy boundary condition (the Past Hypothesis) together with
+coarse-graining \cite{boltzmann1877,lebowitz1993,albert2000,price1996,penrose1979}. Within
+this picture the \emph{memory} (or ``psychological'') arrow is derivative: a physical record
+is a present macrostate correlated with a macrostate at another time, and such correlations
+are abundant only on the entropy-increasing side of the boundary
+\cite{reichenbach1956,wolpert1992,mlodinowbrun2014,rovelli2020memory,halliwell1999,gellmannhartle1993}.
+Reichenbach's fork asymmetry, Wolpert's analysis of memory systems, and Mlodinow and Brun's
+argument that a robust record-forming system must sit on the entropy-increasing side all
+support the same conclusion: \emph{memory points down the entropy gradient}.
+
+These arguments are, however, largely qualitative. They establish which \emph{direction}
+records point, but not the quantitative structure of record-keeping: How long does a record
+remain readable? What sets that lifetime? How is the record physically stored, and how does
+its accessibility scale with the size of the environment that stores it? The quantum
+Darwinism program \cite{zurek2003rmp,zurek2009darwinism,ollivier2004,blumekohout2006}
+answered the storage question for decohering quantum systems---objective, classical facts
+are those redundantly imprinted in many environment fragments---and Riedel, Zurek, and
+Zwolak studied the rise and fall of that redundancy in time \cite{riedel2012risefall}.
+Observational entropy \cite{safranek2019a,safranek2019b,safranek2021intro,strasberg2021}
+supplies the information-theoretic bookkeeping for coarse observers of closed systems. What
+has been missing is a direct, controlled measurement, in exactly reversible dynamics, of the
+\emph{lifetime} of a record and its relation to the thermodynamic clock of the same system.
+
+This paper reports such measurements, together with a mechanism that explains them and a
+regime in which they demonstrably fail. Our testbed is deliberately minimal: exactly
+reversible model dynamics (a Margolus block cellular automaton
+\cite{margolus1984,toffolimargolus1987}, an event-driven hard-disk gas, and Clifford
+circuits \cite{gottesman1998,aaronsongottesman2004}), a coarse-grained Boltzmann entropy,
+and a one-bit macroscopic fact planted at the low-entropy boundary whose readability we
+track with an explicit decoder. Our contributions:
+
+\begin{enumerate}
+\item \textbf{An exact ledger} (Sec.~\ref{sec:setup}): over an ensemble of microstates
+evolved by a bijective map, the fine-grained (Gibbs/Shannon) entropy is conserved to machine
+precision while the observational entropy rises; the rise is \emph{identically} the growth
+of information hidden from the coarse observer, $\Delta S_{\mathrm{obs}}=\Delta I$. The
+record's decay is the same bookkeeping seen from the fact's side.
+\item \textbf{A horizon law} (Sec.~\ref{sec:horizon}): the record horizon tracks the
+entropy-saturation time, $\tstar=\kap\,\tS$ with $\kap$ order one, flat across scrambling
+rates ($7\times$ in $\tS$) and system sizes.
+\item \textbf{A mechanism} (Sec.~\ref{sec:mechanism}): both clocks read the same slowest
+relaxation mode; $\kap$ is a computable ratio of logarithms. A parameter-free postdiction
+from the fitted mode reproduces $\tstar$ and $\tS$ to $5\%$ and $1\%$ median error, and
+explains why $\kap$ is flat in system size, substrate-dependent, and only logarithmically
+sensitive to threshold conventions.
+\item \textbf{Universality} (Sec.~\ref{sec:universality}): the law reproduces in a
+continuous hard-disk gas and in reversible Clifford circuits (up to $N=128$ qubits), and
+survives a Haar-random statevector control---it is not a lattice or stabilizer artifact.
+\item \textbf{A falsification boundary} (Sec.~\ref{sec:falsification}): the law is
+contingent on ergodicity. A conservation law protecting the record makes $\tstar$ diverge
+while $\tS$ stays finite. The horizon law is a law, not a definition.
+\item \textbf{Redundancy scaling} (Sec.~\ref{sec:redundancy}): near the boundary the record
+is stored in $R\approx 8$--$10$ independent copies; $R$ grows with the number of environment
+fragments as $N^{\alpha}$ with a conservative $\alpha_\infty=0.92\pm0.04$
+(equally-well-fitting extrapolations reach $0.95$--$1.00$), while a quantum broadcast
+realizes ideal Darwinism, $\alpha=1$ exactly---isolating the classical shortfall as a
+signal-to-noise artifact rather than a limit of the principle.
+\end{enumerate}
+
+Throughout we are explicit about what is \emph{not} shown (Sec.~\ref{sec:discussion}): the
+low-entropy boundary is an input, as it must be for any time-symmetric dynamics
+\cite{loschmidt1876}; the numerical value of $\kap$ is convention-dependent (the law is the
+proportionality and the collapse); and the classical redundancy exponent is supported, not
+certified, at ideal value. All code, data, and per-experiment numerical verdicts are public
+\cite{repo}.
+
+\section{Setup: substrates, records, and the ledger}
+\label{sec:setup}
+
+\subsection{Reversible substrates and coarse entropy}
+
+Our primary substrate is a Margolus block cellular automaton
+\cite{margolus1984,toffolimargolus1987}: a two-dimensional lattice gas on an $L\times L$
+grid of binary site occupations, updated in $2\times2$ blocks by bijective lookup tables
+with alternating block offsets. A quenched random fraction (``scatter'') of blocks applies a
+rotation rule, breaking spurious conservation laws so the gas thermalizes cleanly; the map
+remains exactly bijective, and the inverse map recovers the initial bitstring exactly
+(verified bit-for-bit \cite{repo}). Appendix~\ref{app:model} gives details. Two companion
+substrates are used for universality tests: an event-driven hard-disk gas (elastic disks,
+specular walls; exact between-collision flight) and Clifford brickwork circuits simulated in
+the stabilizer formalism (Appendix~\ref{app:stabilizer}).
+
+The coarse-grained (Boltzmann) entropy is defined by partitioning the grid into $b\times b$
+cells and counting microstates compatible with the cell occupancies $\{n_i\}$:
+\begin{equation}
+S \;=\; \sum_i \ln \binom{b^2}{n_i},
+\label{eq:boltzS}
+\end{equation}
+with $\Smax$ its microcanonical maximum at the given particle number. Initial states are
+low-entropy ``blobs'': all particles confined to a region of width $w$ at density $\rho$,
+with microstates drawn microcanonically within the blob.
+
+\subsection{Records and the two clocks}
+
+A \emph{record} is operationalized as follows. A one-bit macroscopic fact $F$ (a marker of
+identical particle number placed on the left or the right side of the blob---so the two
+classes differ in no conserved quantity) is planted at $t=0$. For each class we evolve an
+ensemble of $K$ microstates through the same quenched disorder. The readout at time $t$ is a
+decoder $\hat F$ trained on the coarse occupancy vectors of half of the worlds and evaluated
+on the held-out half; the accessible record is the mutual information $I(F;\hat F)$
+estimated from the held-out confusion matrix (Appendix~\ref{app:decoder}). This is a
+\emph{present-macrostate} readout: the decoder sees only the coarse state at time $t$, never
+the history.
+
+The two clocks, defined on the same runs:
+\begin{align}
+\tS &: \quad \text{first time } S(t) \ge 0.9\,\Smax,
+\label{eq:tS}\\
+\tstar &: \quad \text{first time } I(F;\hat F) < \tfrac12~\text{bit}.
+\label{eq:tstar}
+\end{align}
+The thresholds are conventions; Sec.~\ref{sec:mechanism} shows the law depends on them only
+logarithmically, and the time-rescaled collapse plots below make the convention-independent
+content explicit.
+
+\subsection{The exact ledger}
+
+Before measuring lifetimes we fix the bookkeeping. Consider an ensemble of $K$ equiprobable
+microstates evolved by the (bijective) dynamics. The Shannon entropy $H$ of the microstate
+distribution is exactly conserved, $H=\ln K$; in our runs ($K=64$, $L=128$, $T=2400$ steps)
+the deviation is zero to machine precision, $\max_t|H-\ln K|=0$. The observational entropy
+\cite{safranek2019a,safranek2019b} of the coarse observer decomposes as
+\begin{equation}
+S_{\mathrm{obs}}(t) \;=\; H \;+\; I(t), \qquad I(t)\ge 0,
+\label{eq:ledger}
+\end{equation}
+where $I(t)$ is the information about the microstate hidden from the coarse observer
+(Appendix~\ref{app:decoder}). Since $H$ is constant, \emph{all} growth of
+$S_{\mathrm{obs}}$ is growth of $I$: in the runs of Fig.~\ref{fig:ledger}, $100\%$ of
+$\Delta S_{\mathrm{obs}}$ is carried by the hidden-information term, as an identity rather
+than a correlation. On the same runs the planted record decays from $1.000$ bit to $0.006$
+bit. The record arrow is thus an exact information ledger: what the coarse observer loses
+about the past fact is part of what the coarse description hides about the microstate. This
+upgrades the familiar qualitative statement (record fidelity mirrors the entropy curve) to
+bookkeeping with no free play, and frames the quantitative question of this paper: \emph{at
+what time is the ledger's record entry effectively erased?}
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{T7_ledger.png}
+\caption{\textbf{The record arrow as an exact information ledger} (bit-reversible lattice
+gas, $K=64$ worlds, $L=128$, $b=8$). Left: the fine-grained entropy $H$ of the evolving
+microstate ensemble is conserved to machine precision while the observational entropy
+$S_{\mathrm{obs}}$ rises; the rise is identically the hidden-information term $I$ of
+Eq.~\eqref{eq:ledger}. Right: on the same runs, the accessible record $I(F;\hat F)$ of a
+planted one-bit fact decays from $1.000$ to $0.006$ bit as the gas thermalizes.}
+\label{fig:ledger}
+\end{figure*}
+
+\section{The horizon law}
+\label{sec:horizon}
+
+Figure~\ref{fig:horizon} shows the central measurement. We sweep the scrambling rate
+(scatterer fraction $0.15$--$0.42$) with per-condition run lengths chosen so that no
+condition is clamped by the simulation window ($T=400$--$2400$ steps, sampling stride
+$2$--$6$), five quenched-disorder seeds per condition, $K=40$ worlds per fact class,
+$L=64$, $b=4$. Of $25$ runs, $24$ resolve both clocks (one run at the slowest condition
+remains censored and is excluded).
+
+The result is a proportionality through the origin,
+\begin{equation}
+\tstar \;=\; 1.08\,\tS, \qquad R^2=0.82,
+\end{equation}
+over a $7\times$ range of $\tS$ ($26$--$192$ steps). More important than the fit is its
+\emph{flatness}: the per-condition ratios are $1.37,\,0.97,\,1.09,\,1.02,\,1.15$ (standard
+deviations $0.21$--$0.28$), so the law holds run by run rather than through one leverage
+point. (The largest ratio occurs at the fastest condition, where both times are shortest and
+the discrete sampling is coarsest relative to them.) The law is also robust in system size:
+repeating the measurement with the box and marker scaled together for $L=48$--$128$ ($\tS$
+spanning $6\times$) gives $\kap(L)=0.95,\,0.89,\,0.91,\,1.23$, mean $0.99$, with no
+systematic drift \cite{repo}.
+
+That $\kap$ is slightly above unity says only that the $\tfrac12$-bit record threshold is
+crossed slightly after the $0.9\,\Smax$ entropy threshold---a statement about conventions,
+not physics. The physical content, made explicit next, is that both observables relax on
+\emph{one} clock.
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{T7_horizon.png}
+\caption{\textbf{The record horizon tracks thermalization} (lattice gas; $5$ scrambling
+rates $\times$ $5$ disorder seeds; $24/25$ runs resolved, nothing clamped). Left: $\tstar$
+against $\tS$ for all resolved runs; the through-origin fit gives $\tstar=1.08\,\tS$
+($R^2=0.82$) over a $7\times$ range. Right: the per-condition ratio $\tstar/\tS$ is flat
+across scrambling rates---the law holds run by run.}
+\label{fig:horizon}
+\end{figure*}
+
+\section{Mechanism: one slow mode, two thresholds}
+\label{sec:mechanism}
+
+Why should the two clocks agree? In a finite ergodic system the late-time approach to
+equilibrium is dominated by the slowest relaxation mode; for our diffusive lattice gas this
+is the largest-wavelength density mode, with lifetime $\tau\sim L^2/D$. Both observables
+read that mode. The entropy deficit
+\begin{equation}
+\mathcal D(t) \;\equiv\; S_{\mathrm{eq}}-S(t) \;\approx\; A_S\,e^{-t/\tau_S}
+\end{equation}
+measures the large-scale inhomogeneity still to be erased, while the record signal
+\begin{equation}
+M(t)\;\equiv\;I\!\left(F;\hat F\right)(t) \;\approx\; A_M\,e^{-t/\tau_M}
+\end{equation}
+\emph{is} the odd (left--right) large-wavelength component of the same relaxation: the
+planted fact is a parity of the slowest mode. If one timescale underlies both,
+$\tau_M\simeq\tau_S\equiv\tau$, the threshold crossings of Eqs.~\eqref{eq:tS} and
+\eqref{eq:tstar} give
+\begin{equation}
+\tS=\tau\ln\!\frac{A_S}{\theta_S},\qquad
+\tstar=\tau_M\ln\!\frac{A_M}{\theta_M},
+\end{equation}
+with $\theta_S=0.1\,\Smax-\mathcal D_{\mathrm{eq}}$ (the deficit value at the entropy gate,
+$\mathcal D_{\mathrm{eq}}$ the finite-size equilibrium deficit) and $\theta_M=\tfrac12$ bit.
+Hence
+\begin{equation}
+\boxed{\;\tstar=\kap\,\tS,\qquad
+\kap=\frac{\tau_M}{\tau_S}\,
+\frac{\ln(A_M/\theta_M)}{\ln(A_S/\theta_S)}\;}
+\label{eq:kappa}
+\end{equation}
+---a \emph{computable ratio of logarithms}. Equation~\eqref{eq:kappa} explains the entire
+phenomenology at once, with no free parameter: (i) the proportionality itself; (ii) the
+flatness of $\kap$ in system size, because $A_S$ scales with $\Smax$ so the logarithm ratio
+is size-free; (iii) the substrate dependence of $\kap$ (below: CA $1.08$, hard disks
+$1.00$, Clifford $0.79$), because amplitudes and threshold conventions differ between
+substrates but enter only through slowly varying logarithms, keeping $\kap$ order one;
+(iv) the weak (logarithmic) sensitivity to threshold choices.
+
+Figure~\ref{fig:mechanism} tests the mechanism directly ($5$ scrambling rates $\times$ $3$
+seeds; both tails fitted per run over their first decaying window,
+Appendix~\ref{app:decoder}). The tails are exponential with a \emph{shared} timescale:
+$\tau_M/\tau_S=0.92\pm0.30$ across all $15$ runs, flat while the absolute $\tau_S$ varies by
+$7.6\times$ ($11$--$84$ steps; condition means $0.76$--$1.16$ with no trend). The
+parameter-free postdiction of the crossing times from each run's fitted $(\tau,A)$ and the
+thresholds lands at median error $5\%$ for $\tstar$ and $1\%$ for $\tS$; the through-origin
+$\kap$ is postdicted at $0.98$ against a measured $1.02$ on the same runs. We conclude that
+the horizon law is a one-slow-mode theorem, not a numerical coincidence: \emph{a record
+survives exactly as long as the slowest mode it is written in---and the entropy's own
+approach to saturation is that same mode's decay}.
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{T7_mechanism.png}
+\caption{\textbf{Why $\tstar\approx\tS$: one slow mode, two thresholds} (lattice gas, $5$
+scrambling rates $\times$ $3$ seeds). Left: for one example condition, the entropy deficit
+$S_{\mathrm{eq}}-S(t)$ and the record signal $I(F;\hat F)(t)$ on a logarithmic scale; both
+tails are exponential with the same slope. Middle: fitted $\tau_M$ against $\tau_S$ for all
+runs; the ratio is $0.92\pm0.30$, flat over a $7.6\times$ range of absolute timescales.
+Right: parameter-free postdiction of both crossing times from the fitted $(\tau,A)$ and the
+thresholds, Eq.~\eqref{eq:kappa}: median error $5\%$ ($\tstar$) and $1\%$ ($\tS$); $\kap$
+postdicted $0.98$ vs.\ measured $1.02$.}
+\label{fig:mechanism}
+\end{figure*}
+
+\section{Universality}
+\label{sec:universality}
+
+A fair objection is that Secs.~\ref{sec:horizon}--\ref{sec:mechanism} might describe an
+artifact of one substrate---a square lattice gas with quenched scatterers. We therefore
+re-ran the same two clocks in two deliberately different substrates. The target is
+\emph{not} to reproduce the number $\kap=1.08$, which Eq.~\eqref{eq:kappa} says is
+convention-bound, but the invariant: $\tstar\propto\tS$ with order-one flat $\kap$, and a
+collapse of record decay and entropy relaxation onto one clock under $t/\tS$ rescaling.
+
+\subsection{Continuous hard-disk gas}
+
+An event-driven hard-disk gas thermalizes by ballistic crossing rather than lattice
+scattering. The clean knob is a \emph{self-similar} size sweep: the low-entropy blob (and
+the planted fact) scale with the box, so record and entropy live on the same spatial scale
+while the one thermalization time stretches with size. (Growing the box at fixed blob
+decouples two scales---filling the box versus erasing a local asymmetry---and the ratio then
+drifts; the self-similar sweep is the physically matched comparison.) Result
+(Fig.~\ref{fig:md}): $\tstar=1.00\,\tS$ over a $5.1\times$ range ($\tS=14$--$73$), per-size
+$\kap=1.19,\,1.03,\,0.94,\,0.97,\,1.03$, and both observables collapse onto master curves
+under $t/\tS$. (This substrate is float-chaotic, so exact values vary at the percent level
+with the floating-point environment; an independent re-run on different hardware gives
+$\kap=1.04$ with the same flatness \cite{repo}.)
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{T7_md_horizon.png}
+\caption{\textbf{Universality I: continuous hard-disk gas} (self-similar size sweep,
+$D=40$--$130$, three seed-ensembles per size). Left: $\tstar$ vs.\ $\tS$;
+$\tstar=1.00\,\tS$ over a $5.1\times$ range with flat per-size ratios. Right: rescaling time
+by $\tS$ collapses the record MI (solid) and the entropy relaxation (dashed) of every size
+onto single master curves: $\tstar$ and $\tS$ are one clock; $\kap$ is merely where each
+observable crosses its conventional threshold.}
+\label{fig:md}
+\end{figure*}
+
+\subsection{Reversible quantum circuits}
+
+The bookkeeping of Sec.~\ref{sec:setup} is natively quantum
+\cite{safranek2019a,strasberg2021,zurek2009darwinism}; the lattice gas exercises only its
+classical shadow. A Clifford brickwork circuit is unitary---hence exactly reversible---yet
+efficiently simulable \cite{gottesman1998,aaronsongottesman2004}, allowing $N=128$ qubits.
+Two clocks on the same random circuit: $\tS$ is the half-chain entanglement saturation time
+(entanglement first reaches $0.9$ of its late-time Page plateau
+\cite{page1993,nahum2017}); $\tstar$ is the time at which a reference qubit's recoverable
+record $I(R:\text{local window})$ (window $=N/3$ sites, initially $2$ bits for a maximally
+entangled reference) first drops below $1$ bit. Sweeping $N=24$--$128$ stretches the
+ballistic scrambling time. Result (Fig.~\ref{fig:clifford}): $\tstar=0.79\,\tS$ with
+$R^2=0.95$ over a $6.9\times$ range ($\tS=33$--$229$ layers), per-size ratios flat at
+$0.77$--$0.79$ for $N\ge64$, with the same $t/\tS$ collapse.
+
+Clifford circuits are simulable precisely because they are non-generic, so we add a
+non-Clifford control: a full statevector simulation at $N=8$--$16$ with true von Neumann
+entropies, run under random Clifford gates ($\kap=0.89\pm0.32$) and genuinely universal
+Haar-random gates ($\kap=0.60\pm0.10$). Both obey the proportional law with order-one
+$\kap$; at these small sizes the absolute value is finite-size-suppressed, and the decisive
+point is that a universal gate set does not break the law. Had the horizon law been a
+stabilizer artifact, the Haar ensemble would have revealed it.
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{T7_clifford_horizon.png}
+\caption{\textbf{Universality II: exactly reversible quantum (Clifford) circuits}
+($N=24$--$128$ qubits, five circuit seeds per size). Left: record horizon vs.\
+entanglement-saturation time; $\tstar=0.79\,\tS$ ($R^2=0.95$) over a $6.9\times$ range,
+per-size ratios flat. Right: $t/\tS$ collapse of entanglement growth (dashed) and record
+decay (solid) for all sizes. A statevector control with Haar-random gates (not shown; see
+text) confirms the law is not a stabilizer artifact.}
+\label{fig:clifford}
+\end{figure*}
+
+\begin{table}
+\caption{The horizon law across substrates. $\kap$ is convention- and substrate-dependent
+(Eq.~\eqref{eq:kappa}); the law is the flat proportionality.}
+\label{tab:kappa}
+\begin{ruledtabular}
+\begin{tabular}{lllc}
+Substrate & Dynamics & Range in $\tS$ & $\kap$ \\
+\hline
+Margolus CA        & bit-reversible, diffusive & $7\times$   & $1.08$ \\
+\quad size sweep   & $L=48$--$128$             & $6\times$   & $0.99$ (mean) \\
+Hard-disk gas      & Hamiltonian, ballistic    & $5.1\times$ & $1.00$ \\
+Clifford circuit   & unitary, $N\le128$        & $6.9\times$ & $0.79$ \\
+Haar statevector   & unitary, $N\le16$         & (spot check) & $0.60\pm0.10$ \\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+\section{Falsifiability: a conservation law decouples the clocks}
+\label{sec:falsification}
+
+A law that cannot fail is a definition. The mechanism of Sec.~\ref{sec:mechanism} says the
+horizon law should hold for \emph{ergodic} reversible dynamics---the record must be written
+in a relaxing mode. This predicts its own failure mode: protect the record with a
+conservation law, and the two clocks must decouple.
+
+We engineer this in the Clifford substrate (Fig.~\ref{fig:falsification}). A reference qubit
+is entangled with a record qubit at the chain end. The bulk scrambles with a random
+brickwork (so $\tS$ stays finite), but the bond touching the record qubit is, with
+probability $1-p_{\mathrm{break}}$, a protected gate that uses the record only as a control,
+conserving $Z_0$ while still broadcasting it; with probability $p_{\mathrm{break}}$ it is a
+full scrambling gate. Thus $p_{\mathrm{break}}$ tunes ergodicity at the record. Result
+($N=64$, $5N$ layers, four seeds): $\tS$ stays flat across the sweep ($\approx110$ layers,
+relative std $0.03$), while
+\begin{equation}
+\kap(p_{\mathrm{break}})=0.82,\ 0.74,\ 0.80,\ 0.88,\ 1.09,\ \ge1.67,\ \ge2.90
+\end{equation}
+for $p_{\mathrm{break}}=1,\,0.5,\,0.25,\,0.1,\,0.05,\,0.02,\,0$; at
+$p_{\mathrm{break}}\le0.02$ the record outlives every simulated window (censored---the
+values quoted are lower bounds), and at $p_{\mathrm{break}}=0$ it is never lost. The horizon
+law is therefore \emph{contingent on ergodic scrambling}: a conserved quantity is exactly
+what lets a record outlast---or point against---the entropy gradient. This is the extreme
+limit of a protected (pointer/code) subspace \cite{zurek2003rmp}; engineered quantum memory
+is, in this language, the deliberate construction of horizon-law violations. Mapping this
+boundary is what makes $\tstar\approx\tS$ a falsifiable claim about generic dynamics rather
+than a tautology of our definitions.
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{T7_clifford_falsification.png}
+\caption{\textbf{The law is falsifiable, and fails where it must} (Clifford chain, $N=64$; a
+tunable $Z_0$-conserving gate protects the record with probability
+$1-p_{\mathrm{break}}$). Left: example trajectories---under full scrambling the record dies
+as entanglement saturates, while the protected record survives arbitrarily long although the
+bulk thermalizes identically. Right: $\kap=\tstar/\tS$ against $p_{\mathrm{break}}$; the
+ratio is order one in the ergodic regime and diverges (censored points are lower bounds) as
+the conservation law is restored, while $\tS$ stays flat.}
+\label{fig:falsification}
+\end{figure*}
+
+\section{Redundancy: classical Darwinism and its scaling}
+\label{sec:redundancy}
+
+How is the record stored while it lives? Following the quantum Darwinism program
+\cite{zurek2009darwinism,blumekohout2006,riedel2012risefall} we measure the
+partial-information profile of the classical record: the mutual information $I_f$ recovered
+by decoders restricted to random fractions $f$ of the coarse cells, and the redundancy
+$R_\delta=1/f_\delta$, where $f_\delta$ is the smallest fraction achieving
+$(1-\delta)I_{\max}$ (we use $\delta=0.1$). Near the boundary the profile has the classical
+plateau shape: $10\%$ of the cells already recover $89\%$ of the record, and
+$R\approx8$--$10$ independent copies coexist, collapsing to $R=1$ at the horizon
+\cite{repo}---the classical analogue of the rise and fall of redundancy
+\cite{riedel2012risefall}.
+
+\subsection{Scaling with environment size}
+
+A diffusion/signal-to-noise argument fixes the ideal scaling. Growing the system
+self-similarly (box $L$ up at fixed cell size $b$, marker scaled with $L$) adds
+\emph{equivalent} fragments: each added cell is an equally informative, conditionally
+independent detector of the planted parity near the boundary, so ideally one new copy per
+added fragment, $R\propto N$ with $N=(L/b)^2$, i.e.\ $\alpha=1$ (ideal classical
+Darwinism). Refining the grid instead ($b$ down at fixed $L$) multiplies fragments while
+dividing the per-fragment signal, so $\alpha<1$ is expected---an SNR-confounded control.
+
+Figure~\ref{fig:redundancy} shows the measured scaling over $N=144$ to $16{,}384$
+($L=48$--$512$, six disorder seeds): $R$ climbs from $7.3$ to $438$. A power law over the
+full range gives $\alpha=0.88$; the finite-size-free tail ($L\ge128$) gives
+$\alpha=0.91\pm0.05$; and two independent extrapolations (a cutoff sweep in $N_{\min}$ and a
+correction fit $R=A\,N^{\alpha}(1+c/N)$, mutually agreeing) give
+\begin{equation}
+\alpha_\infty = 0.92\pm0.04,
+\end{equation}
+$2.2\sigma$ below the ideal value---ideal Darwinism \emph{supported but not certified} at
+accessible sizes. This quote is deliberately conservative: the data cannot distinguish the
+form of the finite-size correction (near-identical residuals), and the physically motivated
+$c/\sqrt N$ correction (the marker spans $\propto L=b\sqrt N$ cells) gives
+$\alpha_\infty=0.95\pm0.07$, while $c\,N^{-1/4}$ gives $1.00\pm0.12$
+(Appendix~\ref{app:extrapolation}). Meanwhile the SNR-confounded refinement sweep stays at
+$\alpha=0.71$: the two ways of growing the environment separate cleanly, exactly as the
+argument predicts.
+
+\subsection{The quantum limit isolates the shortfall}
+
+The residual classical gap to $\alpha=1$ is explained by its noiseless limit. In the
+stabilizer substrate we compare Zurek's dichotomy directly (Fig.~\ref{fig:qdarwin}): a
+pointer bit \emph{broadcast} into $N_E$ environment qubits (decoherence-type dynamics)
+yields a flat partial-information plateau---any fragment carries the full classical
+record---and $R_\delta=N_E$ exactly across $N_E=8$--$128$, i.e.\ $\alpha=1.000$: ideal
+Darwinism, realized. The same pointer under \emph{scrambling} dynamics is encoded rather
+than broadcast: the partial-information profile becomes a step at half the environment and
+$R\approx1$. Perfect discrete copying has no SNR loss, so it reaches the exponent the
+diffusive classical lattice only approaches; the classical sub-linearity is thereby isolated
+as a signal-to-noise/finite-size artifact, not a limit of the redundancy principle. (We note
+honestly that broadcast redundancy is fragile: a few scrambling layers collapse $R$ toward
+$1$ well before the entropy horizon---redundant, multi-observer accessibility dies earlier
+than the single-copy record of Fig.~\ref{fig:clifford}, consistent with
+\cite{riedel2012risefall}.)
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{T7_redundancy_scaling_hires.png}
+\caption{\textbf{Redundancy scaling toward ideal Darwinism} (lattice gas, equivalent-fragment
+sweep $L=48$--$512$, i.e.\ $N=(L/b)^2$ up to $16{,}384$; six disorder seeds). Left:
+near-boundary redundancy $R_{\delta=0.1}$ vs.\ $N$; the full-range exponent is $0.88$, the
+$L\ge128$ tail $0.91\pm0.05$ (extrapolating to $\alpha_\infty=0.92\pm0.04$, conservatively;
+see text), while the SNR-confounded refinement sweep stays at $\alpha=0.71$. Right: the
+local slope $d\ln R/d\ln N$ climbs to $\approx1$ at the largest sizes as the small-$L$
+curvature fades.}
+\label{fig:redundancy}
+\end{figure*}
+
+\begin{figure*}
+\includegraphics[width=\textwidth]{T7_clifford_darwinism.png}
+\caption{\textbf{Quantum Darwinism in the reversible circuit substrate.} Left:
+partial-information profiles for a pointer bit broadcast into the environment (flat plateau:
+any small fragment carries the record) versus scrambled into it (step at half the
+environment: the record is encoded, not redundant). Right: redundancy of the broadcast
+record scales as $R_\delta=N_E$ exactly ($\alpha=1.000$, $N_E=8$--$128$)---the ideal limit
+the classical lattice approaches from below.}
+\label{fig:qdarwin}
+\end{figure*}
+
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{What has been established}
+
+Within exactly reversible model dynamics prepared at a low-entropy boundary: (i) the growth
+of coarse entropy is identically the growth of information hidden from the coarse observer,
+with the fine-grained entropy conserved to machine precision---and a record's decay is that
+same ledger read from the fact's side; (ii) the readable lifetime of a record is the
+thermalization time, $\tstar=\kap\,\tS$ with order-one $\kap$, flat across dynamics rates
+and sizes and reproduced across three substrates (Table~\ref{tab:kappa}); (iii) the law has
+a mechanism---both clocks are slaved to the slowest relaxation mode, making $\kap$ a ratio
+of logarithms, postdicted parameter-free to a few percent; (iv) the law is falsifiable and
+fails precisely when a conservation law protects the record; (v) records are stored
+redundantly, with a scaling that approaches ideal classical Darwinism and attains it in the
+noiseless quantum broadcast.
+
+Taken together, these results sharpen the qualitative slogan of the memory arrow
+\cite{reichenbach1956,wolpert1992,mlodinowbrun2014,rovelli2020memory}. Mlodinow and Brun
+argued that a robust record-forming system must sit on the entropy-increasing side of the
+gradient \cite{mlodinowbrun2014}; our measurements add the quantitative structure of that
+record-keeping: a record is a slow mode of the very relaxation that defines the
+thermodynamic clock, so its readable lifetime is not a new parameter of nature but the
+thermalization time itself; its objectivity while alive is redundancy; and the only way to
+out-live the gradient is a conservation law---which is engineering (memory protection), not
+generic dynamics. In companion experiments in the same testbed \cite{repo}, the
+\emph{direction} of record accumulation flips with the sign of the entropy gradient
+(including for facts injected mid-run, realizing Reichenbach's fork asymmetry), completing
+the picture: direction, lifetime, and storage of memory are all read off the gradient.
+
+\subsection{What has \emph{not} been shown}
+
+First and fundamentally, nothing here derives the arrow of time: every run assumes the
+low-entropy boundary. This is not a defect of the testbed but a theorem-level wall for any
+time-symmetric dynamics \cite{loschmidt1876,price1996}; our exactly reversible substrate
+makes it vivid, since entropy grows in \emph{both} time directions away from the boundary
+state \cite{repo}. The mystery of the Past Hypothesis is used, not dissolved. (An
+exploratory companion experiment relocates the posit in the spirit of Carroll and Chen
+\cite{carrollchen2004}---a \emph{small} early volume plus expansion, rather than a
+fine-tuned microstate, sustains an unbounded two-headed entropy valley from a single bounce
+microstate evolved in both time directions---but the relocated question, why the volume was
+small, remains as open as the original \cite{repo}.)
+
+Second, $\kap$'s numerical value is convention-laden; only the proportionality, the
+collapse, and the mechanism are physics. Third, the classical redundancy exponent is
+supported at, but not certified to, the ideal value ($\alpha_\infty=0.92\pm0.04$
+conservatively, up to $1.00$ under equally consistent extrapolation forms); certification
+would require another decade in $N$. Fourth, all claims are about the model classes
+simulated here---though three substrates, a mechanism, and a mapped failure boundary argue
+that the horizon law is a generic property of ergodic reversible information dynamics rather
+than an artifact of any one model.
+
+\subsection{Outlook}
+
+Three extensions seem most valuable. (i) A quantitative tie of the shared timescale $\tau$
+to transport: the mechanism predicts $\tau\propto L^2/D$ in the diffusive substrate, with
+$D$ set by the scatterer density, so the horizon law should be expressible entirely in
+transport coefficients. (ii) A systematic threshold-sensitivity study, which the mechanism
+predicts to be logarithmic. (iii) In the corroboration direction \cite{repo}: conditioning
+equilibrium fluctuations on reproducing one half of a record and testing whether the other
+half corroborates would quantify why multiple independent records justify belief in a real
+low-entropy past---Reichenbach's common cause as a measurable statement.
+
+\begin{acknowledgments}
+All simulations, per-experiment numerical verdicts, and figure-generating code are openly
+available \cite{repo}.
+\end{acknowledgments}
+
+\appendix
+
+\section{The bit-reversible substrate}
+\label{app:model}
+
+The Margolus automaton partitions the $L\times L$ periodic grid into $2\times2$ blocks, with
+the partition offset alternating each step. Each block is updated by a bijective lookup
+table acting on its $16$ possible occupancies; the composition of bijections is a bijection,
+so the global map is exactly invertible, and running the inverse tables in reverse order
+returns the initial bitstring exactly (verified bit-for-bit at every commit \cite{repo}). A
+quenched fraction (the scrambling knob) of blocks applies a rotation rule; the remainder
+apply the identity-preserving collision rule. Initial low-entropy states confine all
+particles to a width-$w$ blob at density $\rho$ ($w=40$, $\rho=0.45$, $L=64$, $b=4$ for the
+horizon experiments), with microstates sampled microcanonically. The hard-disk companion is
+an event-driven elastic-disk gas in a square box with specular walls; between collisions the
+flight is exact, so the only irreversibility is floating-point.
+
+\section{Records, decoders, and tail fits}
+\label{app:decoder}
+
+The planted fact $F$ places a marker of identical particle number on the left or right of
+the blob, so the classes share every conserved quantity. For each class, $K$ microstates are
+evolved through the same quenched disorder ($K=40$ for the horizon sweep, $64$ for the
+ledger). At each sample time the coarse occupancy vectors of half the worlds train a
+nearest-centroid readout $\hat F$; $I(F;\hat F)$ is computed from the held-out confusion
+matrix. This makes $\tstar$ an \emph{operational} horizon: the time past which no such
+decoder of the present coarse state beats a half-bit of information about the fact.
+
+For the ledger, an ensemble of $K$ equiprobable microstates gives $H=\ln(\#\text{distinct
+microstates})=\ln K$ under bijective evolution, while the coarse observer assigns the
+observational entropy \cite{safranek2019a,safranek2021intro}; the hidden-information term of
+Eq.~\eqref{eq:ledger} is the difference, computed exactly from the evolving ensemble.
+
+For the mechanism experiment, the equilibrium deficit $\mathcal D_{\mathrm{eq}}$ (mean of
+the last $15\%$ of each run) is subtracted before fitting; both tails are fitted by ordinary
+least squares on $\ln y$ over the first decaying crossing of a fixed window ($[0.04,0.5]$ of
+the initial deficit for $\mathcal D$; $[0.04,0.6]$ bit for $M$), which excludes the
+estimation floor that follows the record's death.
+
+\section{Stabilizer methods}
+\label{app:stabilizer}
+
+Clifford states are tracked by the binary check matrix of their stabilizer group (phases
+dropped; they do not affect entanglement). Gates act as column operations
+\cite{gottesman1998,aaronsongottesman2004}. The entanglement entropy of a region $A$ is
+$S_A=\mathrm{rank}_{\mathbb F_2}(G|_A)-|A|$ ebits \cite{fattal2004}, and mutual informations
+follow from $I(A{:}B)=S_A+S_B-S_{AB}$. Brickwork layers apply independent random two-qubit
+Cliffords (random single-qubit words interleaved with CNOTs in both directions) to
+alternating bonds; this drives contiguous regions to volume-law (Page) entanglement
+\cite{page1993,nahum2017}. The protected gate of Sec.~\ref{sec:falsification} uses the
+record qubit only as a control, conserving $Z_0$. The statevector control applies exact
+$4\times4$ unitaries (Haar-random via QR of complex Gaussians, or random Clifford words) and
+computes von Neumann entropies from Schmidt spectra.
+
+\section{Extrapolation of the redundancy exponent}
+\label{app:extrapolation}
+
+Two estimators of the asymptotic exponent agree: (A) a cutoff sweep, fitting
+$\alpha_{\mathrm{eff}}(N_{\min})$ on $N\ge N_{\min}$ and extrapolating linearly in
+$1/N_{\min}\to0$ (giving $0.918$); and (B) a correction fit
+$\ln R=c_0+\alpha_\infty\ln N+c_1 N^{-p}$ with seed-bootstrapped errors. For $p=1$:
+$\alpha_\infty=0.922\pm0.036$; $p=\tfrac12$: $0.947\pm0.067$; $p=\tfrac14$:
+$1.001\pm0.124$---with statistically indistinguishable residuals (RSS
+$0.060/0.063/0.064$), so the main text quotes the most conservative value. The local slope
+$d\ln R/d\ln N$ reaches $0.96$--$1.05$ across the largest size steps.
+
+\bibliography{refs}
+
+\end{document}
