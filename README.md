@@ -60,6 +60,11 @@ experiments/
   t7_clifford_darwinism.py U3: Quantum Darwinism — record redundant under decoherence, encoded under scrambling
   t7_clifford_falsification.py  U4: falsification — a conserved record outlives thermalization (t*≫t_S)
   t8_expanding_universe.py T8: (exploratory) low-entropy past as small volume + expansion (Carroll–Chen toy)
+  t9_maxwell_demon.py      T9: endogenous observer — an active, reversible, Landauer-costed Maxwell
+                           demon whose 1-bit memory is slaved to the gradient (answers "external decoder")
+  t9_demon_universal.py    T9b: the demon obeys the MODE-MATCHED law across substrates — inherits
+                           t*≈t_S in the hard-disk gas; butterfly-limited in the ballistic Clifford
+                           scrambler (the demon's own mode-mismatch control)
   make_movie.py            renders the CA thermalize-then-exactly-un-thermalize movie
 figures/                   generated PNGs (+ the movie)
 ```
@@ -74,7 +79,8 @@ for e in selftest t1_boundary t2_loschmidt t3_records t3_hard_readout \
          t7_mechanism t7_mode_resolved t7_anomaly t7_frozen_incidence t7_redundancy_scaling \
          t7_redundancy_scaling_hires t7_redundancy_extrapolate \
          md_companion t7_md_horizon t7_md_mismatch t7_clifford_horizon t7_universal_check \
-         t7_clifford_darwinism t7_clifford_falsification t8_expanding_universe; do
+         t7_clifford_darwinism t7_clifford_falsification t8_expanding_universe \
+         t9_maxwell_demon t9_demon_universal; do
     ./.venv/bin/python experiments/$e.py
 done
 ```
@@ -108,6 +114,13 @@ record** (T7-anomaly), the τ→∞ limit arising from quenched disorder. The fe
 make memory, and therefore the experienced past, point down the entropy gradient. Records are
 also **redundant under decoherence but encoded under scrambling** (U3, quantum Darwinism), and
 the horizon law is **falsifiable** — a conserved quantity lets a record outlive thermalization
-(U4). What remains unexplained is *why the boundary was low-entropy*; T8 explores a Carroll–Chen
-relocation (small early volume + expansion, not a fine-tuned microstate) but the mystery is
-**relocated, not removed** — the honest edge of the whole programme.
+(U4). The observer, finally, can be moved *inside* the physics: an active, reversible,
+**Landauer-costed Maxwell demon** — a fixed 1-bit sensor writing a reversible tape, not an external
+decoder — inherits the same horizon (t\*≈t_S), flips with the boundary, and **cannot learn in
+equilibrium**, so the record arrow is no artifact of a god's-eye analyst (T9); and the demon obeys
+the **mode-matched** law across substrates — it inherits t\*≈t_S in the diffusive hard-disk gas but
+is **butterfly-limited** in the ballistic Clifford scrambler, where only active decoding reaches
+t_S (T9b). What remains
+unexplained is *why the boundary was low-entropy*; T8 explores a Carroll–Chen relocation (small
+early volume + expansion, not a fine-tuned microstate) but the mystery is **relocated, not
+removed** — the honest edge of the whole programme.

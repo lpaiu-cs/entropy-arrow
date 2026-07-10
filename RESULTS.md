@@ -45,6 +45,8 @@ Substrates: an **exactly bit-reversible Margolus lattice gas** (rigorous core) a
 | **U3** | *Quantum Darwinism* — the record is redundant under decoherence, encoded under scrambling | broadcast → flat **redundancy plateau** (any fragment carries the pointer); scrambling → step (needs ~½, non-redundant); perfect broadcast reaches **α = 1.00 exactly** (R_δ = N_E, ideal) vs the classical lattice's finite-size 0.92 | ✅ PASS |
 | **U4** | *Falsification* — the horizon law is contingent on ergodicity, not a tautology | a **conserved** record (Z₀) survives thermalization: t_S finite but t\* **censored** (record never lost); κ=t\*/t_S **diverges** as ergodicity p→0 (2.90→censored) while it holds (κ≈0.8) when ergodic — boundary mapped | ✅ PASS |
 | **T8** | *Exploratory* — the low-entropy past as small volume + expansion, not a fine-tuned microstate (Carroll–Chen toy) | expanding box: S rises **403→761** unbounded (no heat death) vs static **saturates**; a symmetric bounce gives a **two-headed entropy valley** from a *typical* small-volume middle — **relocates, does not dissolve**, the Past Hypothesis | ✅ demo |
+| **T9** | *Endogenous observer* — an active, reversible, **Landauer-costed** demon's memory is also slaved to the gradient (answers "your decoder is an external god's-eye") | a **fixed 1-bit** sensor + reversible CNOT tape (no per-time retrain): horizon **t\*_demon = 0.95·t_S** (κ=O(1) across 4 rates, cf. decoder 1.08); **flips** with the boundary (MI **0.01→1.00**); a cyclic demon **erases ~9 bits** to hold a 1-bit fact until t\*; an accumulate demon's best recall is **1.00 bit from a tape started at t=0** but only **0.08–0.18 bit (noise) after 3·t_S** — the boundary is a **non-renewable resource**; in **equilibrium it cannot learn** (mean MI **0.02 bit**, never reaches ½) | ✅ PASS |
+| **T9b** | *Demon universality* — the endogenous demon obeys the **mode-matched** law across substrates | **hard-disk gas** (diffusive): the fixed 1-bit demon inherits the law, t\*_demon = **0.54·t_S** (R²=0.92, per-size κ 0.52–0.68, O(1)) over **5.1×**; **Clifford** (ballistic): the fixed sensor is **butterfly-limited** — t\*_demon = **2–4 layers, flat in N** while t_S grows **4.8×** (κ_demon **0.11→0.02**), yet the **active** window read still tracks t_S (κ_active **0.77–0.93**, matching U2's 0.79) — a passive sensor lives only as long as the mode it rides | ✅ PASS |
 
 **Bottom line: H survives every test we could throw at it in this model** — and the
 centerpiece **t\*≈t_S** now holds in **three independent substrates** (reversible CA, continuous
@@ -54,7 +56,13 @@ dynamics, not a lattice artifact. The record
 arrow — in this system it is the *same gradient measured another way*, and it flips
 when the gradient flips. Even the *causal* arrow (T5) — which way an event's records
 point — is set by the gradient, not the clock, since it reverses when the gradient
-does. Nothing about the arrow lives in the laws of motion.
+does. Nothing about the arrow lives in the laws of motion. And the observer can be moved
+*inside* the physics: an active, reversible, **Landauer-costed** memory (T9) — a Maxwell
+demon, not an external decoder — is slaved to the same gradient and flips with it, so the
+record arrow is not an artifact of a god's-eye analyst either. Its horizon obeys the
+**mode-matched** law across substrates (T9b): a passive fixed sensor lives as long as the
+mode it rides — the thermalization time where relaxation is modal (CA, gas), only the
+butterfly time in a ballistic scrambler, where reaching t_S demands *active* decoding.
 
 ---
 
@@ -498,6 +506,92 @@ reach.
 
 ---
 
+## The active observer — memory that writes, and pays (T9)
+`experiments/t9_maxwell_demon.py` → `figures/T9_maxwell_demon.png`
+
+Every record result up to here reads the fact with an **external decoder retrained at every
+instant** — a god's-eye analyst with fresh access to the whole coarse state. The sharpest
+remaining objection (caveat 4) is that this is not what memory *is*: a real observer is a
+**physical subsystem** bound by the same reversible dynamics, its detector is **fixed when the
+event happens**, and writing a record **costs free energy** (Landauer, kT ln 2 per erased bit).
+T9 builds that observer — a reversible **Maxwell demon** in the lattice gas — and asks whether
+the arrow survives when the observer is inside the physics and the bookkeeping is honest.
+
+The demon has a **fixed one-bit sensor**, calibrated once at the boundary as the contrast
+w = ⟨coarse|F=0⟩ − ⟨coarse|F=1⟩ and **never retrained**, plus a blank **tape**; recording is the
+reversible CNOT `tape ^= o(t)` (von Neumann pre-measurement — a blank cell is *required* to record,
+and clearing one costs kT ln 2). Its knowledge of the equal-N left/right fact F is its own
+held-out one-bit **MI(o(t);F)**. (Contrast `decode_mi`, which re-fits a discriminant at every t —
+the god's-eye move we are giving up here.)
+
+- **Endogenous horizon, t\*≈t_S.** A dumb one-bit physical detector shows the **same horizon** as
+  the trained multi-cell decoder: t\*_demon = **0.95·t_S** across four scrambling rates (per-rate
+  κ 0.68–1.05, all O(1); cf. the decoder's 1.08). The horizon is not an artifact of the fancy
+  readout — it is in the state. (Fit R²=0.73, quantization-limited by the 1-bit/stride resolution
+  over a compressed t_S range; the claim is the O(1) proportionality, not a precision κ.)
+- **It flips with the boundary.** Relocate the low-entropy end to the future (backward evolution,
+  reversed clock) and the demon's faithful readings move with it: MI **0.01 at t=0 → 1.00 at t=T**.
+  The subjective past sits wherever the gradient's low-entropy end is.
+- **Landauer: a live memory pays forever yet forgets at t_S.** The cyclic demon (keeps only its
+  latest reading) erases one bit per epoch, so its bill grows **linearly** while its content stays
+  ≤ 1 bit: keeping the fact *currently known* until t\*_demon costs **~9 erased bits ≫ 1 bit** of
+  content — the thermodynamic price of a live memory of a decaying record. A *durable* record
+  instead needs an accumulate demon that freezes the early cells written near the boundary — i.e.
+  it spends **blank tape**, the same low-entropy resource the Past Hypothesis supplies (cf. T8).
+- **The boundary is a non-renewable resource (measured).** The accumulate demon's best possible
+  recall from a tape *started at* t_start is max over its cells of MI(o(t_j);F): **1.00 bit for a
+  tape started at t=0**, decaying with the record's own mode (the curves of all four scrambling
+  rates **collapse on t_start/t_S**, knee at ≈ κ) to the **noise floor 0.08–0.18 bit past ~3·t_S**.
+  No amount of blank tape spent after the record has relaxed buys the fact back — durable memory
+  must be *written while the gradient is live*.
+- **A demon in equilibrium cannot learn.** Present the same fact to a pre-thermalized gas (F left
+  only in the microstate, not the macrostate): the sensor reads a **coin flip**, mean MI **0.02
+  bit**, never reaching the ½-bit "knows it" line — versus a forward peak of 1.00. Without the
+  low-entropy boundary there is nothing to record (the Boltzmann-brain point, T6b, from the
+  observer's side).
+
+**What it buys, and the honest ceiling.** This closes caveat 4 **as far as a simulation can**: an
+*active, costed, endogenous* observer's memory is **necessarily** slaved to the gradient + boundary
+and flips with it — the record arrow is not an artifact of an external analyst, and building a
+durable memory demonstrably **consumes low-entropy resource**. It does **not** cross to the
+constitutive question (whether that *constitutes* felt passage / qualia), and "durable memory" is
+**relocated, not conjured** — bought with blank tape at the boundary, exactly as T8 relocates the
+boundary itself. Necessary, sharpened; not sufficient. *(A follow-up beyond the submitted paper's
+scope.)*
+
+### T9b — demon universality: the endogenous observer obeys the *mode-matched* law
+`experiments/t9_demon_universal.py` → `figures/T9b_demon_universal.png`
+
+*Why* did T9's **fixed** sensor inherit t\* ≈ t_S? By the paper's own mechanism (T7e/T7f): in a
+diffusive substrate the record rides the slowest relaxation mode — an eigenmode that decays *in
+place* (amplitude shrinks, shape preserved) — so a sensor matched to it at the boundary **stays
+matched**. That mechanism makes two predictions about other substrates, and both are confirmed:
+
+- **Hard-disk gas (positive, the U1 analogue).** The identical fixed-contrast one-bit sensor on
+  U1's self-similar size sweep inherits the law: **t\*_demon = 0.54·t_S** (R² = 0.92) over a
+  **5.1×** t_S range, per-size κ 0.67→0.52 — O(1) with a mild drift. The fixed sensor is a weaker
+  reader than U1's per-time-retrained decoder (κ = 1.00), but its horizon reads the same clock.
+- **Clifford circuit (negative control, the U1b analogue — the demon's own mode-mismatch).** The
+  quantum demon writes a fresh blank ancilla each layer by reversible CNOT from a fixed sensor
+  qubit — an exact von Neumann premeasurement, a ≤1-bit classical copy whose MI is frozen at
+  write time. It dies at the **butterfly time**: t\*_demon = **2–4 layers, flat in N**, while t_S
+  grows 36→172 layers (**4.8×**), so κ_demon collapses **0.11→0.02**. The record itself is still
+  alive: the **active** optimal window read (U2's I(R:window)) tracks t_S with κ_active
+  **0.77–0.93** — matching U2's 0.79. In a ballistic scrambler a local operator's shape churns at
+  the butterfly speed; there is no slow mode for a passive detector to ride, and only *active*
+  decoding (re-fitting the measurement to the scrambled record) reaches t_S.
+
+**The honest universal statement** is therefore *not* "any fixed observer reaches t_S" — it is
+the mode-matched law extended to endogenous observers: **a passive fixed sensor lives as long as
+the mode it is matched to.** Where relaxation is modal (CA, gas), that mode is the slowest one
+and the demon's horizon *is* the thermalization time; in a ballistic scrambler the fixed observer
+is butterfly-limited and durable readability requires active decoding. A suggestive aside, not a
+claim: passive record-keeping — memory that just *sits there* and stays readable — is viable
+precisely in substrates with slow hydrodynamic modes, which is where physical memories in fact
+live.
+
+---
+
 ## What this does NOT prove (the bill, carried over from the discussion)
 
 The model relocates the mystery; it does not dissolve it.
@@ -527,7 +621,12 @@ The model relocates the mystery; it does not dissolve it.
 4. **"Record fidelity" is a necessary condition for memory, not sufficiency for
    *felt* passage.** The sim shows records must point down-gradient; whether that
    *constitutes* the feeling of time flowing is the constitutive-vs-causal question
-   the simulation cannot settle.
+   the simulation cannot settle. **T9 sharpens this caveat to its limit:** even an
+   *active, endogenous, Landauer-costed* observer (a reversible Maxwell demon, not an
+   external decoder) has its memory slaved to the gradient, flips with the boundary, and
+   cannot learn in equilibrium — so the *necessary* condition is now maximally strong. But
+   T9 still measures only physical record fidelity; the step from "an agent has recorded and
+   paid for the fact" to "the agent *feels* time flow" is exactly the gap no dynamics can close.
 5. **The classical redundancy exponent climbs toward ideal but is not certified at α = 1.**
    At the original L ≤ 128 ceiling the record-redundancy-vs-environment-size exponent measured
    α ≈ 0.7–0.8. Higher resolution (`t7_redundancy_scaling_hires.py`, L → 512) and a finite-size
@@ -574,6 +673,8 @@ python3 -m venv .venv && ./.venv/bin/pip install numpy matplotlib
 ./.venv/bin/python experiments/t7_clifford_darwinism.py     # U3: Quantum Darwinism — redundant vs encoded, ideal α=1
 ./.venv/bin/python experiments/t7_clifford_falsification.py # U4: falsification — t*≫t_S when a conservation law protects the record
 ./.venv/bin/python experiments/t8_expanding_universe.py     # T8: (exploratory) low-entropy past as small volume + expansion
+./.venv/bin/python experiments/t9_maxwell_demon.py          # T9: endogenous Maxwell-demon observer — active memory slaved to the gradient, with Landauer cost
+./.venv/bin/python experiments/t9_demon_universal.py        # T9b: the demon obeys the mode-matched law across substrates (gas: inherits t*≈t_S; Clifford: butterfly-limited)
 ```
 
 Every script prints its own numeric PASS/CHECK verdict and writes its figure into
