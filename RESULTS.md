@@ -47,6 +47,7 @@ Substrates: an **exactly bit-reversible Margolus lattice gas** (rigorous core) a
 | **T8** | *Exploratory* — the low-entropy past as small volume + expansion, not a fine-tuned microstate (Carroll–Chen toy) | expanding box: S rises **403→761** unbounded (no heat death) vs static **saturates**; a symmetric bounce gives a **two-headed entropy valley** from a *typical* small-volume middle — **relocates, does not dissolve**, the Past Hypothesis | ✅ demo |
 | **T9** | *Endogenous observer* — an active, reversible, **Landauer-costed** demon's memory is also slaved to the gradient (answers "your decoder is an external god's-eye") | a **fixed 1-bit** sensor + reversible CNOT tape (no per-time retrain): horizon **t\*_demon = 0.95·t_S** (κ=O(1) across 4 rates, cf. decoder 1.08); **flips** with the boundary (MI **0.01→1.00**); a cyclic demon **erases ~9 bits** to hold a 1-bit fact until t\*; an accumulate demon's best recall is **1.00 bit from a tape started at t=0** but only **0.08–0.18 bit (noise) after 3·t_S** — the boundary is a **non-renewable resource**; in **equilibrium it cannot learn** (mean MI **0.02 bit**, never reaches ½) | ✅ PASS |
 | **T9b** | *Demon universality* — the endogenous demon obeys the **mode-matched** law across substrates | **hard-disk gas** (diffusive): the fixed 1-bit demon inherits the law, t\*_demon = **0.54·t_S** (R²=0.92, per-size κ 0.52–0.68, O(1)) over **5.1×**; **Clifford** (ballistic): the fixed sensor is **butterfly-limited** — t\*_demon = **2–4 layers, flat in N** while t_S grows **4.8×** (κ_demon **0.11→0.02**), yet the **active** window read still tracks t_S (κ_active **0.77–0.93**, matching U2's 0.79) — a passive sensor lives only as long as the mode it rides | ✅ PASS |
+| **T9d** | *Demon crossover* — the mode-matched ↔ butterfly-limited transition made **continuous, on one collisionality knob, in one substrate** | hard-disk gas with geometry frozen, **only the disk radius swept**: Kn = mfp/D runs **4.8→0.11** (45×); on the dilute branch κ_demon **rises monotonically 0.37→0.73** (2.0× suppression, 2-SEM-gated) while the retrained decoder stays **O(1)** throughout; the mechanism is decoder-free: in the ballistic gas the fixed sensor's MI **dies and revives** (echo amplitude **0.96** — the pattern *advects off* the sensor and returns off the walls), collapsing monotonically to the noise floor as collisions set in (in-place modal decay, no echo); *flagged, not gated:* at blob packing **φ=0.44** the advective signature **returns** (κ_demon turns down 0.73→0.63, κ_decode detaches up 1.12→1.70 — U-shaped, echo-free) — a **rarefaction wave re-advects the record** | ✅ PASS |
 
 **Bottom line: H survives every test we could throw at it in this model** — and the
 centerpiece **t\*≈t_S** now holds in **three independent substrates** (reversible CA, continuous
@@ -62,7 +63,13 @@ demon, not an external decoder — is slaved to the same gradient and flips with
 record arrow is not an artifact of a god's-eye analyst either. Its horizon obeys the
 **mode-matched** law across substrates (T9b): a passive fixed sensor lives as long as the
 mode it rides — the thermalization time where relaxation is modal (CA, gas), only the
-butterfly time in a ballistic scrambler, where reaching t_S demands *active* decoding.
+butterfly time in a ballistic scrambler, where reaching t_S demands *active* decoding. T9d
+closes the gap between those endpoints: with the geometry frozen and **one collisionality
+knob** swept, the same fixed sensor detaches from the thermalization clock **continuously and
+monotonically** as the gas turns ballistic — and the mechanism is visible directly (ballistic
+records *advect off* the sensor and echo back; collisional records decay in place). Passive
+memory — a record that just sits there and stays readable — is a property of worlds with
+slow modes.
 
 ---
 
@@ -590,6 +597,51 @@ claim: passive record-keeping — memory that just *sits there* and stays readab
 precisely in substrates with slow hydrodynamic modes, which is where physical memories in fact
 live.
 
+### T9d — the demon's crossover: mode-matched ↔ butterfly-limited on **one knob**
+`experiments/t9d_knudsen.py` → `figures/T9d_knudsen.png`
+
+T9b established the mode-matched law as a **two-endpoint contrast** (diffusive gas vs ballistic
+Clifford). This experiment makes the transition **continuous in a single substrate**: freeze the
+gas geometry of U1/T9b exactly (box D=60, N=110 disks, self-similar blob, same coarse grid, same
+fact, same two readers) and sweep **only the disk radius**, so the Knudsen number Kn = mfp/D runs
+**4.8 → 0.11** (45×, collisionless → collisional) with nothing else touched. (In hindsight,
+T9b's size sweep at fixed R was a *hidden* Kn sweep, 0.13→0.42 — exactly the range over which its
+per-size κ drifted 0.67→0.52. T9d makes that knob explicit and controlled.)
+
+- **The crossover (gated on the dilute branch, blob packing φ ≤ 0.3).** κ_demon = t\*_demon/t_S
+  **rises monotonically 0.37 → 0.73** (2.0× suppression; monotone within 2-SEM at every step;
+  5 seeds × K=24 per condition) as the gas turns collisional, while the per-time-retrained
+  decoder stays **O(1)·t_S throughout** (κ_decode 1.7–1.1): the information is in the coarse
+  field either way — what changes is only whether a **fixed** detector can keep reading it. The
+  lattice CA (κ_demon = 0.95, T9) sits beyond the reachable collisional end, consistent with the
+  trend as the deep-modal endpoint.
+- **The mechanism, decoder-free.** In the ballistic gas the fixed sensor's MI **dies and then
+  revives** — the blob's left/right contrast *advects off* the calibrated cells, reflects off the
+  walls, and returns: a coherent echo with amplitude **0.96** in the collisionless limit. As
+  collisions set in, the echo amplitude collapses **monotonically to the estimator's noise floor**
+  (~0.2): collisional records decay *in place* (the eigenmode picture of T7e/T7f) and there is
+  nothing to come back. The revival-vs-Kn curve is the crossover seen **without any decoder**.
+- **A flagged observation, not a gated claim.** At the last reachable radius the blob's internal
+  packing hits **φ = 0.44** (a dense liquid packet), and the advective signature set **returns**:
+  κ_demon turns *down* (0.73 → 0.63, robust across 5 seeds), κ_decode detaches *upward*
+  (1.12 → 1.70 — making κ_decode **U-shaped** across the sweep: high at both advective ends,
+  minimal in the diffusive middle), and no echo appears (collisions scramble the phase). A dense
+  packet's free expansion is a **rarefaction wave** — advection by the mean flow — so the record
+  is again *carried away from* the fixed sensor rather than dissolving in place: readable to an
+  active decoder, unreadable to a passive one. One point cannot establish a law; it is plotted
+  flagged, as the natural next question (a second, hydrodynamic route to butterfly-limited
+  readout).
+
+**Take-away.** What the demon's horizon measures is not "when the information is gone" — it is
+**how long the substrate offers a slow mode for a passive memory to ride**. Sweeping one
+microscopic knob moves an *unchanged* observer continuously from butterfly-limited (κ ≈ 0.4,
+echo ≈ 1) to mode-matched (κ ≈ 0.7, echo at floor), with the active reader pinned at t_S the
+whole way. *Honest limits:* the dilute branch stops at Kn ≈ 0.14 / κ_demon ≈ 0.73, short of the
+CA's 0.95; the full-amplitude echo is a finite-box (specular-wall) coherence effect — the claim
+is its *decay* with collision rate, not its existence; t\*_demon uses the first ½-bit crossing
+(conservative — MI is symmetric, so this is genuine decorrelation); monotonicity gates use 2-SEM
+tolerances from per-seed scatter, not tuned constants.
+
 ---
 
 ## What this does NOT prove (the bill, carried over from the discussion)
@@ -675,6 +727,7 @@ python3 -m venv .venv && ./.venv/bin/pip install numpy matplotlib
 ./.venv/bin/python experiments/t8_expanding_universe.py     # T8: (exploratory) low-entropy past as small volume + expansion
 ./.venv/bin/python experiments/t9_maxwell_demon.py          # T9: endogenous Maxwell-demon observer — active memory slaved to the gradient, with Landauer cost
 ./.venv/bin/python experiments/t9_demon_universal.py        # T9b: the demon obeys the mode-matched law across substrates (gas: inherits t*≈t_S; Clifford: butterfly-limited)
+./.venv/bin/python experiments/t9d_knudsen.py               # T9d: the crossover made continuous — one collisionality knob (Kn 4.8→0.11) detaches the fixed sensor from t_S, with an advective-echo mechanism panel
 ```
 
 Every script prints its own numeric PASS/CHECK verdict and writes its figure into
