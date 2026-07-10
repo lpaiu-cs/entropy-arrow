@@ -21,6 +21,8 @@ arrow/
   entropy.py     coarse-grained Boltzmann entropy  S = Σ ln C(b², nᵢ)
   states.py      initial conditions (low-entropy blobs, microcanonical ensembles)
   harddisk.py    event-driven hard-disk gas (the intuitive companion)
+  stabilizer.py  exactly-reversible Clifford circuit (the quantum substrate; entanglement
+                 entropy + mutual information from the stabilizer check matrix)
 experiments/
   selftest.py              reversibility (bit-exact) + mixing checks
   t1_boundary.py           T1: the arrow lives in the boundary condition, not the dynamics
@@ -37,8 +39,16 @@ experiments/
   t7_scaling.py            T7: first scaling cut + shared helpers (superseded by the two below)
   t7_horizon.py            T7: the record horizon t* ≈ t_S (its lifetime IS t_thermalization)
   t7_horizon_L.py          T7: …and it is robust to system size
-  t7_redundancy_scaling.py T7: how redundancy scales with environment size (finite-size)
+  t7_redundancy_scaling.py T7: how redundancy scales with environment size (original L≤128)
+  t7_redundancy_scaling_hires.py  T7: …high-resolution retry (L→512, N=16384) → α≈1 (ideal Darwinism)
   md_companion.py          hard-disk free expansion + velocity echo
+  t7_redundancy_extrapolate.py  T7d: finite-size extrapolation of the redundancy exponent → α∞≈0.92
+  t7_md_horizon.py         U1: t* ≈ t_S in a continuous hard-disk gas (universality)
+  t7_clifford_horizon.py   U2: t* ≈ t_S in a reversible Clifford circuit (quantum universality)
+  t7_universal_check.py    U2: non-Clifford (Haar) control — the horizon law is no stabilizer artifact
+  t7_clifford_darwinism.py U3: Quantum Darwinism — record redundant under decoherence, encoded under scrambling
+  t7_clifford_falsification.py  U4: falsification — a conserved record outlives thermalization (t*≫t_S)
+  t8_expanding_universe.py T8: (exploratory) low-entropy past as small volume + expansion (Carroll–Chen toy)
   make_movie.py            renders the CA thermalize-then-exactly-un-thermalize movie
 figures/                   generated PNGs (+ the movie)
 ```
@@ -50,7 +60,9 @@ python3 -m venv .venv && ./.venv/bin/pip install numpy matplotlib
 for e in selftest t1_boundary t2_loschmidt t3_records t3_hard_readout \
          t4_two_observers t5_fork t6a_fluctuations t6b_boltzmann_brain \
          t6c_corroboration t7_ledger t7_redundancy t7_horizon t7_horizon_L \
-         t7_redundancy_scaling md_companion; do
+         t7_redundancy_scaling t7_redundancy_scaling_hires t7_redundancy_extrapolate \
+         md_companion t7_md_horizon t7_clifford_horizon t7_universal_check \
+         t7_clifford_darwinism t7_clifford_falsification t8_expanding_universe; do
     ./.venv/bin/python experiments/$e.py
 done
 ```
@@ -70,7 +82,13 @@ Boltzmann-brain catastrophe (T6). The **T7** layer turns the story quantitative:
 coarse-entropy rise is *exactly* the growth of hidden information while the microscopic
 (Gibbs) entropy is conserved to machine precision (ledger); records are stored
 **redundantly** (classical Darwinism); and — the firm, size-robust result — **the readable
-record dies exactly when entropy saturates, t\* ≈ t_S**. The felt "flow" need not be added to
-physics: a boundary condition plus reversible dynamics is enough to make memory, and
-therefore the experienced past, point down the entropy gradient. What remains unexplained is
-*why the boundary was low-entropy* — the mystery is relocated, not removed.
+record dies exactly when entropy saturates, t\* ≈ t_S**. That centerpiece is **not a lattice
+artifact**: it reproduces, with an order-one κ, in a continuous hard-disk gas and in an exactly
+reversible quantum (Clifford) circuit — and survives a non-Clifford control (U1, U2). The felt
+"flow" need not be added to physics: a boundary condition plus reversible dynamics is enough to
+make memory, and therefore the experienced past, point down the entropy gradient. Records are
+also **redundant under decoherence but encoded under scrambling** (U3, quantum Darwinism), and
+the horizon law is **falsifiable** — a conserved quantity lets a record outlive thermalization
+(U4). What remains unexplained is *why the boundary was low-entropy*; T8 explores a Carroll–Chen
+relocation (small early volume + expansion, not a fine-tuned microstate) but the mystery is
+**relocated, not removed** — the honest edge of the whole programme.
