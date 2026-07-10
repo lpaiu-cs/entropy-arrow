@@ -50,7 +50,8 @@ from t7_ledger import decode_mi
 from t7_scaling import evolve2, horizon_and_tS
 
 FIG = pathlib.Path(__file__).resolve().parents[1] / "figures"
-FIG.mkdir(exist_ok=True)
+DATA = pathlib.Path(__file__).resolve().parents[1] / "data"
+FIG.mkdir(exist_ok=True); DATA.mkdir(exist_ok=True)
 
 
 def tail_fit(t, y, lo, hi):
@@ -139,6 +140,29 @@ def main(smoke=False):
     err_t = np.median(np.abs(tstar_p / tstar - 1))
     err_S = np.median(np.abs(tS_p / tS - 1))
 
+    # OUT-OF-SAMPLE (leave-one-seed-out): predict each run's crossings from the tail
+    # parameters fitted on the OTHER seeds of the same condition -- a genuine prediction,
+    # not an in-sample reconstruction.
+    loo_t, loo_S = [], []
+    for x in rows:
+        peers = [y for y in rows if y["sc"] == x["sc"] and y["sd"] != x["sd"]]
+        if not peers:
+            continue
+        tauS_p = np.mean([y["tauS"] for y in peers]); AS_p = np.mean([y["AS"] for y in peers])
+        tauM_p = np.mean([y["tauM"] for y in peers]); AM_p = np.mean([y["AM"] for y in peers])
+        thS_p = 0.1 * Smax - np.mean([y["D_eq"] for y in peers])
+        if thS_p > 0 and AS_p > thS_p and AM_p > 0.5:
+            loo_S.append(tauS_p * np.log(AS_p / thS_p) / x["tS"] - 1)
+            loo_t.append(tauM_p * np.log(AM_p / 0.5) / x["tstar"] - 1)
+    loo_err_t = float(np.median(np.abs(loo_t))); loo_err_S = float(np.median(np.abs(loo_S)))
+
+    np.savez(DATA / "t7_mechanism.npz",
+             sc=np.array([x["sc"] for x in rows]), sd=np.array([x["sd"] for x in rows]),
+             tauS=tauS, tauM=tauM, tstar=tstar, tS=tS, tstar_pred=tstar_p, tS_pred=tS_p,
+             AS=np.array([x["AS"] for x in rows]), AM=np.array([x["AM"] for x in rows]),
+             D_eq=np.array([x["D_eq"] for x in rows]), Smax=Smax,
+             loo_err_tstar=loo_err_t, loo_err_tS=loo_err_S)
+
     # ---------------------------------------------------------------- figure
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(16.6, 5.2))
 
@@ -188,7 +212,8 @@ def main(smoke=False):
 
     print(f"\ntau_M / tau_S = {ratio.mean():.2f} ± {ratio.std():.2f}  over {len(rows)} runs "
           f"(conditions x seeds; shared-clock claim)")
-    print(f"parameter-free postdiction:  t* median err {100*err_t:.0f}%   t_S median err {100*err_S:.0f}%")
+    print(f"in-sample reconstruction:    t* median err {100*err_t:.0f}%   t_S median err {100*err_S:.0f}%")
+    print(f"out-of-sample (LOO seeds):   t* median err {100*loo_err_t:.0f}%   t_S median err {100*loo_err_S:.0f}%")
     print(f"kappa: measured {kap_meas:.2f}   predicted from fits {kap_pred:.2f}   "
           f"per-run log-ratio prediction {kap_run_pred.mean():.2f} ± {kap_run_pred.std():.2f}")
     # Shared clock = the ratio tau_M/tau_S is FLAT across conditions spanning a wide range
@@ -198,10 +223,11 @@ def main(smoke=False):
     # mode amplitudes -- relaxes at tau/2 too; what matters is that one tau underlies both.)
     shared_clock = 0.3 < ratio.mean() < 1.6 and ratio.std() / ratio.mean() < 0.35
     postdiction = err_t < 0.35 and err_S < 0.35
+    loo_ok = loo_err_t < 0.35 and loo_err_S < 0.35
     kappa_ok = abs(kap_pred - kap_meas) < 0.35
-    allok = shared_clock and postdiction and kappa_ok
+    allok = shared_clock and postdiction and loo_ok and kappa_ok
     print(f"\nT7-mechanism verdict: shared_clock(tau_M~tau_S)={shared_clock}  "
-          f"postdiction_ok={postdiction}  kappa_pred~meas={kappa_ok}")
+          f"postdiction_ok={postdiction}  out_of_sample_ok={loo_ok}  kappa_pred~meas={kappa_ok}")
     print(f"  => {'PASS (the horizon law is a one-mode theorem, not a coincidence)' if allok else 'CHECK'}")
     print(f"saved {out}")
 
