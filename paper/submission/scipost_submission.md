@@ -2,7 +2,7 @@
 
 **Target journal:** SciPost Physics (stretch; fallback: SciPost Physics Core, then PRE).
 **Manuscript:** "Mode-matched record horizons in reversible dynamics: relaxation,
-redundancy, and protected exceptions" — 14 pp, 11 figures.
+redundancy, and protected exceptions" — ~15 pp, 12 figures.
 
 > NOTE: the acceptance-criteria wording below is reconstructed from SciPost's published
 > criteria; verify the current text at https://scipost.org/SciPostPhys/about before
@@ -37,14 +37,16 @@ one-slow-mode account that reconstructs both clocks with no additional free para
 predicts held-out runs; (iii) the mode-resolved generalization — the entropy clock is
 record-independent while horizons span an order of magnitude, each record dying at its own
 mode's tau*ln(A/theta), making "lifetime = thermalization time" the supremum over relaxing
-records; and (iv) a mapped failure boundary — engineered conservation laws and, in one of
-25 disordered realizations, a *spontaneously frozen* record that stores a bit at full
-fidelity for at least 48 thermalization times (a lower bound). Concrete follow-up paths
-are opened and stated:
-the frozen-record phase diagram (classical analogue of ergodicity breaking /
-fragmentation-protected memory), the transport crossover tau(lambda) vs lambda^2/D,
-decoder hierarchies toward the information-theoretic horizon, and the corroboration
-(common-cause) program.
+records; and (iv) a mapped failure boundary — engineered conservation laws, a diagnosed
+*spontaneously frozen* record (full fidelity for at least 48 thermalization times, a
+lower bound), and — new in this work — the frozen sector's **measured incidence**: over
+798 quenched worlds it is closed at weak disorder (0/448) and opens sharply with
+scrambling rate (5.5% at 0.42, 43% at 0.50), giving the horizon law a quantified domain
+of validity. Concrete follow-up paths are opened and stated: completing the frozen-record
+phase diagram (marker geometry, density, size scaling of the onset; the classical
+analogue of ergodicity breaking / fragmentation-protected memory), the transport
+crossover tau(lambda) vs lambda^2/D, decoder hierarchies toward the information-theoretic
+horizon, and the corroboration (common-cause) program.
 
 **Secondary — "Provide a novel and synergetic link between different research areas."**
 

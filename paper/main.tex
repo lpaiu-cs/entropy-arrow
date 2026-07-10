@@ -49,7 +49,9 @@ time, attained at the boundary scale, while a non-relaxing mode escapes the cloc
 entirely. The law fails exactly where it must---an engineered conservation law decouples
 $\tstar$ from $\tS$, and one of $25$ lattice realizations does the same
 \emph{spontaneously}, storing its record in a diagnosed frozen cluster at full fidelity
-for $48\,\tS$---and records are stored redundantly,
+for $48\,\tS$; the incidence of this frozen sector is itself measured, closed at weak
+disorder ($0/448$ worlds) and opening sharply ($5.5\%$, then $43\%$) at the strongest
+scrambling rates---and records are stored redundantly,
 with effective redundancy growing as $N^{\alpha}$, $\alpha_\infty=0.92\pm0.04$
 (conservative) classically and $\alpha=1$ for quantum broadcast states. These results
 quantify the sense in which the recorded past is the direction of the entropy
@@ -118,9 +120,12 @@ law over relaxing records, attained by those written in the slowest mode.
 \item \textbf{Cross-substrate corroboration} (Sec.~\ref{sec:universality}): the
 boundary-scale proportionality reproduces in a continuous hard-disk gas and in reversible
 Clifford circuits (up to $N=128$ qubits), and survives a Haar-random statevector control.
-\item \textbf{A falsification boundary} (Sec.~\ref{sec:falsification}): the law is
-contingent on ergodicity. A conservation law protecting the record makes $\tstar$ diverge
-while $\tS$ stays finite---the extreme case of a non-relaxing mode.
+\item \textbf{A falsification boundary, with a measured incidence}
+(Secs.~\ref{sec:falsification}, \ref{sec:horizon}): the law is contingent on ergodicity.
+A conservation law protecting the record makes $\tstar$ diverge while $\tS$ stays
+finite---the extreme case of a non-relaxing mode---and the spontaneous counterpart, the
+kinetically frozen record, has a sharp disorder-driven onset: closed at weak disorder
+($0/448$ worlds), $5.5\%$ at scatter $0.42$, $43\%$ at $0.50$.
 \item \textbf{Redundancy scaling} (Sec.~\ref{sec:redundancy}): near the boundary the record
 is recoverable from any $\sim1/8$ of the environment (effective redundancy
 $R_\delta\approx8$--$10$); $R_\delta$ grows with the number of environment fragments as
@@ -272,7 +277,26 @@ than by engineering. We therefore state the horizon law as holding in $24/25$
 realizations, with the exception classified as a frozen-record sector rather than folded
 into the fit (as a point value at its lower bound $\tstar\ge T$ it would shift the
 through-origin fit to $3.0$ through a single high-leverage point); all its lifetime
-statements are lower bounds. Re-deriving both crossings from the stored curves over a grid of gate
+statements are lower bounds.
+
+Is the frozen realization a fluke? We measured its \emph{incidence}
+(Fig.~\ref{fig:incidence}): $798$ additional independent quenched worlds across six
+scrambling rates, each evolved to $T\approx8\,\tS$ and classified by the same operational
+readout (frozen: late-time MI $\ge0.8$ bit; partial/slow: $[0.3,0.8)$ bit, reported
+separately and never folded in). The frozen sector has a sharp, disorder-driven onset. It
+is closed at scatter $0.15$--$0.35$ ($0$ of $448$ worlds; $95\%$ upper bounds
+$2.5$--$3.8\%$), opens at $0.42$ ($11/200=5.5\%$, CI $[3.1,9.6]\%$---consistent with the
+$1/25$ of the horizon sweep), and reaches $43.3\%$ ($65/150$, CI $[35.7,51.3]\%$) at
+scatter $0.50$; the partial/slow population tracks the onset ($0\to3\to29\to57$ worlds),
+and at the strongest disorder $81\%$ of worlds retain significant record signal at
+$8\,\tS$. The horizon law therefore lives in a \emph{quantified} domain: across the
+disorder range where it was measured, the ergodic sector comprises $94.5$--$100\%$ of
+realizations, while stronger scrambling---which in this substrate also means slower
+transport---carries the gas into a regime where kinetically frozen records are common.
+The protected sector of Sec.~\ref{sec:falsification} is not only engineerable; it opens
+spontaneously, with a measurable rate, as a function of a single disorder knob.
+
+Re-deriving both crossings from the stored curves over a grid of gate
 conventions quantifies how convention-bound the \emph{number} $\kap$ is:
 $\kap=0.87$--$2.83$ for $\theta_S\in\{0.85,0.9\}$, $\theta_M\in\{0.25,0.5,0.75\}$ bit
 (a $\theta_S=0.95$ gate lies above the finite-size equilibrium entropy and never resolves).
@@ -317,6 +341,19 @@ all lifetime statements are lower bounds)---behaviour consistent with the
 $\tau_{\mathrm{mode}}\to\infty$ limit of Eq.~\eqref{eq:modelaw}, realized by quenched
 disorder.}
 \label{fig:anomaly}
+\end{figure*}
+
+\begin{figure*}
+\includegraphics[width=0.92\textwidth]{T7_frozen_incidence.png}
+\caption{\textbf{The frozen sector has a measured incidence with a sharp disorder-driven
+onset} ($798$ quenched worlds, $\sim100$--$200$ per scrambling rate, each evolved to
+$T\approx8\,\tS$). Left: the fraction of worlds whose record is still essentially
+perfectly readable (late MI $\ge0.8$ bit) at $T\approx8\,\tS$, with $95\%$ Wilson
+intervals and raw counts: $0/448$ at scatter $0.15$--$0.35$, $5.5\%$ at $0.42$, $43.3\%$
+at $0.50$. Right: the late-time MI distributions behind the classification---worlds pile
+up dead (left peak) or frozen (right peak), with a partial/slow band opening at the onset
+($0\to3\to29\to57$ worlds; classification thresholds dotted).}
+\label{fig:incidence}
 \end{figure*}
 
 \section{A one-slow-mode account}
@@ -722,7 +759,8 @@ order of magnitude, each set by its own mode's relaxation and amplitude, with
 ``lifetime $=$ thermalization time'' as the supremum attained by slowest-mode records;
 (v) the law fails precisely when the record is stored in a non-relaxing structure---the
 $\tau\to\infty$ limit of the same statement---whether engineered (a conservation law,
-Sec.~\ref{sec:falsification}) or spontaneous (the diagnosed frozen realization,
+Sec.~\ref{sec:falsification}) or spontaneous, and the spontaneous sector has a measured,
+sharply-onsetting incidence in disorder strength ($0/448\to5.5\%\to43\%$,
 Sec.~\ref{sec:horizon}); (vi) records are stored redundantly, with an
 effective-redundancy scaling that approaches ideal classical Darwinism and attains it in
 the noiseless quantum broadcast.
@@ -779,7 +817,11 @@ information-theoretic horizon (or tighter decoder hierarchies) to close the oper
 gap. (iii) In the corroboration direction \cite{repo}: conditioning equilibrium
 fluctuations on reproducing one half of a record and testing whether the other half
 corroborates would quantify why multiple independent records justify belief in a real
-low-entropy past---Reichenbach's common cause as a measurable statement.
+low-entropy past---Reichenbach's common cause as a measurable statement. (iv) The measured
+onset of the frozen sector invites a mechanism study: what structural change controls it,
+how the onset scales with marker geometry and system size, and how this classical sector
+relates to the broader physics of weak ergodicity breaking and fragmentation-protected
+memory.
 
 \begin{acknowledgments}
 All simulations, per-experiment numerical verdicts, the scripts generating every figure,

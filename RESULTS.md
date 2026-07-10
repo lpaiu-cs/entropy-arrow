@@ -38,6 +38,7 @@ Substrates: an **exactly bit-reversible Margolus lattice gas** (rigorous core) a
 | **T7e** | *Mechanism* — **why** t\*≈t_S: both clocks read **one slowest relaxation mode** | shared τ (τ_M/τ_S = **0.92±0.30**, flat over **7.6×**); reconstruction from (τ, A, thresholds): median err t\* **5%**, t_S **1%**; **out-of-sample (LOO seeds): t\* 19%, t_S 12%**; κ 0.98 vs 1.02 — a computable **ratio of logs** | ✅ PASS |
 | **T7f** | *Mode-resolved* — the horizon law is **mode-matched**; t\*≈t_S is its **sup over relaxing records** | stripe-phase records at λ=w/m (m=1,2,4,5): **t_S flat to 2.3%** while **t\* spans 9×** (153→17); each mode's lifetime = **τ_M·ln(A_M/θ)** to **1–5%**; three readouts agree at the slowest mode (log-offsets as predicted) | ✅ PASS |
 | **T7g** | *Anomaly diagnosed* — the 1/25 censored run is a **spontaneously frozen record** (U4's τ=∞ limit in the wild) | 87% of the signal in the marker boxes, **81% on never-move sites** (occupancy 0.93 solid / 0.07–0.15 void remnants); record still **MI=1.000 at t=12,000 ≈ 48·t_S**; a full/empty 2×2 block is a fixed point of every rule — quenched disorder stalls the marker's erosion | ✅ PASS |
+| **T7h** | *Frozen-sector incidence* — the exception has a **measured rate** with a sharp disorder-driven onset | 798 quenched worlds at T≈8·t_S: **0/448 frozen at scatter 0.15–0.35** (95% upper bounds 2.5–3.8%), **5.5%** [3.1–9.6] at 0.42 (the 1/25 recurs), **43.3%** [35.7–51.3] at 0.50; partial/slow band tracks the onset (0→3→29→57); at 0.50 **81% of worlds** retain significant record signal at 8·t_S | ✅ PASS |
 | **U1** | *Universality (classical continuum)* — the horizon law **t\*≈t_S** is not a lattice artifact | in an event-driven **hard-disk gas**, a self-similar size sweep gives **t\* = 1.00·t_S** over a **5.1×** range (t_S 14→73); per-size κ flat (1.19,1.03,0.94,0.97,1.03); record MI and entropy relaxation **collapse** under t/t_S rescaling | ✅ PASS |
 | **U1b** | *Mode-mismatch control* — decoupling the scales **destroys** the flat law, as mode-matching requires | blob+fact held at fixed absolute size while the box grows: t_S grows **5.1×** but t\* only **1.4×**; **κ drifts monotonically 1.15→0.31 (3.7×)**; at D=40 (scales coincide) κ matches the self-similar value | ✅ PASS |
 | **U2** | *Universality (quantum)* — **t\*≈t_S** in an exactly reversible **Clifford** circuit, and no stabilizer artifact | κ = **0.79** over a **6.9×** range (t_S 33→229), flat; the record MI I(R:window) and half-chain entanglement **collapse** under t/t_S; a **non-Clifford (Haar) statevector** control tracks it (κ: Clifford **0.89**, Haar **0.60** — both O(1)) | ✅ PASS |
@@ -343,6 +344,11 @@ Three follow-ups sharpen the horizon law into its defensible general form:
   (occupancy 0.93 solid / ~0.1 void remnants); the record is still perfect (MI=1.000) at
   **t=12,000 ≈ 48·t_S**. U4's τ=∞ protected limit, arising in the wild — reported as a
   classified exception (law holds in 24/25 realizations), not folded into the fit.
+- **Frozen-sector incidence (T7h).** 798 quenched worlds: the sector is **closed** at
+  scatter 0.15–0.35 (0/448), **opens** at 0.42 (5.5%, the diagnosed 1/25 recurs), and
+  reaches **43%** at 0.50 — a sharp disorder-driven onset, with the partial/slow band
+  tracking it. The horizon law's ergodic domain is now quantified, and the frozen sector
+  is a measurable phenomenon (the seed of the phase-diagram follow-up), not an anecdote.
 - **Mode-mismatch control (U1b).** In the hard-disk gas, holding the blob fixed while the box
   grows decouples the scales: t_S grows 5.1× while t\* changes 1.4×, so **κ drifts 1.15→0.31**
   instead of staying flat — the flat law is destroyed exactly when mode matching is broken,

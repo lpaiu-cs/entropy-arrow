@@ -15,8 +15,10 @@ held-out runs; a mode-resolved experiment showing the general law is mode-matche
 entropy clock is record-independent while horizons span an order of magnitude, so
 "record lifetime = thermalization time" is the supremum over relaxing records; and a
 mapped failure boundary, including a diagnosed realization in which quenched disorder
-spontaneously freezes a record, which remains at full fidelity for at least 48
-thermalization times.
+spontaneously freezes a record (still at full fidelity after 48 thermalization times) —
+and a measurement of that frozen sector's incidence over 798 quenched worlds: closed at
+weak disorder, opening sharply to 5.5% and then 43% at the strongest scrambling rates, so
+the horizon law comes with a quantified domain of validity.
 
 I believe the work meets SciPost Physics's expectation of opening a new pathway with
 clear multipronged follow-up (frozen-record phase diagrams and their relation to

@@ -46,6 +46,8 @@ experiments/
                            t*≈t_S is the sup over relaxing records
   t7_anomaly.py            T7: the 1/25 censored horizon run diagnosed — a spontaneously
                            FROZEN record (solid marker remnant; MI=1.0 at 48·t_S; U4 in the wild)
+  t7_frozen_incidence.py   T7: the frozen sector has a MEASURED incidence — closed at weak
+                           disorder (0/448), sharp onset: 5.5% at scatter 0.42, 43% at 0.50
   t7_redundancy_scaling.py T7: how redundancy scales with environment size (original L≤128)
   t7_redundancy_scaling_hires.py  T7: …high-resolution retry (L→512, N=16384) → α≈1 (ideal Darwinism)
   md_companion.py          hard-disk free expansion + velocity echo
@@ -69,7 +71,7 @@ python3 -m venv .venv && ./.venv/bin/pip install numpy matplotlib
 for e in selftest t1_boundary t2_loschmidt t3_records t3_hard_readout \
          t4_two_observers t5_fork t6a_fluctuations t6b_boltzmann_brain \
          t6c_corroboration t7_ledger t7_redundancy t7_horizon t7_horizon_L \
-         t7_mechanism t7_mode_resolved t7_anomaly t7_redundancy_scaling \
+         t7_mechanism t7_mode_resolved t7_anomaly t7_frozen_incidence t7_redundancy_scaling \
          t7_redundancy_scaling_hires t7_redundancy_extrapolate \
          md_companion t7_md_horizon t7_md_mismatch t7_clifford_horizon t7_universal_check \
          t7_clifford_darwinism t7_clifford_falsification t8_expanding_universe; do
