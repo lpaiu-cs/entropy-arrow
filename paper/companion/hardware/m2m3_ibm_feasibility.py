@@ -29,35 +29,38 @@ def _init(Nsys):
 
 # ------------------------------------------------------------ M2: window sweep + adaptive
 def m2(Nsys=9, depth=26, p2=0.003, seed=3, ks=(1, 2, 3, 4, 6)):
-    rng = np.random.default_rng(seed); p1 = p2 / 10
+    rng = np.random.default_rng(seed); p1 = p2 / 10        # local generator, threaded into haar1(rng)
     rho, n, R = _init(Nsys)
     ts = [0]; curves = {k: [I2(rho, [R], list(range(k)), n)] for k in ks}
     for L in range(1, depth + 1):
         for i in range(L % 2, Nsys - 1, 2):
-            rho = apply_1q(rho, haar1(), i, n); rho = depol1(rho, i, n, p1)
-            rho = apply_1q(rho, haar1(), i + 1, n); rho = depol1(rho, i + 1, n, p1)
+            rho = apply_1q(rho, haar1(rng), i, n); rho = depol1(rho, i, n, p1)
+            rho = apply_1q(rho, haar1(rng), i + 1, n); rho = depol1(rho, i + 1, n, p1)
             rho = apply_2q(rho, CZ, i, i + 1, n); rho = depol2(rho, i, i + 1, n, p2)
         ts.append(L)
         for k in ks: curves[k].append(I2(rho, [R], list(range(k)), n))
     ts = np.array(ts)
-    # adaptive window w(t) = min(ceil(v_B t)+1, max k), v_B~0.22 -> track light cone
+    # adaptive window w(t) = min(ceil(v_B t)+1, max k), v_B~0.22 -> track the light cone. On a tie
+    # between two available windows (e.g. w=5 is equidistant from ks=4 and 6) prefer the LARGER one:
+    # a window of size w survives to t*_p(w)~w/v_B, so the smaller window would die first and make
+    # the "active" curve dip below the 1-bit record it is meant to keep. Tie-break with -k.
     vB = 0.22
     adaptive = []
     for j, t in enumerate(ts):
         w = min(max(1, int(np.ceil(vB * t)) + 1), max(ks))
-        kk = min(ks, key=lambda k: abs(k - w))
+        kk = min(ks, key=lambda k: (abs(k - w), -k))
         adaptive.append(curves[kk][j])
     return ts, {k: np.array(v) for k, v in curves.items()}, np.array(adaptive)
 
 
 # ------------------------------------------------------------ M3-echo: Loschmidt recovery
 def m3_echo(Nsys=9, depth=14, p2=0.003, seed=3):
-    rng = np.random.default_rng(seed); p1 = p2 / 10
+    rng = np.random.default_rng(seed); p1 = p2 / 10        # local generator, threaded into haar1(rng)
     rho, n, R = _init(Nsys)
     fwd = []                                   # record ideal forward SU(2) gates to invert
     for L in range(1, depth + 1):
         for i in range(L % 2, Nsys - 1, 2):
-            ua, ub = haar1(), haar1()
+            ua, ub = haar1(rng), haar1(rng)
             rho = apply_1q(rho, ua, i, n); rho = depol1(rho, i, n, p1)
             rho = apply_1q(rho, ub, i + 1, n); rho = depol1(rho, i + 1, n, p1)
             rho = apply_2q(rho, CZ, i, i + 1, n); rho = depol2(rho, i, i + 1, n, p2)

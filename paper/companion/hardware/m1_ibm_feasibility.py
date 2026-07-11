@@ -22,8 +22,11 @@ CZ = np.diag([1, 1, 1, -1]).astype(complex)
 I2X2 = np.eye(2, dtype=complex)
 
 
-def haar1():
-    z = (rng.standard_normal((2, 2)) + 1j * rng.standard_normal((2, 2))) / np.sqrt(2)
+def haar1(gen=None):
+    """Haar-random SU(2). Draws from `gen` if given, else the module-global `rng` (so callers can
+    thread their own generator instead of mutating the global -- run() below uses the default)."""
+    g = rng if gen is None else gen
+    z = (g.standard_normal((2, 2)) + 1j * g.standard_normal((2, 2))) / np.sqrt(2)
     q, r = np.linalg.qr(z); return q * (np.diag(r) / np.abs(np.diag(r)))
 
 

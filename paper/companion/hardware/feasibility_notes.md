@@ -55,13 +55,13 @@ Higher-fidelity all-to-all hardware (trapped ions) needs fewer shots (less avera
 `m2m3_ibm_feasibility.py`, same hardware-efficient brickwork + device noise:
 - **M2 (passive/active split).** One window sweep: fixed passive readers die at
   $t^*_p(k)\approx 2, 4.6, 14.8$ CZ for $k=1,2,4$, while the light-cone-tracking adaptive reader
-  keeps the record ($I_2\ge0.80$ to depth 26) — the $\mathcal{O}(N)$ separation. No extra circuitry
+  keeps the record ($I_2\ge1.16$ to depth 26) — the $\mathcal{O}(N)$ separation. No extra circuitry
   beyond M1 (`m1_qiskit.py` with a window sweep). Figure `figures/m2_ibm.png`.
 - **M3-echo (perspectival control).** Loschmidt echo (forward $U$ + `U.inverse()`), recovery read
   by the $R$–$q_0$ Bell correlators $\langle ZZ\rangle,\langle XX\rangle$ — **no mid-circuit
-  measurement**, but $2t$ gate depth. Recovery survives noise (exact $N=9$): $I_2(R{:}q_0)=1.81$
-  bit to echo depth 10 at Heron (0.3%), $1.24$ at 1%, while the passive read decays to $\sim0.15$ — a
-  clear perspectival gap at roughly half M1's useful depth (recovery $1.07$ bit even at depth 12, 1%). Artifact `hardware/m3_echo_qiskit.py`
+  measurement**, but $2t$ gate depth. Recovery survives noise (exact $N=9$): $I_2(R{:}q_0)=1.75$
+  bit to echo depth 10 at Heron (0.3%), $1.26$ at 1%, while the passive read stays $\sim0.3$ — a
+  clear perspectival gap at roughly half M1's useful depth (recovery $1.04$ bit even at depth 12, 1%). Artifact `hardware/m3_echo_qiskit.py`
   (uses `QuantumCircuit.inverse()` for exact $U^\dagger$). Figure `figures/m3_ibm.png`.
 - The full Yoshida--Kitaev decoder (M3, radiation recovery without source-reversal) doubles the
   qubits + needs post-selection — a high-fidelity all-to-all (trapped-ion) target, Phase 4+.

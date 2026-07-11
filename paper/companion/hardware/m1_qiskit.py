@@ -21,31 +21,13 @@ import numpy as np
 
 try:
     from qiskit import QuantumCircuit, transpile
-    from qiskit.circuit.library import UGate
 except Exception as e:                       # allow import for inspection without qiskit
     QuantumCircuit = None
     print("qiskit not available -- this file is the hardware artifact; install qiskit to run.", e)
 
-NATIVE_BASIS = ["cz", "sx", "rz", "x", "id"]      # IBM Heron/Eagle native set
-
-
-def _rand_su2_angles(rng):
-    """Random SU(2) as Euler angles (theta, phi, lam) for a U gate ~ Haar."""
-    theta = 2 * np.arccos(np.sqrt(rng.random()))
-    phi = 2 * np.pi * rng.random(); lam = 2 * np.pi * rng.random()
-    return theta, phi, lam
-
-
-def scrambler(N, depth, seed):
-    """Hardware-efficient brickwork on a line of N qubits: per bond, random SU(2) on both then CZ."""
-    qc = QuantumCircuit(N, name=f"scr_d{depth}")
-    rng = np.random.default_rng(seed)
-    for L in range(1, depth + 1):
-        for i in range(L % 2, N - 1, 2):
-            for q in (i, i + 1):
-                qc.u(*_rand_su2_angles(rng), q)
-            qc.cz(i, i + 1)
-    return qc
+# Native basis, Haar SU(2), the brickwork scrambler, and the linear-line transpile are shared with
+# m3_echo_qiskit via _ibm_common so the two artifacts cannot drift apart.
+from _ibm_common import NATIVE_BASIS, _rand_su2_angles, scrambler, transpile_ibm
 
 
 def m1_circuit(N, depth, k, seed, meas_seed, window_from_edge=True):
@@ -91,14 +73,6 @@ def renyi2_MI_from_counts(shots_R, shots_W, shots_RW, kW):
     def S2(shots, nq):
         p = _purity_from_rm(shots, nq); return -np.log2(max(p, 1e-12))
     return S2(shots_R, 1) + S2(shots_W, kW) - S2(shots_RW, kW + 1)
-
-
-# --------------------------------------------------------------------------- IBM transpilation
-def transpile_ibm(qc, N):
-    """Linear coupling map (a heavy-hex line) + IBM native basis. No routing SWAPs for a chain."""
-    coupling = [[i, i + 1] for i in range(N)] + [[i + 1, i] for i in range(N)]   # 0..N-1 sys + R=N on q0's side
-    return transpile(qc, basis_gates=NATIVE_BASIS, coupling_map=coupling,
-                     optimization_level=1, seed_transpiler=0)
 
 
 def native_cz_depth(N, depth):

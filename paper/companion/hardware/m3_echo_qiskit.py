@@ -23,23 +23,9 @@ except Exception as e:
     QuantumCircuit = None
     print("qiskit not available -- hardware artifact; install qiskit to run.", e)
 
-NATIVE_BASIS = ["cz", "sx", "rz", "x", "id"]
-
-
-def _rand_su2_angles(rng):
-    theta = 2 * np.arccos(np.sqrt(rng.random()))
-    return theta, 2 * np.pi * rng.random(), 2 * np.pi * rng.random()
-
-
-def scrambler(N, depth, seed):
-    qc = QuantumCircuit(N, name=f"U_d{depth}")
-    rng = np.random.default_rng(seed)
-    for L in range(1, depth + 1):
-        for i in range(L % 2, N - 1, 2):
-            for q in (i, i + 1):
-                qc.u(*_rand_su2_angles(rng), q)
-            qc.cz(i, i + 1)
-    return qc
+# Native basis, the brickwork scrambler, and the linear-line transpile are shared with m1_qiskit via
+# _ibm_common so the two artifacts cannot drift apart. (NATIVE_BASIS is re-exported for m3_echo_run.)
+from _ibm_common import NATIVE_BASIS, scrambler, transpile_ibm
 
 
 def m3_echo_circuit(N, depth, seed, basis="Z", echo=True):
@@ -48,7 +34,7 @@ def m3_echo_circuit(N, depth, seed, basis="Z", echo=True):
     qc = QuantumCircuit(N + 1, 2)
     R = N
     qc.h(R); qc.cx(R, 0)                                  # plant the fact
-    U = scrambler(N, depth, seed)
+    U = scrambler(N, depth, seed, name="U")
     qc.compose(U, qubits=range(N), inplace=True)
     if echo:
         qc.compose(U.inverse(), qubits=range(N), inplace=True)   # exact U^dagger
@@ -75,12 +61,6 @@ def recovery_MI(zz, xx):
     `abs()` discards coherent phase flips. Do NOT label plots/text "I2(R:q0)"; call it a recovery
     witness, OR replace with a real randomized-measurement Renyi-2 MI before any publication."""
     return abs(zz) + abs(xx)
-
-
-def transpile_ibm(qc, N):
-    coupling = [[i, i + 1] for i in range(N)] + [[i + 1, i] for i in range(N)]
-    return transpile(qc, basis_gates=NATIVE_BASIS, coupling_map=coupling,
-                     optimization_level=1, seed_transpiler=0)
 
 
 def demo():
