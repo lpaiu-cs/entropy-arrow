@@ -47,8 +47,10 @@ authoring machine), or `latexmk -pdf main`.
   (free Open Plan, job mode). **M1** (9-qubit line, 280 circuits): passive memory horizon
   $t^*_p(k)=2.9,4.5,7.6$ CZ for $k=1,2,3$, $\vB\approx0.32$ (`m1_result_hw.json`,
   `m1_hardware.png`, Fig. 9). **M3-echo — the perspectival demonstration (PRL lever)** (24
-  circuits): a reversible Loschmidt echo recovers the fact ($I_2(R{:}q_0)\!:1.86\!\to\!1.42$ bits
-  to $2t{=}20$ CZ) while the passive read loses it ($1.87\!\to\!0.33$) — gap 1.09 bit, the
+  circuits): a reversible Loschmidt echo recovers the fact (sign-blind Bell-correlator recovery
+  witness $\mathcal{W}=|\langle ZZ\rangle|+|\langle XX\rangle|\!:1.86\!\to\!1.42$ to $2t{=}20$ CZ)
+  while the passive read loses it ($1.87\!\to\!0.33$) — gap 1.09 in the witness (a positively-biased
+  proxy for the Rényi-2 MI, not measured bits), the
   memory horizon shown observer-dependent, not thermodynamic (`m3_result_hw.json`,
   `m3_hardware.png`, Fig. 10, run via `hardware/m3_echo_run.py`). Pipeline
   `hardware/m1_ibm_run.py` (`qiskit-ibm-runtime` 0.47, **job mode** — Open Plan forbids Session):
@@ -64,9 +66,13 @@ authoring machine), or `latexmk -pdf main`.
 ## Known issues (from a 2026-07 adversarial referee/literature/red-team review) — FIX BEFORE SUBMISSION
 An honest re-review corrected an earlier inflated "PRL candidate" self-assessment. **Honest tier: PRX
 Quantum / SciPost, not PRL/Nature Physics.** Must fix:
-1. **M3 recovery metric is mislabeled.** `recovery_MI = |<ZZ>|+|<XX>|` is a sign-blind correlator
-   witness, NOT the mutual information it is called ("I2(R:q0)") in text/figures. Rename to a
-   recovery witness or re-measure a real randomized-measurement Rényi-2 MI.
+1. **M3 recovery metric is mislabeled.** ~~`recovery_MI = |<ZZ>|+|<XX>|` is a sign-blind correlator
+   witness, NOT the mutual information it is called ("I2(R:q0)") in text/figures.~~ **FIXED
+   (2026-07):** the *hardware* M3 quantity is now labeled a Bell-correlator recovery witness
+   $\mathcal{W}\in[0,2]$ (a positively-biased proxy for the Rényi-2 MI, "not measured bits") in the
+   text and Fig. 10 caption. The M3-echo *feasibility* figure (density-matrix) uses the real Rényi-2
+   MI, so it keeps the $I_2$ label. (The helper is still named `recovery_MI` internally with a FIXME;
+   a real randomized-measurement Rényi-2 MI on hardware remains future work.)
 2. **v_B is a 2-point slope with ~34% error** and does not reproduce at low statistics (a 6-basis
    re-run gives non-monotonic t*_p, v_B=0.13±13). Give real error bars over k≥4 and show reproducibility.
 3. **M3 is a Loschmidt echo (`QuantumCircuit.inverse()`), not a Bennett/Yoshida–Kitaev decoder** — the

@@ -267,11 +267,14 @@ first measurement of a butterfly velocity from a purely \emph{memory-theoretic} 
 
 \emph{Perspectival demonstration (M3).} On the same processor we measured the perspectival gap
 directly [Fig.~\ref{fig:hw3}]: for a range of scrambling depths, we compare a passive $Z/X$ read of
-$q_{0}$ (recovery $\I_{2}(R{:}q_{0})$ from the $R$--$q_{0}$ Bell correlators) with a reversible
-Loschmidt echo ($U$ then $U^{\dagger}$, then the same read). The passive recovery decays with depth
-($1.87\to0.33$ bits) as the fact leaves $q_{0}$, while the echo \emph{recovers} it and holds
-($1.86\to1.42$ bits) even at $2t=20$ CZ layers---a gap of $1.09$ bits at the largest depth. The
-same physical record is thus recovered or not depending only on whether the observer is reversible:
+$q_{0}$ with a reversible Loschmidt echo ($U$ then $U^{\dagger}$, then the same read). Recovery is
+scored by a sign-blind Bell-correlator witness $\mathcal{W}\equiv|\langle Z_{R}Z_{q_{0}}\rangle|+
+|\langle X_{R}X_{q_{0}}\rangle|\in[0,2]$ ($\mathcal{W}{=}2$ for a recovered Bell pair); it coincides
+with the Rényi-2 mutual information only for the ideal stabilizer state and is a positively-biased
+proxy on the noisy device, so we report it as a recovery witness, not as measured bits of MI. The
+passive witness decays with depth ($\mathcal{W}:1.87\to0.33$) as the fact leaves $q_{0}$, while the
+echo \emph{recovers} it and holds ($1.86\to1.42$) even at $2t=20$ CZ layers---a gap of $1.09$ at the
+largest depth. The same physical record is thus recovered or not depending only on whether the observer is reversible:
 the memory horizon is observer-dependent, not thermodynamic, measured on a quantum processor. This
 is the experimental payoff of the no-go, and---since the reversible and passive strategies act on
 one identical scrambled state---a direct, counterintuitive test rather than an interpretation.
@@ -320,10 +323,12 @@ size $k$, giving $\vB\approx0.32$---a butterfly velocity from a purely memory-th
 \begin{figure}[t]
 \includegraphics[width=\columnwidth]{m3_hardware.png}
 \caption{\label{fig:hw3}\textbf{M3 on real hardware}---the perspectival gap, measured (IBM Heron
-\texttt{ibm\_marrakesh}, 24 circuits). A reversible Loschmidt-echo decoder recovers the fact
-($\I_{2}(R{:}q_{0})$ holding at $1.86\to1.42$ bits) while a passive local read of $q_{0}$ loses it
-($1.87\to0.33$); the growing gap is the perspectival signal---the same record, recovered iff the
-observer is reversible. The echo runs $2t$ deep, yet the recovery survives to $2t=20$ CZ layers.}
+\texttt{ibm\_marrakesh}, 24 circuits). A reversible Loschmidt-echo decoder recovers the fact (the
+sign-blind Bell-correlator recovery witness $\mathcal{W}=|\langle ZZ\rangle|+|\langle XX\rangle|\in
+[0,2]$ holding at $1.86\to1.42$) while a passive local read of $q_{0}$ loses it ($1.87\to0.33$); the
+growing gap is the perspectival signal---the same record, recovered iff the observer is reversible.
+$\mathcal{W}$ is a positively-biased proxy for the R\'enyi-2 MI on the noisy device, not measured
+bits. The echo runs $2t$ deep, yet the recovery survives to $2t=20$ CZ layers.}
 \end{figure}
 
 \section{Discussion}
