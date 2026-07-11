@@ -24,14 +24,15 @@ $p_1=p_2/10$, $N_{\rm sys}=9$:
 | 2q error $p_2$ | $t^*_p(k{=}1,2,3,4)$ | $v_B$ | $I_2(R{:}{\rm sys})$ @ depth 30 |
 |---|---|---|---|
 | 0% (ideal)     | 3.0, 4.6, 9.9, 16.5 | 0.22 | 2.00 |
-| **0.3% (Heron)** | 2.0, 4.5, 9.6, **14.7** | 0.23 | **1.91** |
-| 0.5%           | 2.0, 4.5, 9.5, 14.4 | 0.24 | 1.85 |
-| 1.0% (Eagle)   | 2.0, 4.4, 9.1, 12.8 | 0.27 | 1.66 |
+| **0.3% (Heron)** | 2.0, 4.6, 9.7, **14.8** | 0.23 | **1.98** |
+| 0.5%           | 2.0, 4.5, 9.6, 14.6 | 0.23 | 1.97 |
+| 1.0% (Eagle)   | 2.0, 4.5, 9.3, 14.1 | 0.24 | 1.89 |
 
-- **The horizon location $t^*_p(k)$ is noise-robust**: it compresses only ~10–22% from ideal to
-  1% error; the linear-in-$k$ law survives (Fig. `m1_ibm.png`).
-- **The global record survives on-chip**: $I_2(R{:}{\rm system})\ge1.66$ even at 1% over depth 30.
-- **$v_B$ has a mild noise-induced bias** (0.22→0.27 at 1%). Mitigate with (i) zero-noise
+- **The horizon location $t^*_p(k)$ is noise-robust**: the resolvable $k\ge2$ horizons compress only
+  $\lesssim15\%$ from ideal to 1% error (the $k{=}1$ point, a single coarse crossing, is the most
+  noise-sensitive); the linear-in-$k$ law survives (Fig. `m1_ibm.png`).
+- **The global record survives on-chip**: $I_2(R{:}{\rm system})\ge1.89$ even at 1% over depth 30.
+- **$v_B$ has a mild noise-induced bias** (0.22→0.24 at 1%). Mitigate with (i) zero-noise
   extrapolation / measurement-error mitigation, and (ii) the **OTOC cross-check** of $v_B$ on the
   same device (an independent operator-front measurement); M1's $1/{\rm slope}$ must agree.
 
@@ -53,14 +54,14 @@ Higher-fidelity all-to-all hardware (trapped ions) needs fewer shots (less avera
 ## M2 and M3-echo (same device, next stages)
 `m2m3_ibm_feasibility.py`, same hardware-efficient brickwork + device noise:
 - **M2 (passive/active split).** One window sweep: fixed passive readers die at
-  $t^*_p(k)\approx 2, 4.5, 15$ CZ for $k=1,2,4$, while the light-cone-tracking adaptive reader
-  keeps the record to the scrambling time — the $\mathcal{O}(N)$ separation. No extra circuitry
+  $t^*_p(k)\approx 2, 4.6, 14.8$ CZ for $k=1,2,4$, while the light-cone-tracking adaptive reader
+  keeps the record ($I_2\ge0.80$ to depth 26) — the $\mathcal{O}(N)$ separation. No extra circuitry
   beyond M1 (`m1_qiskit.py` with a window sweep). Figure `figures/m2_ibm.png`.
 - **M3-echo (perspectival control).** Loschmidt echo (forward $U$ + `U.inverse()`), recovery read
   by the $R$–$q_0$ Bell correlators $\langle ZZ\rangle,\langle XX\rangle$ — **no mid-circuit
-  measurement**, but $2t$ gate depth. Recovery survives noise (exact $N=9$): $I_2(R{:}q_0)=1.76$
-  bit to echo depth 10 at Heron (0.3%), $1.09$ at 1%, while the passive read decays to $0.13$ — a
-  clear perspectival gap at roughly half M1's useful depth (echo fails past depth $\sim11$ at 1%). Artifact `hardware/m3_echo_qiskit.py`
+  measurement**, but $2t$ gate depth. Recovery survives noise (exact $N=9$): $I_2(R{:}q_0)=1.81$
+  bit to echo depth 10 at Heron (0.3%), $1.24$ at 1%, while the passive read decays to $\sim0.15$ — a
+  clear perspectival gap at roughly half M1's useful depth (recovery $1.07$ bit even at depth 12, 1%). Artifact `hardware/m3_echo_qiskit.py`
   (uses `QuantumCircuit.inverse()` for exact $U^\dagger$). Figure `figures/m3_ibm.png`.
 - The full Yoshida--Kitaev decoder (M3, radiation recovery without source-reversal) doubles the
   qubits + needs post-selection — a high-fidelity all-to-all (trapped-ion) target, Phase 4+.

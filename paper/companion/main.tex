@@ -235,8 +235,8 @@ in OTOC experiments; the Yoshida--Kitaev decoder recovers from the radiation wit
 growing passive cost, on one device, shows the memory horizon is observer-dependent, not
 thermodynamic---the experimental payoff of the no-go. The echo needs no mid-circuit measurement but
 runs forward-and-back ($2t$ gate depth); a device-noise study [Fig.~\ref{fig:m3ibm}] shows the
-recovery survives---$\I_{2}(R{:}q_{0})=1.76$ bit to echo depth $10$ at Heron rates ($1.09$ at
-$1\%$) while the passive read decays to $0.13$---so the perspectival gap is a clear near-term
+recovery survives---$\I_{2}(R{:}q_{0})=1.81$ bit to echo depth $10$ at Heron rates ($1.24$ at
+$1\%$) while the passive read decays to $\sim0.15$---so the perspectival gap is a clear near-term
 signal, at roughly half the useful depth of M1.
 
 \emph{Feasibility.} Figure~\ref{fig:noise} shows the budget is set by decoherence: the experiment
@@ -247,9 +247,9 @@ $t^{*}_{p}(k)$ is resolved. A device-specific study confirms M1 is realizable no
 single-qubit gates per bond, so a linear chain embeds in heavy-hex with no routing overhead) and
 the Rényi-2 mutual information estimated by randomized measurements~\cite{brydges2019}, the
 passive horizon $t^{*}_{p}(k)$ is resolvable to $k=4$ at $N\sim9$--$13$ qubits, depth $\sim15$ CZ,
-across the full IBM two-qubit error range ($0.3$--$1\%$): the horizon location shifts by only
-$\sim10$--$22\%$ and the global record survives on-chip ($I_{2}(R{:}\mathrm{system})\ge1.66$ at
-depth 30 even for $1\%$). The butterfly velocity carries a mild noise bias, mitigated by
+across the full IBM two-qubit error range ($0.3$--$1\%$): the resolvable $k\ge2$ horizons shift by
+only $\lesssim15\%$ (the $k{=}1$ point, a single coarse crossing, is the most noise-sensitive) and
+the global record survives on-chip ($I_{2}(R{:}\mathrm{system})\ge1.89$ at depth 30 even for $1\%$). The butterfly velocity carries a mild noise bias, mitigated by
 zero-noise extrapolation and the independent OTOC cross-check. The IBM open (free) plan suffices
 for this first stage; a randomized-measurement horizon scan costs $\sim10^{7}$ shots. M3-YK, with
 its qubit doubling and post-selection, is a high-fidelity (trapped-ion) target.
@@ -303,7 +303,7 @@ $\mathcal{O}(N)$ passive/active separation from one window sweep.}
 \begin{figure}[t]
 \includegraphics[width=\columnwidth]{m3_ibm.png}
 \caption{\label{fig:m3ibm}\textbf{M3-echo on IBM-native circuits.} A reversible (Loschmidt) decoder
-recovers the fact ($\I_{2}(R{:}q_{0})>1.7$ bit to echo depth 10 at Heron rates) while the passive
+recovers the fact ($\I_{2}(R{:}q_{0})=1.81$ bit to echo depth 10 at Heron rates) while the passive
 read of $q_{0}$ decays to $\sim0.1$: the perspectival gap survives realistic noise. The echo runs
 $2t$ deep, so its useful depth is roughly half M1's.}
 \end{figure}

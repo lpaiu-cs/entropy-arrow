@@ -11,12 +11,13 @@ M3-echo: Loschmidt echo -- forward U(t) (noisy) then the exact inverse U^dagger 
     We find the max echo depth at IBM error rates.
 """
 
+import os
 import numpy as np
 import sys
-sys.path.insert(0, r"C:/Users/lpaiu/AppData/Local/Temp/claude/E--lab-entropy-arrow/30a5eb66-4513-44dd-96c0-3d0d45b958a5/scratchpad")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))   # m1_ibm_feasibility is next to this file
 from m1_ibm_feasibility import (apply_1q, apply_2q, depol1, depol2, ptrace, renyi2, I2, CZ, haar1)
 
-OUT = r"C:/Users/lpaiu/AppData/Local/Temp/claude/E--lab-entropy-arrow/30a5eb66-4513-44dd-96c0-3d0d45b958a5/scratchpad"
+OUT = os.path.dirname(os.path.abspath(__file__))   # save next to this script (repo-relative)
 
 
 def _init(Nsys):

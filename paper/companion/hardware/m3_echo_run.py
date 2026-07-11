@@ -70,9 +70,10 @@ def run(cfg, backend=None, dry=False):
     from qiskit_ibm_runtime import SamplerV2
     line = pick_line(backend, cfg["N"] + 1)
     is_local = "fake" in backend.name.lower()
-    print(f"backend {backend.name}; line {line}  ({'LOCAL/fake' if is_local else 'HARDWARE'})",
-          flush=True)
-    pm = generate_preset_pass_manager(backend=backend, optimization_level=1, initial_layout=line)
+    layout = list(line[1:]) + [line[0]]              # R=line[0] adjacent to q0=line[1]; chain on line[1:]
+    print(f"backend {backend.name}; line {line} (R@{line[0]} next to q0@{line[1]})  "
+          f"({'LOCAL/fake' if is_local else 'HARDWARE'})", flush=True)
+    pm = generate_preset_pass_manager(backend=backend, optimization_level=1, initial_layout=layout)
     isa = [pm.run(qc) for (_, _, _, qc) in jobs]
     sampler = SamplerV2(mode=backend)                    # job mode: Open-Plan compatible
     try:

@@ -14,10 +14,12 @@ shot-budget section (analytic). A linear chain embeds in IBM heavy-hex with NO r
 CZ count is not inflated by routing.
 """
 
+import os
 import numpy as np
 
 rng = np.random.default_rng(3)
 CZ = np.diag([1, 1, 1, -1]).astype(complex)
+I2X2 = np.eye(2, dtype=complex)
 
 
 def haar1():
@@ -48,11 +50,15 @@ def depol1(rho, q, n, p):
 
 
 def depol2(rho, i, j, n, p):
+    """2-qubit depolarizing: (1-p) rho + (p/15) sum over the 15 NON-identity 2q Paulis.
+    Trace-preserving. (Bug fix: the identity-identity term must be excluded; a fresh np.eye(2)
+    never `is` the tuple's np.eye(2), so the old `is`-check let II leak in and inflated the trace.)"""
     if p <= 0: return rho
+    paulis = (X, Y, Z, I2X2)
     acc = rho * (1 - p)
-    for P in (X, Y, Z, np.eye(2)):
-        for Q in (X, Y, Z, np.eye(2)):
-            if P is np.eye(2) and Q is np.eye(2): continue
+    for a, P in enumerate(paulis):
+        for c, Q in enumerate(paulis):
+            if a == 3 and c == 3: continue          # skip identity x identity
             acc = acc + (p / 15) * apply_1q(apply_1q(rho, P, i, n), Q, j, n)
     return acc
 
@@ -107,7 +113,7 @@ if __name__ == "__main__":
     Nsys, depth, ks = 9, 30, (1, 2, 3, 4)
     print("=== M1 on IBM-efficient brickwork (1 CZ/gate), Renyi-2 MI, exact noisy DM ===")
     print("IBM 2q error: Heron ~0.3%, Eagle ~1%. Sweeping p2.")
-    OUT = r"C:/Users/lpaiu/AppData/Local/Temp/claude/E--lab-entropy-arrow/30a5eb66-4513-44dd-96c0-3d0d45b958a5/scratchpad"
+    OUT = os.path.dirname(os.path.abspath(__file__))   # save next to this script (repo-relative)
     store = {}
     for p2 in (0.0, 0.003, 0.005, 0.01):
         t0 = time.time()

@@ -218,9 +218,13 @@ def run(cfg, backend=None, dry=False):
     is_local = "fake" in backend.name.lower() \
         or backend.__class__.__module__.startswith("qiskit_ibm_runtime.fake_provider")
     line = pick_line(backend, N + 1)
-    print(f"backend {backend.name}; qubit line {line}  ({'LOCAL/fake' if is_local else 'HARDWARE'})",
-          flush=True)
-    pm = generate_preset_pass_manager(backend=backend, optimization_level=1, initial_layout=line)
+    # logical order is [system 0..N-1, R=N]; the circuit does cx(R, q0) and the scrambler is a
+    # chain on 0..N-1, so map the system chain to line[1:] and the reference R to line[0], which
+    # is adjacent to q0=line[1] -- no routing SWAP for the Bell prep or the chain.
+    layout = list(line[1:]) + [line[0]]
+    print(f"backend {backend.name}; line {line} (R@{line[0]} next to q0@{line[1]})  "
+          f"({'LOCAL/fake' if is_local else 'HARDWARE'})", flush=True)
+    pm = generate_preset_pass_manager(backend=backend, optimization_level=1, initial_layout=layout)
     isa = [pm.run(qc) for (_, _, qc) in jobs]
 
     sampler = SamplerV2(mode=backend)                      # job mode: Open-Plan compatible
