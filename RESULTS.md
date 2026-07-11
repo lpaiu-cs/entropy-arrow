@@ -47,6 +47,7 @@ Substrates: an **exactly bit-reversible Margolus lattice gas** (rigorous core) a
 | **T8** | *Exploratory* — the low-entropy past as small volume + expansion, not a fine-tuned microstate (Carroll–Chen toy) | expanding box: S rises **403→761** unbounded (no heat death) vs static **saturates**; a symmetric bounce gives a **two-headed entropy valley** from a *typical* small-volume middle — **relocates, does not dissolve**, the Past Hypothesis | ✅ demo |
 | **T9** | *Endogenous observer* — an active, reversible, **Landauer-costed** demon's memory is also slaved to the gradient (answers "your decoder is an external god's-eye") | a **fixed 1-bit** sensor + reversible CNOT tape (no per-time retrain): horizon **t\*_demon = 0.95·t_S** (κ=O(1) across 4 rates, cf. decoder 1.08); **flips** with the boundary (MI **0.01→1.00**); a cyclic demon **erases ~9 bits** to hold a 1-bit fact until t\*; an accumulate demon's best recall is **1.00 bit from a tape started at t=0** but only **0.08–0.18 bit (noise) after 3·t_S** — the boundary is a **non-renewable resource**; in **equilibrium it cannot learn** (mean MI **0.02 bit**, never reaches ½) | ✅ PASS |
 | **T9b** | *Demon universality* — the endogenous demon obeys the **mode-matched** law across substrates | **hard-disk gas** (diffusive): the fixed 1-bit demon inherits the law, t\*_demon = **0.54·t_S** (R²=0.92, per-size κ 0.52–0.68, O(1)) over **5.1×**; **Clifford** (ballistic): the fixed sensor is **butterfly-limited** — t\*_demon = **2–4 layers, flat in N** while t_S grows **4.8×** (κ_demon **0.11→0.02**), yet the **active** window read still tracks t_S (κ_active **0.77–0.93**, matching U2's 0.79) — a passive sensor lives only as long as the mode it rides | ✅ PASS |
+| **T9c** | *Butterfly scaling law* — the fixed sensor's clock knows only the **local gate rate**; the entropy clock knows the **size**: the mismatch is structural, not kinetic | Clifford brickwork, gate density p ∈ [0.15, 1] × N ∈ [32, 128]: **t\*_demon ∝ 1/p** (log-log slope **−1.01**) and **size-blind** (N-exponent **−0.19 ≈ 0**), while **t_S = (1.7–2.2)·N/p** (N-exponent **+1.04**, product spread 1.33×); so **κ_demon ∝ 1/N at every p** (N-shrink **0.24** vs ideal 0.25; max κ_demon **0.076**) — **slowing the gates rescues nothing** (both clocks stretch by the same 1/p); the **active** window read stays O(1) at every rate and size (κ_active 0.66–1.13) | ✅ PASS |
 | **T9d** | *Demon crossover* — the mode-matched ↔ butterfly-limited transition made **continuous, on one collisionality knob, in one substrate** | hard-disk gas with geometry frozen, **only the disk radius swept**: Kn = mfp/D runs **4.8→0.11** (45×); on the dilute branch κ_demon **rises monotonically 0.37→0.73** (2.0× suppression, 2-SEM-gated) while the retrained decoder stays **O(1)** throughout; the mechanism is decoder-free: in the ballistic gas the fixed sensor's MI **dies and revives** (echo amplitude **0.96** — the pattern *advects off* the sensor and returns off the walls), collapsing monotonically to the noise floor as collisions set in (in-place modal decay, no echo); *flagged, not gated:* at blob packing **φ=0.44** the advective signature **returns** (κ_demon turns down 0.73→0.63, κ_decode detaches up 1.12→1.70 — U-shaped, echo-free) — a **rarefaction wave re-advects the record** | ✅ PASS |
 
 **Bottom line: H survives every test we could throw at it in this model** — and the
@@ -63,13 +64,16 @@ demon, not an external decoder — is slaved to the same gradient and flips with
 record arrow is not an artifact of a god's-eye analyst either. Its horizon obeys the
 **mode-matched** law across substrates (T9b): a passive fixed sensor lives as long as the
 mode it rides — the thermalization time where relaxation is modal (CA, gas), only the
-butterfly time in a ballistic scrambler, where reaching t_S demands *active* decoding. T9d
-closes the gap between those endpoints: with the geometry frozen and **one collisionality
-knob** swept, the same fixed sensor detaches from the thermalization clock **continuously and
-monotonically** as the gas turns ballistic — and the mechanism is visible directly (ballistic
-records *advect off* the sensor and echo back; collisional records decay in place). Passive
-memory — a record that just sits there and stays readable — is a property of worlds with
-slow modes.
+butterfly time in a ballistic scrambler, where reaching t_S demands *active* decoding. T9c
+resolves the butterfly limit into a **scaling law**: the fixed sensor's horizon is set by the
+*local* gate rate alone (t\* ∝ 1/p, size-blind) while t_S ∝ N/p, so κ_demon ∝ 1/N at every
+rate — slowing the dynamics rescues nothing; the failure is **structural** (no slow mode
+exists), not kinetic. And T9d closes the gap between the endpoints: with the geometry frozen
+and **one collisionality knob** swept, the same fixed sensor detaches from the thermalization
+clock **continuously and monotonically** as the gas turns ballistic — and the mechanism is
+visible directly (ballistic records *advect off* the sensor and echo back; collisional
+records decay in place). Passive memory — a record that just sits there and stays readable —
+is a property of worlds with slow modes.
 
 ---
 
@@ -597,6 +601,39 @@ claim: passive record-keeping — memory that just *sits there* and stays readab
 precisely in substrates with slow hydrodynamic modes, which is where physical memories in fact
 live.
 
+### T9c — the butterfly limit as a scaling law: a local clock vs an extensive clock
+`experiments/t9c_butterfly.py` → `figures/T9c_butterfly.png`
+
+T9b's Clifford result invites a skeptic's rescue attempt: *maybe the fixed sensor dies only
+because the gates are fast — gentler scrambling would let it keep up.* This experiment closes
+that door by measuring both clocks' scaling in the brickwork's gate density p (each bond fires
+with probability p per layer — the Clifford analogue of the CA's scatterer fraction), for
+p ∈ [0.15, 1] × N ∈ [32, 64, 128], 6 seeds:
+
+- **t\*_demon ∝ 1/p, and size-blind.** The sensor qubit's death is a first-passage of the local
+  operator front (its bond fires every other layer with probability p): log-log slope in p =
+  **−1.01** (per-N −0.88/−1.19/−0.95), pooled size exponent **−0.19 ≈ 0**. The fixed sensor's
+  horizon contains **no information about the system size**.
+- **t_S = (1.7–2.2)·N/p.** The entanglement clock knows both the rate and the size: pooled size
+  exponent **+1.04**, and the rescaled product t_S·p/N is flat to **1.33×** across all 15
+  (N, p) conditions.
+- **Therefore κ_demon ∝ 1/N at every p** — the 1/p cancels. Measured N-shrink **0.24** vs the
+  ideal 32/128 = 0.25; κ_demon never exceeds **0.076**. **Slowing the gates does not rescue the
+  passive observer**: both clocks stretch by the same factor and the gap is untouched. The
+  butterfly limit is **structural** (the substrate offers no slow local mode, at any rate), not
+  kinetic (gates too fast to follow).
+- **The active window read stays O(1) throughout** (κ_active 0.66–1.13 across every rate and
+  size, matching U2) — the record is alive either way; only the *passive* readout dies.
+
+This is the ballistic counterpart of T9d: there, one collisionality knob moved a fixed sensor
+continuously between mode-matched and butterfly-limited readout; here, the butterfly-limited
+regime itself is resolved into a law — **the passive observer's horizon is set by the local
+dynamics alone, and its gap to t_S is a pure size effect that no rate knob closes.** *Honest
+limits:* the prefactor t\*_demon·p is O(1) but not constant (1.9–4.4 — an unmodelled survival
+count with mild p-structure); horizons are 2–30 integer layers, so per-cell means carry
+quantization wobble (hence pooled exponent fits, not per-cell spread gates); t_S is
+plateau-relative as in T9b/U2.
+
 ### T9d — the demon's crossover: mode-matched ↔ butterfly-limited on **one knob**
 `experiments/t9d_knudsen.py` → `figures/T9d_knudsen.png`
 
@@ -727,6 +764,7 @@ python3 -m venv .venv && ./.venv/bin/pip install numpy matplotlib
 ./.venv/bin/python experiments/t8_expanding_universe.py     # T8: (exploratory) low-entropy past as small volume + expansion
 ./.venv/bin/python experiments/t9_maxwell_demon.py          # T9: endogenous Maxwell-demon observer — active memory slaved to the gradient, with Landauer cost
 ./.venv/bin/python experiments/t9_demon_universal.py        # T9b: the demon obeys the mode-matched law across substrates (gas: inherits t*≈t_S; Clifford: butterfly-limited)
+./.venv/bin/python experiments/t9c_butterfly.py             # T9c: the butterfly limit as a scaling law — t*_demon ∝ 1/p size-blind, t_S ∝ N/p, κ_demon ∝ 1/N at every rate
 ./.venv/bin/python experiments/t9d_knudsen.py               # T9d: the crossover made continuous — one collisionality knob (Kn 4.8→0.11) detaches the fixed sensor from t_S, with an advective-echo mechanism panel
 ```
 
