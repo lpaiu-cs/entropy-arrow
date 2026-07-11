@@ -132,10 +132,15 @@ $w_{\min}\approx 0.22\,t$ ($R^{2}=0.97$), saturating toward $N/2$ (the Page/Hayd
 the readout size $k$, with butterfly velocity $\vB\approx0.22$ sites/layer, and---crucially---is
 independent of $N$: in the large-$N$ mixed-stabilizer simulation (Sec.~\ref{sec:feasibility})
 $t^{*}_{p}(k{=}6)$ reads $25.5/24.0/33.0$ layers at $N=24/40/56$, flat rather than extensive
-[Fig.~\ref{fig:largen}]. The passive limit of this law holds across substrates~\cite{arrowrepo}: in
-the hard-disk gas and lattice CA the fixed one-bit demon's horizon is size-blind (a $t^{*}_{p}$
-size-exponent $-0.19\approx0$) while thermalization is extensive (a $t_{S}$ exponent
-$+1.04\approx1$).
+[Fig.~\ref{fig:largen}]. This size-blindness is quantitative in the reversible Clifford
+scrambler~\cite{arrowrepo}: over gate density $p\in[0.15,1]$ and $N\in[32,128]$ the fixed one-bit
+demon's horizon has a $t^{*}_{p}$ size-exponent $-0.19\approx0$ while thermalization stays extensive
+($t_{S}$ exponent $+1.04\approx1$). What generalizes across substrates is the weaker
+\emph{mode-matched} law---a passive sensor lives as long as the slowest mode it rides: only in a
+\emph{ballistic} scrambler is that mode the size-blind butterfly cone; in a \emph{diffusive}
+hard-disk gas or lattice CA it is instead the slowest relaxation eigenmode, so the demon
+\emph{inherits} an $\mathcal{O}(1)$ fraction of the extensive $t_{S}$
+($t^{*}_{\mathrm{demon}}\approx0.54\,t_{S}$ in the gas)---extensive, not size-blind.
 
 \paragraph{R2: the passive/active $\mathcal{O}(N)$ dichotomy.}
 A fixed local reader loses $F$ at $t^{*}_{p}(k)\sim k/\vB$ (intensive); an adaptive reader whose
