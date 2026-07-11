@@ -52,7 +52,16 @@ authoring machine), or `latexmk -pdf main`.
   while the passive read loses it ($1.87\!\to\!0.33$) — gap 1.09 in the witness (a positively-biased
   proxy for the Rényi-2 MI, not measured bits), the
   memory horizon shown observer-dependent, not thermodynamic (`m3_result_hw.json`,
-  `m3_hardware.png`, Fig. 10, run via `hardware/m3_echo_run.py`). Pipeline
+  `m3_hardware.png`, Fig. 10, run via `hardware/m3_echo_run.py`).
+  **Reproducibility note (2026-07):** the echo circuit must carry a `qc.barrier()` around the
+  `U.inverse()` block (added in the barrier fix) — without it, `optimization_level=1` cancels
+  `U·U†` to identity (transpiled echo collapses to cz=1, depth 8, depth-independent) and a re-run
+  would spuriously overstate recovery. The committed data is genuine: it is IBM job
+  `d98un8d2su3c739jonu0` on `ibm_marrakesh`, whose *submitted* echo circuits ran at real growing
+  depth (transpiled depth 26→157 over scrambler depth 0→8) and whose stored counts reproduce the
+  `m3_result_hw.json` witness values exactly (1.856/1.905/1.730/1.539/1.453/1.417) — i.e. the
+  original run preserved the 2t echo; only the later committed `m3_echo_run.py` had regressed, now
+  restored. Pipeline
   `hardware/m1_ibm_run.py` (`qiskit-ibm-runtime` 0.47, **job mode** — Open Plan forbids Session):
   low-error qubit-line picker, marginal randomized-measurement horizon scan, TREX, bootstrap
   $t^*_p(k)$ + $\vB$, OTOC cross-check. Validated with zero QPU time via `--dry-run` (Aer) and
