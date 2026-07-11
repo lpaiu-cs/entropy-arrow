@@ -65,6 +65,10 @@ experiments/
   t9_demon_universal.py    T9b: the demon obeys the MODE-MATCHED law across substrates — inherits
                            t*≈t_S in the hard-disk gas; butterfly-limited in the ballistic Clifford
                            scrambler (the demon's own mode-mismatch control)
+  t9c_butterfly.py         T9c: the butterfly limit as a SCALING LAW — in the Clifford brickwork
+                           the fixed sensor's horizon knows only the local gate rate (t* ∝ 1/p,
+                           size-blind) while t_S ∝ N/p, so κ_demon ∝ 1/N at every p: slowing the
+                           gates rescues nothing; the mismatch is structural, not kinetic
   t9d_knudsen.py           T9d: that crossover made CONTINUOUS on one knob — sweep only the disk
                            radius (Kn = mfp/D, 4.8→0.11) and the fixed sensor detaches from t_S
                            monotonically (κ 0.37→0.73) while the retrained decoder stays O(1);
@@ -85,7 +89,7 @@ for e in selftest t1_boundary t2_loschmidt t3_records t3_hard_readout \
          t7_redundancy_scaling_hires t7_redundancy_extrapolate \
          md_companion t7_md_horizon t7_md_mismatch t7_clifford_horizon t7_universal_check \
          t7_clifford_darwinism t7_clifford_falsification t8_expanding_universe \
-         t9_maxwell_demon t9_demon_universal t9d_knudsen; do
+         t9_maxwell_demon t9_demon_universal t9c_butterfly t9d_knudsen; do
     ./.venv/bin/python experiments/$e.py
 done
 ```
@@ -125,7 +129,10 @@ decoder — inherits the same horizon (t\*≈t_S), flips with the boundary, and 
 equilibrium**, so the record arrow is no artifact of a god's-eye analyst (T9); and the demon obeys
 the **mode-matched** law across substrates — it inherits t\*≈t_S in the diffusive hard-disk gas but
 is **butterfly-limited** in the ballistic Clifford scrambler, where only active decoding reaches
-t_S (T9b). That transition is itself **continuous**: sweeping a single collisionality knob (the
+t_S (T9b). In the scrambler that limit is a **scaling law**: the fixed sensor's horizon knows
+only the local gate rate (t\* ∝ 1/p, size-blind) while t_S ∝ N/p, so κ_demon ∝ 1/N at every
+rate — slowing the gates rescues nothing; the failure is structural, not kinetic (T9c). And the
+transition is **continuous**: sweeping a single collisionality knob (the
 Knudsen number, 45×) with everything else frozen detaches the *same* fixed sensor from the
 thermalization clock monotonically (κ 0.37→0.73), and shows the mechanism directly — ballistic
 records **advect off the sensor and echo back** (amplitude →1), collisional records decay in
