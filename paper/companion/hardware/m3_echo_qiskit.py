@@ -37,7 +37,10 @@ def m3_echo_circuit(N, depth, seed, basis="Z", echo=True):
     U = scrambler(N, depth, seed, name="U")
     qc.compose(U, qubits=range(N), inplace=True)
     if echo:
-        qc.compose(U.inverse(), qubits=range(N), inplace=True)   # exact U^dagger
+        qc.barrier()                                             # CRITICAL: block the transpiler (opt>=1
+        qc.compose(U.inverse(), qubits=range(N), inplace=True)   # inverse cancellation) from collapsing
+        qc.barrier()                                             # U.U^dagger to identity -- keep the 2t
+        #                                                          noisy echo depth the experiment intends
     if basis == "X":
         qc.h(R); qc.h(0)
     qc.measure(R, 0); qc.measure(0, 1)                   # bit0=R, bit1=q0
